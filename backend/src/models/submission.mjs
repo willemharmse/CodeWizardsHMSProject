@@ -2,42 +2,42 @@ import mongoose from "mongoose";
 
 const subSchema = new mongoose.Schema({
     submissionID: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         auto: true,
       },
       assignmentID: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Assignment',
         required: true,
       },
       studentID: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Student',
         required: true,
       },
       fileURL: {
-        type: String,
+        type: mongoose.Schema.Types.String,
         required: true,
       },
       submittedAt: {
-        type: Date,
+        type: mongoose.Schema.Types.Date,
         default: Date.now,
       },
       grade: {
-        type: Number,
+        type: mongoose.Schema.Types.Number,
         min: 0,
         max: 100,
       },
       feedback: {
-        type: String,
+        type: mongoose.Schema.Types.String,
       },
       compressed: {
-        type: Boolean,
+        type: mongoose.Schema.Types.Boolean,
         default: false,
       },
       compressionDetails: {
-        type: String,
+        type: mongoose.Schema.Types.String,
       }
 });
 
