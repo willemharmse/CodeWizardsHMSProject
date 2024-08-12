@@ -21,12 +21,12 @@ const courseSchema = new mongoose.Schema({
         required: true,
     }],
     students: [{
-        type: mongoose.Schema.Types.Array,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Student',
         required: true,
     }],
     assignments: [{
-        type: mongoose.Schema.Types.Array,
+        type: mongoose.Schema.Types.ObjectId,
         ref:'Assignment',
         required: true,
     }],
