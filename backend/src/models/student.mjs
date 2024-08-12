@@ -1,6 +1,8 @@
 import mongoose, { Schema } from "mongoose";
+import { User } from './user.mjs';
 
 const StudentSchema = new mongoose.Schema({
+    user: User.schema,
     studentID: {
         type: String,
         required: true,
