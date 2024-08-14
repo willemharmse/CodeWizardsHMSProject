@@ -1,5 +1,5 @@
 import express from 'express';
-import passport from '../auth.mjs';
+import passport from '../config/passport.mjs';
 
 const router = express.Router();
 
