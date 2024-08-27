@@ -1,9 +1,9 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import { User } from '../models/users.mjs'; 
-//import { Student } from '../models/student.mjs';
+import { Student } from '../models/student.mjs';
 import { Admin } from '../models/admins.mjs';
-//import { Lecturer } from '../models/lecturers.mjs';
+import { Lecturer } from '../models/lecturers.mjs';
 
 const router = express.Router();
 
@@ -17,7 +17,6 @@ router.post('/create', async function(req, res){
 
         await newUser.save();
         
-        /*
         if (role === 'student')
         {
             const student = new Student({
@@ -45,11 +44,11 @@ router.post('/create', async function(req, res){
 
             await lecturer.save();
         }
-        */
 
         res.status(200).send('User account created');
     }
     catch (err) {
+        console.log(err);
         res.status(500).send('Error during creation of account');
     }
 });

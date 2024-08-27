@@ -1,8 +1,11 @@
 import mongoose, { Schema } from "mongoose";
-import { User } from "./user.mjs";
 
 const LecturerSchema = new mongoose.Schema({
-    user: User.schema,
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     coursesTaught: [{
         type: Schema.Types.ObjectId,
         ref: 'Course',
