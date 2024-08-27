@@ -1,53 +1,23 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
-const assignSchema = new mongoose.Schema({
-    assignmentID:
-    {
-        type: mongoose.Schema.Types.ObjectId,
+const adminSchema = new mongoose.Schema({
+    title: {
+        type: mongoose.Schema.Types.String,
         required: true,
-        unique: true,
-        auto: true
     },
-    courseID:
-    {
-        type: mongoose.Schema.Types.ObjectId,
+    description: {
+        type: mongoose.Schema.Types.String,
         required: true,
-        unique: true,
-        ref: 'Course'
     },
-    title:
-    {
-        type: mongoose.Schema.Types.String
+    dueDate: {
+        type: mongoose.Schema.Types.Date,
+        required: true,
     },
-    description:
-    {
-        type: mongoose.Schema.Types.String
-    },
-    dueDate:
-    {
-        type: mongoose.Schema.Types.Date
-    },
-    file:
-    {
-        type: mongoose.Schema.Types.String
-    }, 
     submissions: [{
-        type: Schema.Types.ObjectId,  // Array of references to Submission models
-        ref: 'Submission',
-    }],
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now,
-    },
-});
-    
-AssignmentSchema.pre('save', function(next) {
-    this.updatedAt = Date.now();
-    next();
+        type: mongoose.Schema.Types.ObjectId,
+        default: []
+    }]
+
 });
 
-export const Assignment = mongoose.model('Assignment', AssignmentSchema);
+export const Assignment = mongoose.model("Assigment", assignmentSchema);
