@@ -1,8 +1,11 @@
 import mongoose from "mongoose"
-import {User} from "./users.mjs"
 
 const adminSchema = new mongoose.Schema({
-    user: User.schema,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     permissions: [{
         type: mongoose.Schema.Types.String,
         required: true,
