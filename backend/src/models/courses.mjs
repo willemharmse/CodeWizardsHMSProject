@@ -1,12 +1,6 @@
 import mongoose from "mongoose"
 
 const courseSchema = new mongoose.Schema({
-    courseID: [{
-        type: mongoose.Schema.Types.ObjectId,
-        auto: true,
-        required: true,
-        unique: true,
-    }],
     courseName:{ 
         type: mongoose.Schema.Types.String,
         required: true,
@@ -15,20 +9,23 @@ const courseSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.String,
         required: true,
     },
-    lecturerID:[{
+    lecturers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Lecturer',
         required: true,
+        default: []
     }],
     students: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Student',
         required: true,
+        default: []
     }],
     assignments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref:'Assignment',
         required: true,
+        default: []
     }],
     description: {
         type: mongoose.Schema.Types.String,
@@ -36,5 +33,5 @@ const courseSchema = new mongoose.Schema({
     },
 });
 
-export const User = mongoose.model("Course", courseSchema);
+export const Course = mongoose.model("Course", courseSchema);
 
