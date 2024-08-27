@@ -39,7 +39,7 @@ router.post('/create', async function(req, res){
         {
             const lecturer = new Lecturer({
                 user: newUser._id,
-                department: req.body.permissions
+                department: req.body.department
             });
 
             await lecturer.save();
