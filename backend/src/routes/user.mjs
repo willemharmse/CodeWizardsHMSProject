@@ -22,21 +22,28 @@ router.post('/create', async function(req, res){
         {
             const student = new Student({
                 user: newUser._id, 
-                studentId: req.body.studentId,
-                coursesEnrolled: 
+                enrollmentYear: req.body.enrollmentYear
             });
+
+            await student.save();
         }
         else if (role === 'admin')
         {
+            const admin = new Admin({
+                user: newUser._id, 
+                permissions: req.body.permissions
+            });
 
+            await admin.save();
         }
         else if (role === 'lecturer')
         {
+            const lecturer = new Lecturer({
+                user: newUser._id,
+                department: req.body.permissions
+            });
 
-        }
-        else
-        {
-
+            await lecturer.save();
         }
         */
 
