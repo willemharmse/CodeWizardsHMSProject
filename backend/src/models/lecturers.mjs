@@ -3,14 +3,10 @@ import { User } from "./user.mjs";
 
 const LecturerSchema = new mongoose.Schema({
     user: User.schema,
-    lecturerID: {
-        type: String,
-        required: true,
-        unique: true,
-    },
     coursesTaught: [{
         type: Schema.Types.ObjectId,
         ref: 'Course',
+        default: [],
     }],
     department: {
         type: String,
@@ -23,5 +19,4 @@ const LecturerSchema = new mongoose.Schema({
     
 });
 
-const Lecturer = mongoose.model('Lecturer', LecturerSchema);
-module.exports = Lecturer;
+export const Lecturer = mongoose.model('Lecturer', LecturerSchema);
