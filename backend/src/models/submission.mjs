@@ -1,17 +1,12 @@
 import mongoose from "mongoose";
 
 const subSchema = new mongoose.Schema({
-    submissionID: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        auto: true,
-      },
-      assignmentID: {
+      assignment: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Assignment',
         required: true,
       },
-      studentID: {
+      student: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Student',
         required: true,
