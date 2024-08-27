@@ -16,7 +16,7 @@ router.post('/create', async function(req, res){
         const newUser = new User({ username, password: hashPass, email, role });
 
         await newUser.save();
-
+        
         /*
         if (role === 'student')
         {
@@ -30,7 +30,14 @@ router.post('/create', async function(req, res){
         {
 
         }
-        else if (role === '')
+        else if (role === 'lecturer')
+        {
+
+        }
+        else
+        {
+
+        }
         */
 
         res.status(200).send('User account created');
