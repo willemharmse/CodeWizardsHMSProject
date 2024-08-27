@@ -3,14 +3,10 @@ import { User } from './user.mjs';
 
 const StudentSchema = new mongoose.Schema({
     user: User.schema,
-    studentID: {
-        type: String,
-        required: true,
-        unique: true,
-    },
     coursesEnrolled: [{
         type: Schema.Types.ObjectId,
         ref: 'Course',
+        default: [],
     }],
     enrollmentYear: {
         type: Number,
@@ -23,8 +19,8 @@ const StudentSchema = new mongoose.Schema({
     submissions: [{
         type: Schema.Types.ObjectId,
         ref: 'Submission',
+        default: [],
     }],
 });
 
-const Student = mongoose.model('Student', StudentSchema);
-module.exports = Student;
+export const Student = mongoose.model('Student', StudentSchema);
