@@ -97,12 +97,12 @@ router.put('/update/:username', async (req, res) => {
 
             // Add to the new role-specific collection
             if (role === 'admin') {
-                await new Admin({ user: user._id }).save();
+                await new Admin({ user: user._id, permissions: "[12]"}).save();
             } else if (role === 'student') {
-                await new Student({ user: user._id }).save();
+                await new Student({ user: user._id, enrollmentYear: 2000 }).save();
             }
             else if (role === 'lecturer') {
-                await new Lecturer({ user: user._id }).save();
+                await new Lecturer({ user: user._id, department: "Schools"}).save();
             }
         }
 
