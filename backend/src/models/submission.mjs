@@ -5,15 +5,18 @@ const subSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Assignment',
         required: true,
+        default: () => new mongoose.Types.ObjectId()
       },
       student: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Student',
         required: true,
+        default: () => new mongoose.Types.ObjectId()
       },
       fileURL: {
         type: mongoose.Schema.Types.String,
         required: true,
+        default: ''
       },
       submittedAt: {
         type: mongoose.Schema.Types.Date,

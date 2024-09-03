@@ -29,43 +29,4 @@ router.post('/create', async function(req, res) {
     }
 });
 
-router.delete('/delete/:title', async function(req, res) {
-    const title = req.params.title;
-  try {
-    const assignment = await Assignment.findOneAndDelete({ title });
-
-    if(!assignment) {
-        return res.status(404).send('Assignment not found.');
-    }
-
-    res.status(200).send('Assignment deleted successfully.');
-  } 
-  catch (error) {
-    console.log(error);
-    res.status(500).send('Error deleting Assignment.');
-  }  
-});
-
-router.put('update/:title', async function(req, res) {
-    const title = req.params.title;
-    const updates = req.body; // The fields to update, sent in the request body
-
-    try {
-        const assignment = await Assignment.findOneAndUpdate({ title }, updates, {
-            new: true, // Return the updated document
-            runValidators: true, // Validate the updates against the schema
-        });
-
-        if (!assignment) {
-            return res.status(404).send('Assignment not found.');
-        }
-
-        res.status(200).send({ message: 'Assignment updated successfully.', assignment });
-    } 
-    catch (error) {
-        console.log(error);
-        res.status(500).send('Error updating assignment.');
-    }  
-});
-
 export default router;
