@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const adminSchema = new mongoose.Schema({
+const assignmentSchema = new mongoose.Schema({
     title: {
         type: mongoose.Schema.Types.String,
         required: true,
