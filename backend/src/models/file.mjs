@@ -1,22 +1,13 @@
 import mongoose from "mongoose";
 
 const fileSchema = new mongoose.Schema({
-    fileID: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        auto: true,
-      },
       fileName: {
         type: mongoose.Schema.Types.String,
         required: true,
         unique: true
       },
-      filePath: {
-        type: mongoose.Schema.Types.String,
-        required: true,
-      },
       fileURL: {
-        type: mongoose.String,
+        type: mongoose.Schema.Types.String,
         required: true,
       },
       uploadedByUserID: {
@@ -31,4 +22,4 @@ const fileSchema = new mongoose.Schema({
       }
 });
 
-export const File = mongoose.model('File', subSchema);
+export const File = mongoose.model('File', fileSchema);
