@@ -3,7 +3,7 @@ import db from './db.mjs';
 import dotenv from 'dotenv';
 import authRoute from './routes/auth.mjs';
 import userRoute from './routes/user.mjs';
-import fileRoute from '../src/routes/file.mjs';
+import fileRoute from '../src/routes/files.mjs';
 import subRoute from '../src/routes/submission.mjs';
 import assignRoute from '../src/routes/assignment.mjs';
 
