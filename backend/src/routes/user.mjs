@@ -4,12 +4,16 @@ import { User } from '../models/users.mjs';
 import { Student } from '../models/student.mjs';
 import { Admin } from '../models/admins.mjs';
 import { Lecturer } from '../models/lecturers.mjs';
+import verifyToken from '../middleware/verifyJWTToken.mjs'
+import restrictUser from '../middleware/restrictUser.mjs'
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 router.use(express.json());
 
-router.post('/create', async function(req, res){
+router.post('/admin/create', verifyToken, restrictUser(['admin']), async function(req, res){
     try {
         const { username, password, email, role } = req.body;
         const hashPass = await bcrypt.hash(password, 10)
@@ -61,16 +65,18 @@ router.post('/login', async function(req, res) {
         const user = await User.findOne({ username });
 
         if (user && await bcrypt.compare(password, user.password)) {
-            res.status(200).send('Login successful');
+            const token = jwt.sign({userId: user, role: user.role}, JWT_SECRET, { expiresIn: '1h' });
+            res.json({ token });
         } else {
             res.status(401).send('Invalid username or password');
         }
+        
     } catch (err) {
         res.status(500).send('Error during login');
     }
 });
 
-router.put('/update/:username', async (req, res) => {
+router.put('/admin/update/:username', verifyToken, restrictUser(['admin']), async (req, res) => {
     try{
         const username = req.params.username;
         const { email, role } = req.body;
@@ -117,7 +123,7 @@ router.put('/update/:username', async (req, res) => {
     }
 });
 
-router.delete('/delete/:username', async function(req, res) {
+router.delete('/admin/delete/:username', async function(req, res) {
     const username = req.params.username;
 
     try {
