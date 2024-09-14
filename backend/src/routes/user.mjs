@@ -57,6 +57,105 @@ router.post('/admin/create', verifyToken, restrictUser(['admin']), async functio
     }
 });
 
+router.get('/student/:username', async (req, res) => {
+    try {
+        const username = req.params.username;
+
+        // Find the user by username
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // Check if the user is a student
+        if (user.role !== 'student') {
+            return res.status(400).send('User is not a student');
+        }
+
+        // Find the student document associated with the user
+        const student = await Student.findOne({ user: user._id })
+                                     .populate('user')  // This will populate user details
+                                    // .populate('coursesEnrolled')  // This will populate the courses if needed
+                                    // .populate('submissions'); // This will populate submissions if needed
+
+        if (!student) {
+            return res.status(404).send('Student details not found');
+        }
+
+        res.status(200).json(student);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching student details');
+    }
+});
+
+router.get('/lecturer/:username', async (req, res) => {
+    try {
+        const username = req.params.username;
+
+        // Find the user by username
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // Check if the user is a student
+        if (user.role !== 'lecturer') {
+            return res.status(400).send('User is not a lecturer');
+        }
+
+        // Find the student document associated with the user
+        const lecturer = await Lecturer.findOne({ user: user._id })
+                                     .populate('user')  // This will populate user details
+                                    // .populate('coursesEnrolled')  // This will populate the courses if needed
+                                    // .populate('submissions'); // This will populate submissions if needed
+
+        if (!lecturer) {
+            return res.status(404).send('Lecturer details not found');
+        }
+
+        res.status(200).json(lecturer);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching lecturer details');
+    }
+});
+
+router.get('/admin/:username', async (req, res) => {
+    try {
+        const username = req.params.username;
+
+        // Find the user by username
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // Check if the user is a student
+        if (user.role !== 'admin') {
+            return res.status(400).send('User is not a admin');
+        }
+
+        // Find the student document associated with the user
+        const admin = await Admin.findOne({ user: user._id })
+                                     .populate('user')  // This will populate user details
+                                    // .populate('coursesEnrolled')  // This will populate the courses if needed
+                                    // .populate('submissions'); // This will populate submissions if needed
+
+        if (!admin) {
+            return res.status(404).send('Admin details not found');
+        }
+
+        res.status(200).json(admin);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching admin details');
+    }
+});
+
 router.post('/login', async function(req, res) {
     try {
         const { username, password } = req.body;
@@ -73,6 +172,14 @@ router.post('/login', async function(req, res) {
         
     } catch (err) {
         res.status(500).send('Error during login');
+    }
+});
+
+router.get('/logout', async (req, res) => {
+    try {
+        res.status(200).send('Successfully logged out');
+    } catch (err) {
+        res.status(500).send('Error during logout');
     }
 });
 
