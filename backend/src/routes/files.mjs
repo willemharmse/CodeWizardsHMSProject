@@ -38,9 +38,8 @@ router.post('/upload', upload.single('file'), compressVideo, async (req, res) =>
             if (fs.existsSync(filePath)) {
                 fs.unlinkSync(filePath);
             }
-            console.log(`File ${filePath} deleted successfully`);
         } catch (error) {
-            console.error(`Error deleting file ${filePath}:`, error);
+            res.status(500).send('Error during file deletion on local drive');
         }
 
         res.status(200).send('File uploaded and saved successfully');
