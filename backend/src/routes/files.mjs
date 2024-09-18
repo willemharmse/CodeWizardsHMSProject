@@ -8,15 +8,16 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { BlobServiceClient } from '@azure/storage-blob';
+import verifyToken from '../middleware/verifyJWTToken.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
-router.post('/upload', upload.single('file'), compressVideo, async (req, res) => {
+router.post('/upload', upload.single('file'), verifyToken, compressVideo, async (req, res) => {
     try {
-        const { userId, submissionId } = req.body;
+        const userID = req.user.userId;
         const filePath = req.file.path;
         const fileName = req.file.filename;
 
@@ -27,8 +28,7 @@ router.post('/upload', upload.single('file'), compressVideo, async (req, res) =>
         const newFile = new File({
             fileName: blobName,
             fileURL: url,
-            uploadedByUserID: userId,
-            associatedWith: submissionId
+            uploadedByUserID: userID,
         });
         await newFile.save();
 

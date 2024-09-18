@@ -7,9 +7,9 @@ const subSchema = new mongoose.Schema({
         required: true,
         default: () => new mongoose.Types.ObjectId()
       },
-      student: {
+      user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Student',
+        ref: 'User',
         required: true,
         default: () => new mongoose.Types.ObjectId()
       },
@@ -27,7 +27,7 @@ const subSchema = new mongoose.Schema({
       },
       file: {
         type: mongoose.Schema.Types.ObjectId,
-        rel: 'File',
+        ref: 'File',
         required: true
       }
 });

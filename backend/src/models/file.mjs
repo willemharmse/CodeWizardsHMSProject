@@ -15,12 +15,6 @@ const fileSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
         default: () => new mongoose.Types.ObjectId()
-      },
-      associatedWith: {
-        type: mongoose.Schema.Types.ObjectID,
-        ref: 'Submission',
-        required: true,
-        default: () => new mongoose.Types.ObjectId()
       }
 });
 
