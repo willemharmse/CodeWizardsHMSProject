@@ -8,25 +8,16 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { BlobServiceClient } from '@azure/storage-blob';
-<<<<<<< HEAD
 import verifyToken from '../middleware/verifyJWTToken.mjs';
-=======
->>>>>>> 6b7d6d6 (Willem (#25))
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
-<<<<<<< HEAD
 router.post('/upload', upload.single('file'), verifyToken, compressVideo, async (req, res) => {
     try {
         const userID = req.user.userId;
-=======
-router.post('/upload', upload.single('file'), compressVideo, async (req, res) => {
-    try {
-        const { userId, submissionId } = req.body;
->>>>>>> 6b7d6d6 (Willem (#25))
         const filePath = req.file.path;
         const fileName = req.file.filename;
 
@@ -37,17 +28,11 @@ router.post('/upload', upload.single('file'), compressVideo, async (req, res) =>
         const newFile = new File({
             fileName: blobName,
             fileURL: url,
-<<<<<<< HEAD
             uploadedByUserID: userID,
-=======
-            uploadedByUserID: userId,
-            associatedWith: submissionId
->>>>>>> 6b7d6d6 (Willem (#25))
         });
         await newFile.save();
 
         // Remove the local file after successful upload
-<<<<<<< HEAD
         try {
             fs.unlinkSync(filePath);
             if (fs.existsSync(filePath)) {
@@ -58,11 +43,6 @@ router.post('/upload', upload.single('file'), compressVideo, async (req, res) =>
         }
 
         res.status(200).send({message: 'File uploaded and saved successfully', fileId: newFile._id});
-=======
-        fs.unlinkSync(filePath);
-
-        res.status(200).send('File uploaded and saved successfully');
->>>>>>> 6b7d6d6 (Willem (#25))
     } catch (err) {
         console.error(err);
         res.status(500).send('Error during file upload');
