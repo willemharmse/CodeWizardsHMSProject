@@ -1,5 +1,7 @@
 import express from 'express';
 import { Submission } from '../models/submission.mjs';
+import { Assignment } from '../models/assignments.mjs';
+import verifyToken from '../middleware/verifyJWTToken.mjs';
 
 const router = express.Router();
 router.use(express.json());
@@ -8,16 +10,35 @@ router.get('/api/submission', (req, res) => {
     res.send('No submission created yet');
 });
 
-router.post('/submit', async (req, res) =>{
-    const {grade, feedback, file} = req.body;
-    const newSubmission = new Submission({grade, feedback, file});
-    try{
+router.post('/submit', verifyToken, async (req, res) =>{
+    const {title, grade, feedback, file} = req.body;
+
+    try 
+    {
+        const userID = req.user.userId;
+
+        const assignment = await Assignment.findOne({ title: title }); // Find assignment by title or any other field
+        if (!assignment) {
+            return res.status(404).send('Assignment not found');
+        }
+
+        const newSubmission = new Submission({
+            user: userID,
+            grade, 
+            feedback, 
+            file,
+            assignment: assignment._id 
+        });
+
+
         await newSubmission.save();
-        res.status(200).send('Successful submission');
+        
+        res.status(200).send({ message: 'Successful submission', ID: userID });
     }catch (err){
-        console.log(err);
         res.status(500).send('There was an error with the submission');
     }
+    
+    
 })
 
 router.put('/update/:id', async (req, res) => {
@@ -65,18 +86,6 @@ router.delete('/delete/:id', async function(req, res) {
         res.status(500).send('Error deleting submission');
     }
 });
-
-router.post('/submit', async (req, res) =>{
-    const {assignment, student, fileURL, submittedAt, grade, feedback, compressed, compressionDetails} = req.body;
-    const newSubmission = new Submission({assignment, student, fileURL, submittedAt, grade, feedback, compressed, compressionDetails});
-    try{
-        await newSubmission.save();
-        res.status(200).send('Successful submission');
-    }catch (err){
-        console.log(err);
-        res.status(500).send('There was an error with the submission');
-    }
-})
 
 router.put('/update/:id', async (req, res) => {
     try{
