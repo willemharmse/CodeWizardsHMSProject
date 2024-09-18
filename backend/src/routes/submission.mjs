@@ -9,8 +9,8 @@ router.get('/api/submission', (req, res) => {
 });
 
 router.post('/submit', async (req, res) =>{
-    const {assignment, student, fileURL, submittedAt, grade, feedback, compressed, compressionDetails} = req.body;
-    const newSubmission = new Submission({assignment, student, fileURL, submittedAt, grade, feedback, compressed, compressionDetails});
+    const {grade, feedback, file} = req.body;
+    const newSubmission = new Submission({grade, feedback, file});
     try{
         await newSubmission.save();
         res.status(200).send('Successful submission');
