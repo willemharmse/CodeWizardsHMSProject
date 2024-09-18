@@ -17,7 +17,6 @@ const assignmentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
     }
-
 });
 
 export const Assignment = mongoose.model("Assigment", assignmentSchema);
