@@ -42,7 +42,7 @@ router.post('/upload', upload.single('file'), compressVideo, async (req, res) =>
             res.status(500).send('Error during file deletion on local drive');
         }
 
-        res.status(200).send('File uploaded and saved successfully');
+        res.status(200).send({message: 'File uploaded and saved successfully', fileId: newFile._id});
     } catch (err) {
         console.error(err);
         res.status(500).send('Error during file upload');
