@@ -20,7 +20,6 @@ export const compressVideo = (req, res, next) => {
                     console.log(`Original file ${req.file.path} deleted successfully`);
                 }
             });
-            
             // Replace the file path with the compressed one and continue
             req.file.path = outputFilePath;
             next();
