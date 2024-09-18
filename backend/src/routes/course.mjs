@@ -5,8 +5,20 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.get('/courses', function(req, res){
-    res.send('No courses created yet');
+router.get('/', async function(req, res){
+    try {
+        // Find all lecturer documents
+        const courses = await Course.find({});
+    
+        if (courses.length === 0) {
+            return res.status(404).send('No course found');
+        }
+    
+        res.status(200).json(courses);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching courses details');
+    }
 });
 
 router.post('/create', async function(req, res) {
