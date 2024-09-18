@@ -19,11 +19,6 @@ const StudentSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    submissions: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Submission',
-        default: [],
-    }],
 });
 
 export const Student = mongoose.model('Student', StudentSchema);
