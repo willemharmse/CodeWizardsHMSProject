@@ -51,6 +51,7 @@ router.delete('/delete/:title', verifyToken, restrictUser(['admin','lecturer']),
 });
 
 router.put('/update/:title', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
+
     const title = req.params.title;
     const updates = req.body; // The fields to update, sent in the request body
 

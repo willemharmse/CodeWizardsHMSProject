@@ -33,9 +33,16 @@ router.post('/upload', upload.single('file'), compressVideo, async (req, res) =>
         await newFile.save();
 
         // Remove the local file after successful upload
-        fs.unlinkSync(filePath);
+        try {
+            fs.unlinkSync(filePath);
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        } catch (error) {
+            res.status(500).send('Error during file deletion on local drive');
+        }
 
-        res.status(200).send('File uploaded and saved successfully');
+        res.status(200).send({message: 'File uploaded and saved successfully', fileId: newFile._id});
     } catch (err) {
         console.error(err);
         res.status(500).send('Error during file upload');
