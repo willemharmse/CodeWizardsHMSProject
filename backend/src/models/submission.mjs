@@ -13,11 +13,6 @@ const subSchema = new mongoose.Schema({
         required: true,
         default: () => new mongoose.Types.ObjectId()
       },
-      fileURL: {
-        type: mongoose.Schema.Types.String,
-        required: true,
-        default: ''
-      },
       submittedAt: {
         type: mongoose.Schema.Types.Date,
         default: Date.now,
@@ -30,12 +25,10 @@ const subSchema = new mongoose.Schema({
       feedback: {
         type: mongoose.Schema.Types.String,
       },
-      compressed: {
-        type: mongoose.Schema.Types.Boolean,
-        default: false,
-      },
-      compressionDetails: {
-        type: mongoose.Schema.Types.String,
+      file: {
+        type: mongoose.Schema.Types.ObjectId,
+        rel: 'File',
+        required: true
       }
 });
 
