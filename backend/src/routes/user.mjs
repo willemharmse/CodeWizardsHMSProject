@@ -4,12 +4,16 @@ import { User } from '../models/users.mjs';
 import { Student } from '../models/student.mjs';
 import { Admin } from '../models/admins.mjs';
 import { Lecturer } from '../models/lecturers.mjs';
+import verifyToken from '../middleware/verifyJWTToken.mjs'
+import restrictUser from '../middleware/restrictUser.mjs'
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 router.use(express.json());
 
-router.post('/create', async function(req, res){
+router.post('/admin/create', verifyToken, restrictUser(['admin']), async function(req, res){
     try {
         const { username, password, email, role } = req.body;
         const hashPass = await bcrypt.hash(password, 10)
@@ -53,6 +57,105 @@ router.post('/create', async function(req, res){
     }
 });
 
+router.get('/student/:username', async (req, res) => {
+    try {
+        const username = req.params.username;
+
+        // Find the user by username
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // Check if the user is a student
+        if (user.role !== 'student') {
+            return res.status(400).send('User is not a student');
+        }
+
+        // Find the student document associated with the user
+        const student = await Student.findOne({ user: user._id })
+                                     .populate('user')  // This will populate user details
+                                    // .populate('coursesEnrolled')  // This will populate the courses if needed
+                                    // .populate('submissions'); // This will populate submissions if needed
+
+        if (!student) {
+            return res.status(404).send('Student details not found');
+        }
+
+        res.status(200).json(student);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching student details');
+    }
+});
+
+router.get('/lecturer/:username', async (req, res) => {
+    try {
+        const username = req.params.username;
+
+        // Find the user by username
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // Check if the user is a student
+        if (user.role !== 'lecturer') {
+            return res.status(400).send('User is not a lecturer');
+        }
+
+        // Find the student document associated with the user
+        const lecturer = await Lecturer.findOne({ user: user._id })
+                                     .populate('user')  // This will populate user details
+                                    // .populate('coursesEnrolled')  // This will populate the courses if needed
+                                    // .populate('submissions'); // This will populate submissions if needed
+
+        if (!lecturer) {
+            return res.status(404).send('Lecturer details not found');
+        }
+
+        res.status(200).json(lecturer);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching lecturer details');
+    }
+});
+
+router.get('/admin/:username', async (req, res) => {
+    try {
+        const username = req.params.username;
+
+        // Find the user by username
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // Check if the user is a student
+        if (user.role !== 'admin') {
+            return res.status(400).send('User is not a admin');
+        }
+
+        // Find the student document associated with the user
+        const admin = await Admin.findOne({ user: user._id })
+                                     .populate('user')  // This will populate user details
+                                    // .populate('coursesEnrolled')  // This will populate the courses if needed
+                                    // .populate('submissions'); // This will populate submissions if needed
+
+        if (!admin) {
+            return res.status(404).send('Admin details not found');
+        }
+
+        res.status(200).json(admin);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching admin details');
+    }
+});
+
 router.post('/login', async function(req, res) {
     try {
         const { username, password } = req.body;
@@ -61,16 +164,26 @@ router.post('/login', async function(req, res) {
         const user = await User.findOne({ username });
 
         if (user && await bcrypt.compare(password, user.password)) {
-            res.status(200).send('Login successful');
+            const token = jwt.sign({userId: user, role: user.role}, JWT_SECRET, { expiresIn: '1h' });
+            res.json({ token });
         } else {
             res.status(401).send('Invalid username or password');
         }
+        
     } catch (err) {
         res.status(500).send('Error during login');
     }
 });
 
-router.put('/update/:username', async (req, res) => {
+router.get('/logout', async (req, res) => {
+    try {
+        res.status(200).send('Successfully logged out');
+    } catch (err) {
+        res.status(500).send('Error during logout');
+    }
+});
+
+router.put('/admin/update/:username', verifyToken, restrictUser(['admin']), async (req, res) => {
     try{
         const username = req.params.username;
         const { email, role } = req.body;
@@ -117,7 +230,7 @@ router.put('/update/:username', async (req, res) => {
     }
 });
 
-router.delete('/delete/:username', async function(req, res) {
+router.delete('/admin/delete/:username', async function(req, res) {
     const username = req.params.username;
 
     try {

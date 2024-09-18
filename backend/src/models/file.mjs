@@ -13,12 +13,14 @@ const fileSchema = new mongoose.Schema({
       uploadedByUserID: {
         type: mongoose.Schema.Types.ObjectID,
         ref: 'User',
-        required: true
+        required: true,
+        default: () => new mongoose.Types.ObjectId()
       },
       associatedWith: {
         type: mongoose.Schema.Types.ObjectID,
         ref: 'Submission',
-        required: true
+        required: true,
+        default: () => new mongoose.Types.ObjectId()
       }
 });
 
