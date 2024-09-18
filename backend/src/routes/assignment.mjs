@@ -1,6 +1,9 @@
 import express from 'express';
 import { Assignment } from '../models/assignments.mjs'; 
 import { Student } from '../models/student.mjs';
+import verifyToken from '../middleware/verifyJWTToken.mjs'
+import restrictUser from '../middleware/restrictUser.mjs'
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
@@ -10,7 +13,7 @@ router.get('/api/assignment', function(req, res){
     res.send('No Asssignments created yet');
 });
 
-router.post('/create', async function(req, res) {
+router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
     try {
         const { title, description, dueDate } = req.body;
 
@@ -29,7 +32,7 @@ router.post('/create', async function(req, res) {
     }
 });
 
-router.delete('/delete/:title', async function(req, res) {
+router.delete('/delete/:title', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
     const title = req.params.title;
 
     try {
@@ -47,7 +50,8 @@ router.delete('/delete/:title', async function(req, res) {
     }  
 });
 
-router.put('/update/:title', async function(req, res) {
+router.put('/update/:title', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
+
     const title = req.params.title;
     const updates = req.body; // The fields to update, sent in the request body
 
