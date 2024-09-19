@@ -1,5 +1,8 @@
 import express from 'express';
 import { Course } from '../models/courses.mjs';
+import { User } from '../models/users.mjs';
+import { Student } from '../models/student.mjs';
+import { Lecturer } from '../models/lecturers.mjs';
 
 const router = express.Router();
 
@@ -79,9 +82,95 @@ router.put('/update/:courseCode', async function(req, res) {
         res.status(200).send({ message: 'Course updated successfully.' });
     } 
     catch (error) {
-        console.log(error);
         res.status(500).send('Error updating course.');
     }  
+});
+
+router.post('/lecturer/:username/:courseCode', async (req, res) => {
+    const username = req.params.username;
+    const courseCode = req.params.courseCode;
+
+    try{
+        const user = await User.findOne({ username: username});
+        if (!user)
+        {
+            return res.status(404).send('User not found.');
+        }
+        else if (!user.role === 'lecturer')
+        {
+            res.status(500).send('User is not a lecturer');
+        }
+
+        const lecturer = await Lecturer.findOne({user: user});
+        if (!lecturer)
+        {
+            return res.status(404).send('Lecturer not found.');
+        }
+
+        const course = await Course.findOne({ courseCode: courseCode });
+        if (!course) {
+            return res.status(404).send('Course not found.');
+        }
+
+        const isCourseAlreadyAdded = lecturer.coursesTaught.includes(course._id);
+
+        if (isCourseAlreadyAdded) {
+            return res.status(400).send('Course already exists in courses taught.');
+        }
+
+        lecturer.coursesTaught.push(course._id);
+        await lecturer.save();
+    
+        res.status(200).send('Course added successfully to courses taught.');
+    }
+    catch (err)
+    {
+        res.status(500).send('Error adding course.');
+    }
+});
+
+router.post('/student/:username/:courseCode', async (req, res) => {
+    const username = req.params.username;
+    const courseCode = req.params.courseCode;
+
+    try{
+        const user = await User.findOne({ username: username});
+        if (!user)
+        {
+            return res.status(404).send('User not found.');
+        }
+        else if (!user.role === 'student')
+        {
+            res.status(500).send('User is not a student');
+        }
+
+        const student = await Student.findOne({user: user});
+        if (!student)
+        {
+            return res.status(404).send('Student not found.');
+        }
+
+        const course = await Course.findOne({ courseCode: courseCode });
+        if (!course) {
+            return res.status(404).send('Course not found.');
+        }
+
+        const isCourseAlreadyAdded = student.coursesEnrolled.includes(course._id);
+
+        if (isCourseAlreadyAdded) {
+            return res.status(400).send('Course already exists in courses enrolled.');
+        }
+
+        student.coursesEnrolled.push(course._id);
+        await student.save();
+    
+        res.status(200).send('Course added successfully to courses enrolled.');
+    }
+    catch (err)
+    {
+        console.log(err);
+        res.status(500).send('Error adding course.');
+    }
 });
 
 export default router;
