@@ -16,6 +16,10 @@ const assignmentSchema = new mongoose.Schema({
     course: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
+    },
+    assignCode: {
+        type: mongoose.Schema.Types.String,
+        required: true
     }
 });
 
