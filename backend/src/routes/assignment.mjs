@@ -37,11 +37,15 @@ router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async fu
             return res.status(404).send('Course not found');
         }
 
+        const assignmentCount = await Assignment.countDocuments({ course: course });
+        const assignCode = `${course.courseCode}-${assignmentCount + 1}`;
+
         const newAssignment = new Assignment({
             title,
             description,
             dueDate,
-            course: course
+            course: course,
+            assignCode
         });
 
         await newAssignment.save();
@@ -53,11 +57,11 @@ router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async fu
     }
 });
 
-router.delete('/delete/:title', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
-    const title = req.params.title;
+router.delete('/delete/:assignCode', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
+    const assignCode = req.params.assignCode;
 
     try {
-        const assignment = await Assignment.findOneAndDelete({ title });
+        const assignment = await Assignment.findOneAndDelete({ assignCode: assignCode });
 
         if (!assignment) {
             return res.status(404).send('Assignment not found.');
@@ -71,12 +75,12 @@ router.delete('/delete/:title', verifyToken, restrictUser(['admin','lecturer']),
     }  
 });
 
-router.put('/update/:title', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
-    const title = req.params.title;
+router.put('/update/:assignCode', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
+    const assignCode = req.params.assignCode;
     const updates = req.body; // The fields to update, sent in the request body
 
     try {
-        const assignment = await Assignment.findOneAndUpdate({ title }, updates, {
+        const assignment = await Assignment.findOneAndUpdate({ assignCode: assignCode }, updates, {
             new: true, // Return the updated document
             runValidators: true, // Validate the updates against the schema
         });
