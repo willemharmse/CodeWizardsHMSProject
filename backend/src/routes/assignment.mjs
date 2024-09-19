@@ -3,24 +3,45 @@ import { Assignment } from '../models/assignments.mjs';
 import { Student } from '../models/student.mjs';
 import verifyToken from '../middleware/verifyJWTToken.mjs'
 import restrictUser from '../middleware/restrictUser.mjs'
+import { Course } from '../models/courses.mjs'
 import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
 router.use(express.json());
 
-router.get('/api/assignment', function(req, res){
-    res.send('No Asssignments created yet');
+router.get('/:courseCode', async function(req, res){
+    try{
+        const courseCode = req.params.courseCode;
+        const course = await Course.findOne({ courseCode: courseCode }); // Find assignment by title or any other field
+        if (!course) {
+            return res.status(404).send('Course not found');
+        }
+
+        const assignment = await assignment.find({course: course});
+
+        if (assignment.length === 0){
+            return res.status(404).send("No assignments found");
+        }
+    }catch(err){
+        res.status(500).send("Something went wrong");
+    }
 });
 
 router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
     try {
-        const { title, description, dueDate } = req.body;
+        const { title, description, dueDate, courseCode } = req.body;
+
+        const course = await Course.findOne({ courseCode: courseCode }); // Find assignment by title or any other field
+        if (!course) {
+            return res.status(404).send('Course not found');
+        }
 
         const newAssignment = new Assignment({
             title,
             description,
             dueDate,
+            course: course
         });
 
         await newAssignment.save();
@@ -51,7 +72,6 @@ router.delete('/delete/:title', verifyToken, restrictUser(['admin','lecturer']),
 });
 
 router.put('/update/:title', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
-
     const title = req.params.title;
     const updates = req.body; // The fields to update, sent in the request body
 
