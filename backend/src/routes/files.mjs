@@ -15,43 +15,17 @@ const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
-router.post('/upload', upload.single('file'), verifyToken, compressVideo, async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     try {
-        const userID = req.user.userId;
-        const filePath = req.file.path;
-        const fileName = req.file.filename;
+        const { id } = req.params;
 
-        // Upload the compressed file to Azure
-        const { blobName, url } = await uploadToAzure(filePath, fileName);
-
-        // Save file info to MongoDB
-        const newFile = new File({
-            fileName: blobName,
-            fileURL: url,
-            uploadedByUserID: userID,
-        });
-        await newFile.save();
-
-        // Remove the local file after successful upload
-        try {
-            fs.unlinkSync(filePath);
-            if (fs.existsSync(filePath)) {
-                fs.unlinkSync(filePath);
-            }
-        } catch (error) {
-            res.status(500).send('Error during file deletion on local drive');
+        const file = await File.findOne({_id: id});
+        if (!file)
+        {
+            return res.status(404).send("File does not exist");
         }
 
-        res.status(200).send({message: 'File uploaded and saved successfully', fileId: newFile._id});
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Error during file upload');
-    }
-});
-
-router.delete('/delete/:fileName', async (req, res) => {
-    try {
-        const { fileName } = req.params;
+        const fileName = file.fileName;
 
         // Delete the file from Azure Blob Storage
         await deleteFromAzure(fileName);
@@ -66,9 +40,18 @@ router.delete('/delete/:fileName', async (req, res) => {
     }
 });
 
-router.get('/download/:fileName', async (req, res) => {
+router.get('/download/:id', async (req, res) => {
     try {
-        const { fileName } = req.params;
+        const { id } = req.params;
+
+        const file = await File.findOne({_id: id});
+        if (!file)
+        {
+            return res.status(404).send("File does not exist");
+        }
+
+        const fileName = file.fileName;
+
         const downloadPath = path.join(__dirname, '..', 'downloads', fileName);
 
         // Create the downloads folder if it doesn't exist
@@ -96,15 +79,24 @@ router.get('/download/:fileName', async (req, res) => {
     }
 });
 
-router.get('/stream/:fileName', async (req, res) => {
-    const { fileName } = req.params;
-    const range = req.headers.range;
+router.get('/stream/:id', async (req, res) => {
+    try{
+        const { id } = req.params;
 
-    if (!range) {
-        return res.status(400).send('Requires Range header');
-    }
+        const file = await File.findOne({_id: id});
+        if (!file)
+        {
+            return res.status(404).send("File does not exist");
+        }
 
-    try {
+        const fileName = file.fileName;
+
+        const range = req.headers.range;
+
+        if (!range) {
+            return res.status(400).send('Requires Range header');
+        }
+
         // Initialize the BlobServiceClient and ContainerClient
         const containerName = process.env.AZURE_STORAGE_CONTAINER_NAME;
         const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_STORAGE_CONNECTION_STRING);
