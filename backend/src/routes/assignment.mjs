@@ -92,7 +92,8 @@ router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async fu
                 description,
                 dueDate,
                 course: course,
-                assignCode
+                assignCode,
+                mark
             });
 
             await newAssignment.save();
