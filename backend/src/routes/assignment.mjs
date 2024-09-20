@@ -1,9 +1,11 @@
 import express from 'express';
 import { Assignment } from '../models/assignments.mjs'; 
 import { Student } from '../models/student.mjs';
-import verifyToken from '../middleware/verifyJWTToken.mjs'
-import restrictUser from '../middleware/restrictUser.mjs'
-import { Course } from '../models/courses.mjs'
+import verifyToken from '../middleware/verifyJWTToken.mjs';
+import restrictUser from '../middleware/restrictUser.mjs';
+import { Course } from '../models/courses.mjs';
+import { User } from '../models/users.mjs';
+import { Lecturer } from '../models/lecturers.mjs';
 import jwt from 'jsonwebtoken';
 
 const router = express.Router();
@@ -30,27 +32,74 @@ router.get('/:courseCode', async function(req, res){
 
 router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
     try {
-        const { title, description, dueDate, courseCode } = req.body;
+        const { title, description, dueDate, courseCode, mark } = req.body;
+        const userID = req.user.userId;
 
         const course = await Course.findOne({ courseCode: courseCode }); // Find assignment by title or any other field
         if (!course) {
             return res.status(404).send('Course not found');
         }
 
-        const assignmentCount = await Assignment.countDocuments({ course: course });
-        const assignCode = `${course.courseCode}-${assignmentCount + 1}`;
+        const user = await User.findOne({ _id: userID});
+        if (!user)
+        {
+            return res.status(404).send('User not found.');
+        }
 
-        const newAssignment = new Assignment({
-            title,
-            description,
-            dueDate,
-            course: course,
-            assignCode
-        });
+        if (mark < 0 || mark > 250)
+        {
+            return res.status(400).send('Mark value is out of bounds');
+        }
 
-        await newAssignment.save();
+        if (user.role === 'lecturer')
+        {
+            const lecturer = await Lecturer.findOne({user: user._id});
+            if (!lecturer)
+            {
+                return res.status(404).send('Lecturer not found.');
+            }
 
-        res.status(201).send('Assignment created successfully');
+            if (lecturer.coursesTaught.includes(course._id))
+            {
+                const assignmentCount = await Assignment.countDocuments({ course: course });
+                const assignCode = `${course.courseCode}-${assignmentCount + 1}`;
+
+                const newAssignment = new Assignment({
+                    title,
+                    description,
+                    dueDate,
+                    course: course,
+                    assignCode,
+                    mark
+                });
+
+                await newAssignment.save();
+
+                res.status(201).send('Assignment created successfully');
+            }
+            else
+            {
+                res.status(404).send('Lecturer not found as a course lecturer');
+            }
+        }
+        else if (user.role === 'admin')
+        {
+            const assignmentCount = await Assignment.countDocuments({ course: course });
+            const assignCode = `${course.courseCode}-${assignmentCount + 1}`;
+
+            const newAssignment = new Assignment({
+                title,
+                description,
+                dueDate,
+                course: course,
+                assignCode,
+                mark
+            });
+
+            await newAssignment.save();
+
+            res.status(201).send('Assignment created successfully');
+        }
     } catch (err) {
         console.error(err);
         res.status(500).send('Error creating assignment');
