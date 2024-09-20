@@ -52,7 +52,7 @@ router.post('/submit', verifyToken, restrictUser(['admin','student']), async (re
 
         if (user.role === 'student')
         {
-            const student = await Student.findOne({_id: userID});
+            const student = await Student.findOne({user: userID});
             if (!student) {
                 return res.status(404).send('Student not found');
             }
