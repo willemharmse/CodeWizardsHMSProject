@@ -5,11 +5,7 @@ const adminSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    },
-    permissions: [{
-        type: mongoose.Schema.Types.String,
-        required: true,
-    }]
+    }
 });
 
 export const Admin = mongoose.model("Admin", adminSchema);
