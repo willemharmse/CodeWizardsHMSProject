@@ -18,6 +18,8 @@ router.get('/:assignCode', verifyToken, restrictUser(['admin', 'lecturer']), asy
             return res.status(404).send('Assignment not found');
         }
 
+        const mark = assignment.mark || 100;
+        
         const submissions = await Submission.find({ assignment: assignment._id })
             .populate({
                 path: 'user', 
@@ -31,7 +33,7 @@ router.get('/:assignCode', verifyToken, restrictUser(['admin', 'lecturer']), asy
         // Prepare data for the Excel file
         const data = submissions.map(submission => ({
             Student: submission.user ? submission.user.username : 'Unknown', // Assuming the User model has a 'username' field
-            Grade: submission.grade !== null ? submission.grade : 'Not graded',
+            [`Grade (${mark})`]: submission.grade !== null ? submission.grade : 'Not graded',
             Feedback: submission.feedback !== "" ? submission.feedback : 'No feedback provided',
         }));
 
