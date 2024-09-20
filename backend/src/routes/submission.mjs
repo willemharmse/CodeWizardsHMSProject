@@ -3,7 +3,11 @@ import { Submission } from '../models/submission.mjs';
 import { Assignment } from '../models/assignments.mjs';
 import verifyToken from '../middleware/verifyJWTToken.mjs';
 import restrictUser from '../middleware/restrictUser.mjs';
-import { Course } from '../models/courses.mjs';
+import { upload } from '../middleware/fileUpload.mjs';
+import { compressVideo } from '../middleware/compressVideo.mjs';
+import { uploadToAzure } from '../config/azureStorage.mjs';
+import { File } from '../models/file.mjs';
+import fs from 'fs';
 import { User } from '../models/users.mjs';
 import { Student } from '../models/student.mjs';
 
@@ -33,8 +37,8 @@ router.get('/:assignCode', async (req, res) => {
     }
 });
 
-router.post('/submit', verifyToken, restrictUser(['admin','student']), async (req, res) =>{
-    const {assignCode, grade, feedback, file} = req.body;
+router.post('/submit', upload.single('file'), verifyToken, restrictUser(['admin','student']), compressVideo, async (req, res) =>{
+    const assignCode = req.body.assignCode;
 
     try 
     {
@@ -57,41 +61,56 @@ router.post('/submit', verifyToken, restrictUser(['admin','student']), async (re
                 return res.status(404).send('Student not found');
             }
 
-            if (student.coursesEnrolled.includes(assignment.course))
-            {
-                const newSubmission = new Submission({
-                    user: userID,
-                    grade: null, 
-                    feedback: null, 
-                    file,
-                    assignment: assignment._id 
-                });
-
-                await newSubmission.save();
-                
-                res.status(200).send({ message: 'Successful submission'});
-            }
-            else
+            if (!student.coursesEnrolled.includes(assignment.course))
             {
                 return res.status(400).send('Student not enrolled in this course');
             }
         }
-        else if (user.role === 'admin')
+        else if (user.role === 'lecturer')
         {
-            const newSubmission = new Submission({
-                user: userID,
-                grade: null, 
-                feedback: null, 
-                file,
-                assignment: assignment._id 
-            });
-
-            await newSubmission.save();
-            
-            res.status(200).send({ message: 'Successful submission'});
+            return res.status(400).send('Not enrolled in this course');
         }
+
+        const filePath = req.file.path;
+        const fileName = req.file.filename;
+    
+        // Upload the compressed file to Azure
+        const { blobName, url } = await uploadToAzure(filePath, fileName);
+    
+        // Save file info to MongoDB
+        const newFile = new File({
+            fileName: blobName,
+            fileURL: url,
+            uploadedByUserID: userID,
+        });
+        await newFile.save();
+    
+        // Remove the local file after successful upload
+        try {
+            fs.unlinkSync(filePath);
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        } catch (error) {
+            res.status(500).send('Error during file deletion on local drive');
+        }
+    
+        const newSubmission = new Submission({
+            user: userID,
+            grade: null, 
+            feedback: null, 
+            file: newFile._id,
+            assignment: assignment._id 
+        });
+
+        await newSubmission.save();
+        
+        res.status(200).send({ message: 'Successful submission'});
     }catch (err){
         res.status(500).send('There was an error with the submission');
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
     }
 });
 
