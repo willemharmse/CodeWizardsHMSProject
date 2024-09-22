@@ -3,7 +3,7 @@ import { Submission } from '../models/submission.mjs';
 import { Assignment } from '../models/assignments.mjs'; 
 import verifyToken from '../middleware/verifyJWTToken.mjs';
 import restrictUser from '../middleware/restrictUser.mjs';
-import { User } from '../models/users.mjs'; 
+import logger from '../config/logger.mjs';
 import xlsx from 'xlsx';
 
 const router = express.Router();
@@ -15,6 +15,7 @@ router.get('/:assignCode', verifyToken, restrictUser(['admin', 'lecturer']), asy
 
         const assignment = await Assignment.findOne({assignCode: assignCode});
         if (!assignment) {
+            logger.warn(`Failed retrieving info for ${assignCode}. Assignment does not exist`);
             return res.status(404).send('Assignment not found');
         }
 
@@ -27,6 +28,7 @@ router.get('/:assignCode', verifyToken, restrictUser(['admin', 'lecturer']), asy
             .select('grade feedback'); // Select fields to include
 
         if (!submissions.length) {
+            logger.warn(`Failed retrieving info for submissions. Submissions does not exist`);
             return res.status(404).send('No submissions found for this assignment');
         }
 
@@ -49,8 +51,10 @@ router.get('/:assignCode', verifyToken, restrictUser(['admin', 'lecturer']), asy
         res.setHeader('Content-Disposition', 'attachment; filename=grades.xlsx');
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         res.send(buffer);
+
+        logger.info(`Excel file cointaining feedback and marks successfully created`);
     } catch (err) {
-        console.error(err);
+        logger.warn(`Error during excel file creation: ${err}`);
         res.status(500).send('Error generating the Excel file');
     }
 });
