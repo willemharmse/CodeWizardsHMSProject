@@ -61,7 +61,7 @@ router.post('/create', verifyToken, restrictUser(['admin']), async function(req,
         res.status(200).send('User account created');
     }
     catch (err) {
-        logger.info(`Error during creation of user account: ${err}`);
+        logger.warn(`Error during creation of user account: ${err}`);
         res.status(500).send('Error during creation of account');
     }
 });
@@ -74,11 +74,13 @@ router.get('/student/:username', async (req, res) => {
         const user = await User.findOne({ username });
 
         if (!user) {
+            logger.warn(`Failed retrieving info for ${username}. User does not exist`);
             return res.status(404).send('User not found');
         }
 
         // Check if the user is a student
         if (user.role !== 'student') {
+            logger.warn(`Failed retrieving info for ${username}. User is not a student`);
             return res.status(400).send('User is not a student');
         }
 
@@ -88,12 +90,14 @@ router.get('/student/:username', async (req, res) => {
                                      .populate('coursesEnrolled')
 
         if (!student) {
+            logger.warn(`Failed retrieving info for ${username}. User info not found for student`);
             return res.status(404).send('Student details not found');
         }
 
+        logger.info(`User info for user: ${username} successfully loaded`);
         res.status(200).json(student);
     } catch (err) {
-        console.error(err);
+        logger.warn(`Error during retrieval of user details: ${err}`);
         res.status(500).send('Error fetching student details');
     }
 });
@@ -106,11 +110,13 @@ router.get('/lecturer/:username', async (req, res) => {
         const user = await User.findOne({ username });
 
         if (!user) {
+            logger.warn(`Failed retrieving info for ${username}. User does not exist`);
             return res.status(404).send('User not found');
         }
 
         // Check if the user is a student
         if (user.role !== 'lecturer') {
+            logger.warn(`Failed retrieving info for ${username}. User is not a lecturer`);
             return res.status(400).send('User is not a lecturer');
         }
 
@@ -120,12 +126,14 @@ router.get('/lecturer/:username', async (req, res) => {
                                      .populate('coursesTaught')
 
         if (!lecturer) {
+            logger.warn(`Failed retrieving info for ${username}. User info not found for lecturer`);
             return res.status(404).send('Lecturer details not found');
         }
 
+        logger.info(`User info for user: ${username} successfully loaded`);
         res.status(200).json(lecturer);
     } catch (err) {
-        console.error(err);
+        logger.warn(`Error during retrieval of user details: ${err}`);
         res.status(500).send('Error fetching lecturer details');
     }
 });
@@ -138,11 +146,13 @@ router.get('/admin/:username', async (req, res) => {
         const user = await User.findOne({ username });
 
         if (!user) {
+            logger.warn(`Failed retrieving info for ${username}. User does not exist`);
             return res.status(404).send('User not found');
         }
 
         // Check if the user is a student
         if (user.role !== 'admin') {
+            logger.warn(`Failed retrieving info for ${username}. User is not a admin`);
             return res.status(400).send('User is not a admin');
         }
 
@@ -151,12 +161,14 @@ router.get('/admin/:username', async (req, res) => {
                                      .populate('user')  // This will populate user details
 
         if (!admin) {
+            logger.warn(`Failed retrieving info for ${username}. User info not found for admin`);
             return res.status(404).send('Admin details not found');
         }
 
+        logger.info(`User info for user: ${username} successfully loaded`);
         res.status(200).json(admin);
     } catch (err) {
-        console.error(err);
+        logger.warn(`Error during retrieval of user details: ${err}`);
         res.status(500).send('Error fetching admin details');
     }
 });
@@ -186,10 +198,19 @@ router.post('/login', async function(req, res) {
     }
 });
 
-router.get('/logout', async (req, res) => {
-    try {
+router.get('/logout', verifyToken, async (req, res) => {
+    try{
+        const userID = req.user.userId;
+
+        const user = await User.findOne({_id: userID});
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        logger.info(`User: ${username} successfully logged out`);
         res.status(200).send('Successfully logged out');
     } catch (err) {
+        logger.warn(`Error during logging out: ${err}`);
         res.status(500).send('Error during logout');
     }
 });
@@ -197,12 +218,13 @@ router.get('/logout', async (req, res) => {
 router.put('/update/:username', verifyToken, restrictUser(['admin']), async (req, res) => {
     try{
         const username = req.params.username;
-        const { email, role } = req.body;
+        const { email, role, department } = req.body;
         
         // Find the user by username
         const user = await User.findOne({ username });
 
         if (!user) {
+            logger.warn(`Failed retrieving info for ${username}. User does not exist`);
             return res.status(404).send('User not found');
         }
 
@@ -221,12 +243,12 @@ router.put('/update/:username', verifyToken, restrictUser(['admin']), async (req
 
             // Add to the new role-specific collection
             if (role === 'admin') {
-                await new Admin({ user: user._id, permissions: "[12]"}).save();
+                await new Admin({ user: user._id }).save();
             } else if (role === 'student') {
                 await new Student({ user: user._id, enrollmentYear: 2000 }).save();
             }
             else if (role === 'lecturer') {
-                await new Lecturer({ user: user._id, department: "Schools"}).save();
+                await new Lecturer({ user: user._id, department: department}).save();
             }
         }
 
@@ -234,9 +256,11 @@ router.put('/update/:username', verifyToken, restrictUser(['admin']), async (req
         user.role = role || user.role;
         await user.save();
 
+        logger.info(`User: ${username} successfully updated`);
         res.status(200).send('User updated successfully');
     }
     catch (err){
+        logger.warn(`Error during update: ${err}`);
         res.status(500).send('Error during update');
     }
 });
@@ -248,6 +272,7 @@ router.delete('/delete/:username', async function(req, res) {
         const user = await User.findOneAndDelete({ username });
 
         if (!user) {
+            logger.warn(`Failed retrieving info for ${username}. User does not exist`);
             return res.status(404).send('User not found');
         }
 
@@ -260,9 +285,10 @@ router.delete('/delete/:username', async function(req, res) {
             await Lecturer.findOneAndDelete({ user: user._id});
         }
 
+        logger.info(`User: ${username} successfully deleted`);
         res.status(200).send('User deleted successfully');
     } catch (err) {
-        console.log(err);
+        logger.warn(`Error during delete: ${err}`);
         res.status(500).send('Error deleting user');
     }
 });
