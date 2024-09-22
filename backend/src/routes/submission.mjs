@@ -1,4 +1,5 @@
 import express from 'express';
+import logger from '../config/logger.mjs';
 import { Submission } from '../models/submission.mjs';
 import { Assignment } from '../models/assignments.mjs';
 import verifyToken from '../middleware/verifyJWTToken.mjs';
@@ -20,20 +21,23 @@ router.get('/:assignCode', async (req, res) => {
 
         const assignment = await Assignment.findOne({ assignCode: assignCode });
         if (!assignment){
+            logger.warn(`Failed retrieving info for ${assignCode}. Assignment does not exist`);
             return res.status(404).send('Assignment not found');
         }
 
         const submissions = await Submission.find({ assignment: assignment });
     
         if (submissions.length === 0) {
+            logger.info(`No assignments found for ${assignCode}`);
             return res.status(404).send('No submissions found');
         }
     
+        logger.info(`Assignments found for ${assignCode} successfully loaded`);
         res.status(200).json(submissions);
     }
     catch (err){
+        logger.warn(`Error during submission retrieval: ${err}`);
         res.status(500).send("Error retrieving submissions");
-        console.log(err);
     }
 });
 
@@ -46,11 +50,13 @@ router.post('/submit', upload.single('file'), verifyToken, restrictUser(['admin'
 
         const assignment = await Assignment.findOne({ assignCode: assignCode }); // Find assignment by title or any other field
         if (!assignment) {
+            logger.warn(`Failed retrieving info for ${assignCode}. Assignment does not exist`);
             return res.status(404).send('Assignment not found');
         }
 
         const user = await User.findOne({_id: userID});
         if (!user) {
+            logger.warn(`Failed retrieving info for user. User does not exist`);
             return res.status(404).send('User not found');
         }
 
@@ -58,17 +64,15 @@ router.post('/submit', upload.single('file'), verifyToken, restrictUser(['admin'
         {
             const student = await Student.findOne({user: userID});
             if (!student) {
+                logger.warn(`Failed retrieving info for student. Student info not found for student`);
                 return res.status(404).send('Student not found');
             }
 
             if (!student.coursesEnrolled.includes(assignment.course))
             {
+                logger.info(`${user.username} not enrolled in this course, and cannot submit.`);
                 return res.status(400).send('Student not enrolled in this course');
             }
-        }
-        else if (user.role === 'lecturer')
-        {
-            return res.status(400).send('Not enrolled in this course');
         }
 
         const filePath = req.file.path;
@@ -92,6 +96,7 @@ router.post('/submit', upload.single('file'), verifyToken, restrictUser(['admin'
                 fs.unlinkSync(filePath);
             }
         } catch (error) {
+            logger.warn(`Failed deleting the created file from ${user.username}'s local storage.`);
             res.status(500).send('Error during file deletion on local drive');
         }
     
@@ -105,12 +110,16 @@ router.post('/submit', upload.single('file'), verifyToken, restrictUser(['admin'
 
         await newSubmission.save();
         
+        logger.info(`Submission for ${user.username} created for ${assignment.title}`);
         res.status(200).send({ message: 'Successful submission'});
     }catch (err){
-        res.status(500).send('There was an error with the submission');
         if (fs.existsSync(filePath)) {
             fs.unlinkSync(filePath);
         }
+
+        logger.warn(`Error during submission: ${err}`);
+
+        res.status(500).send('There was an error with the submission');
     }
 });
 
@@ -123,6 +132,7 @@ router.put('/grade/:username/:assignCode', verifyToken, restrictUser(['admin','l
         const user = await User.findOne({ username: username});
         if (!user)
         {
+            logger.warn(`Failed retrieving info for user. User does not exist`);
             return res.status(404).send('User not found');
         }
 
@@ -131,17 +141,20 @@ router.put('/grade/:username/:assignCode', verifyToken, restrictUser(['admin','l
         const assignment = await Assignment.findOne({ assignCode: assignCode });
         if (!assignment)
         {
+            logger.warn(`Failed retrieving info for ${assignCode}. Assignment does not exist`);
             return res.status(404).send('Assignment not found');
         }
 
         const submission = await Submission.findOne({ user: user._id, assignment: assignment._id});
         if (!submission)
         {
+            logger.warn(`Failed retrieving info for submission. Submission does not exist`);
             return res.status(404).send('Submission does not exist');
         }
 
         if (grade < 0 || grade > assignment.mark)
         {
+            logger.warn(`Mark entered is out of bounds.`);
             return res.status(400).send('The grade given to the submission is out of bounds')
         }
         
@@ -149,12 +162,13 @@ router.put('/grade/:username/:assignCode', verifyToken, restrictUser(['admin','l
         submission.feedback = feedback;
         await submission.save();
 
+        logger.info(`Submission for ${user.username} graded for ${assignment.title}`);
         return res.status(200).send('Submission graded successfully');
     }
     catch (err)
     {
+        logger.warn(`Error during grading: ${err}`);
         res.status(500).send('There was an error with the grading');
-        console.log(err);
     }
 });
 
@@ -165,12 +179,14 @@ router.delete('/delete/:id', async function(req, res) {
         const submission = await Submission.findOneAndDelete({ id });
 
         if (!submission) {
+            logger.warn(`Failed retrieving info for submission. Submission does not exist`);
             return res.status(404).send('Submission not found');
         }
 
+        logger.info(`Submission for deleted successfully`);
         res.status(200).send('Submission deleted successfully');
     } catch (err) {
-        console.log(err);
+        logger.warn(`Error during submission deletion: ${err}`);
         res.status(500).send('Error deleting submission');
     }
 });

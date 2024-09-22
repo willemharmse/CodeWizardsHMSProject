@@ -11,3 +11,5 @@
 2024-09-22 19:53:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
 2024-09-22 19:55:31 info: Request: PUT /api/user/update/73498120 - Query: {} - Body: {"role":"lecturer","department":"Data Science","email":"lecturer1@hms.com"}
 2024-09-22 19:55:41 info: Request: PUT /api/user/update/73498120 - Query: {} - Body: {"role":"lecturer","email":"lecturer1@hms.com"}
+2024-09-22 20:01:25 info: Request: GET /api/submission/CS101-1 - Query: {} - Body: {"role":"lecturer","email":"lecturer1@hms.com"}
+2024-09-22 20:01:25 info: Assignments found for CS101-1 successfully loaded
