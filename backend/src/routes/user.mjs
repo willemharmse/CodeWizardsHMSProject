@@ -170,12 +170,18 @@ router.post('/login', async function(req, res) {
 
         if (user && await bcrypt.compare(password, user.password)) {
             const token = jwt.sign({userId: user, role: user.role}, JWT_SECRET, { expiresIn: '1h' });
+
+            const sanitizedBody = { ...req.body, password: '******' };
+            logger.info(`Login attempt for user: ${username} successful with body: ${JSON.stringify(sanitizedBody)}`);
+
             res.json({ token });
         } else {
+            logger.warn(`Failed login attempt for user: ${username}`);
             res.status(401).send('Invalid username or password');
         }
         
     } catch (err) {
+        logger.error(`Error during login attempt: ${err.message}`);
         res.status(500).send('Error during login');
     }
 });

@@ -7,6 +7,7 @@ import { logErrors } from '../src/middleware/logErrors.mjs';
 
 dotenv.config();
 const app = express();
+app.use(express.json());
 
 app.use(logRequests);
 
