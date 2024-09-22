@@ -17,13 +17,21 @@ const logger = winston.createLogger({
     level: 'info',
     format: logFormat,
     transports: [
-        // Write logs to a file
-        new winston.transports.File({ filename: path.join(__dirname, 'logs', 'app.log'), level: 'info' }),
+        // Write logs to a file in the src folder
+        new winston.transports.File({ filename: path.join(__dirname, '..', 'logs', 'app.log'), level: 'info' }),
         // Write error logs to a separate file
-        new winston.transports.File({ filename: path.join(__dirname, 'logs', 'error.log'), level: 'error' }),
+        new winston.transports.File({ filename: path.join(__dirname, '..', 'logs', 'error.log'), level: 'error' }),
         // Log to the console
         new winston.transports.Console({ format: winston.format.simple() })
     ]
 });
+
+// Ensure logs folder exists
+import fs from 'fs';
+
+const logsDir = path.join(__dirname, '..', 'logs');
+if (!fs.existsSync(logsDir)) {
+    fs.mkdirSync(logsDir);
+}
 
 export default logger;

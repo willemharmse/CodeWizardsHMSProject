@@ -1,0 +1,2 @@
+2024-09-22 11:36:09 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-22 11:36:10 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
