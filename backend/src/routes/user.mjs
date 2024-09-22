@@ -7,6 +7,7 @@ import { Lecturer } from '../models/lecturers.mjs';
 import verifyToken from '../middleware/verifyJWTToken.mjs'
 import restrictUser from '../middleware/restrictUser.mjs'
 import jwt from 'jsonwebtoken';
+import logger from '../config/logger.mjs';
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -21,6 +22,7 @@ router.post('/create', verifyToken, restrictUser(['admin']), async function(req,
         const user = await User.findOne({username: username});
         if (user)
         {
+            logger.warn(`Failed adding ${username}. Already used by antoher user`);
             return res.status(400).send("User with this username already exists");
         }
 
@@ -55,10 +57,11 @@ router.post('/create', verifyToken, restrictUser(['admin']), async function(req,
             await lecturer.save();
         }
 
+        logger.info(`Creation of user account for user: ${username} successfull`);
         res.status(200).send('User account created');
     }
     catch (err) {
-        console.log(err);
+        logger.info(`Error during creation of user account: ${err}`);
         res.status(500).send('Error during creation of account');
     }
 });

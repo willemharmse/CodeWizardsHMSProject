@@ -1,0 +1,5 @@
+2024-09-22 10:50:47 info: Request: POST /api/user/login - Query: {} - Body: undefined
+2024-09-22 10:51:53 info: Request: POST /api/user/create - Query: {} - Body: undefined
+2024-09-22 10:51:53 info: Error during creation of user account: ValidationError: email: Path `email` is required.
+2024-09-22 10:52:20 info: Request: POST /api/user/create - Query: {} - Body: undefined
+2024-09-22 10:52:20 info: Creation of user account for user: Zandre successfull
