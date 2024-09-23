@@ -60,7 +60,7 @@ router.get('/:username/:assignCode', async (req, res) => {
         else if (user.role === 'lecturer')
         {
             logger.warn(`User is a lecturer and cannot have submissions`);
-            return res.status(400).send('Assignment not found');
+            return res.status(400).send('Lecturer cannot make a submission');
         }
 
         const submissions = await Submission.find({ assignment: assignment, user: user });
@@ -210,7 +210,7 @@ router.put('/grade/:username/:assignCode', verifyToken, restrictUser(['admin','l
     }
 });
 
-router.delete('/delete/:id', async function(req, res) {
+router.delete('/delete/:id', verifyToken, restrictUser(['admin, student']), async function(req, res) {
     const id = req.params.id;
 
     try {
