@@ -126,3 +126,23 @@
 2024-09-23 18:10:35 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
 2024-09-23 18:11:09 info: Request: PUT /api/assignment/update/CS101-3 - Query: {} - Body: {"title":"Assignment 3"}
 2024-09-23 18:11:09 info: Assignment CS101-3 updated successfully.
+2024-09-23 20:24:55 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 20:24:55 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 20:25:36 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:25:54 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 20:25:55 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 20:26:04 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:26:04 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 20:28:05 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 20:28:06 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 20:28:13 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:28:13 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 20:29:57 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 20:29:57 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 20:30:07 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:31:15 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 20:31:15 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 20:31:24 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:32:27 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:45:03 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:45:05 info: Course: CS101 successfully deleted
