@@ -214,13 +214,19 @@ router.delete('/delete/:id', verifyToken, restrictUser(['admin, student']), asyn
     const id = req.params.id;
 
     try {
-        const submission = await Submission.findOneAndDelete({ id });
+        const submission = await Submission.findOne({ _id: id });
 
         if (!submission) {
             logger.warn(`Failed retrieving info for submission. Submission does not exist`);
             return res.status(404).send('Submission not found');
         }
 
+        const file = await File.findOne({_id: { $in: submission.file._id }});
+
+        await deleteFromAzure(file.fileName);
+        await File.findByIdAndDelete(file._id);
+        await Submission.findByIdAndDelete(submission._id);
+        
         logger.info(`Submission for deleted successfully`);
         res.status(200).send('Submission deleted successfully');
     } catch (err) {
