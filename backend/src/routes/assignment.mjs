@@ -1,6 +1,6 @@
 import express from 'express';
 import { Assignment } from '../models/assignments.mjs'; 
-import { Student } from '../models/student.mjs';
+import logger from '../config/logger.mjs';
 import verifyToken from '../middleware/verifyJWTToken.mjs';
 import restrictUser from '../middleware/restrictUser.mjs';
 import { Course } from '../models/courses.mjs';
@@ -12,20 +12,45 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.get('/:courseCode', async function(req, res){
+router.get('/course/:courseCode', async function(req, res){
     try{
         const courseCode = req.params.courseCode;
         const course = await Course.findOne({ courseCode: courseCode }); // Find assignment by title or any other field
         if (!course) {
+            logger.warn(`${courseCode} not found`);
             return res.status(404).send('Course not found');
         }
 
-        const assignment = await assignment.find({course: course});
+        const assignment = await Assignment.find({course: course});
 
         if (assignment.length === 0){
+            logger.info(`Assignments for ${courseCode} not found`);
             return res.status(404).send("No assignments found");
         }
+
+        logger.info(`Assignments for ${courseCode} successfully returned`);
+        return res.status(200).send(assignment);
     }catch(err){
+        logger.warn(`Error occured during retrieval of assignments: ${err}`);
+        res.status(500).send("Something went wrong");
+    }
+});
+
+router.get('/:assignCode', async function(req, res){
+    try{
+        const assignCode = req.params.assignCode;
+
+        const assignment = await Assignment.findOne({assignCode: assignCode});
+
+        if (!assignment){
+            logger.warn(`Assignment for ${assignCode} not found`);
+            return res.status(404).send("No assignments found");
+        }
+
+        logger.info(`Assignment for ${assignCode} successfully found`);
+        res.status(200).send(assignment);
+    }catch(err){
+        logger.warn(`Error occured during retrieval of assignment: ${err}`);
         res.status(500).send("Something went wrong");
     }
 });
@@ -37,17 +62,20 @@ router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async fu
 
         const course = await Course.findOne({ courseCode: courseCode }); // Find assignment by title or any other field
         if (!course) {
+            logger.warn(`${courseCode} not found`);
             return res.status(404).send('Course not found');
         }
 
         const user = await User.findOne({ _id: userID});
         if (!user)
         {
+            logger.warn(`Failed retrieving info for user. User does not exist`);
             return res.status(404).send('User not found.');
         }
 
         if (mark < 0 || mark > 250)
         {
+            logger.warn(`Mark entered is out of bounds.`);
             return res.status(400).send('Mark value is out of bounds');
         }
 
@@ -56,6 +84,7 @@ router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async fu
             const lecturer = await Lecturer.findOne({user: user._id});
             if (!lecturer)
             {
+                logger.warn(`User is not a lecturer.`);
                 return res.status(404).send('Lecturer not found.');
             }
 
@@ -75,10 +104,12 @@ router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async fu
 
                 await newAssignment.save();
 
+                logger.info(`Assignment created for ${coures.courseCode} by ${user.role}: ${user.username}.`);
                 res.status(201).send('Assignment created successfully');
             }
             else
             {
+                logger.warn(`User is not a lecturer for ${coures.courseCode}.`);
                 res.status(404).send('Lecturer not found as a course lecturer');
             }
         }
@@ -98,10 +129,11 @@ router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async fu
 
             await newAssignment.save();
 
+            logger.info(`Assignment created for ${coures.courseCode} by ${user.role}: ${user.username}.`);
             res.status(201).send('Assignment created successfully');
         }
     } catch (err) {
-        console.error(err);
+        logger.warn(`Error occured during creation of assignment: ${err}`);
         res.status(500).send('Error creating assignment');
     }
 });
@@ -113,13 +145,15 @@ router.delete('/delete/:assignCode', verifyToken, restrictUser(['admin','lecture
         const assignment = await Assignment.findOneAndDelete({ assignCode: assignCode });
 
         if (!assignment) {
+            logger.warn(`Assignment for ${assignCode} not found`);
             return res.status(404).send('Assignment not found.');
         }
 
+        logger.info(`Assignment ${assignCode} deleted.`);
         res.status(200).send('Assignment deleted successfully.');
     } 
     catch (error) {
-        console.log(error);
+        logger.warn(`Error occured during deletion of assignment: ${err}`);
         res.status(500).send('Error deleting assignment.');
     }  
 });
@@ -135,13 +169,15 @@ router.put('/update/:assignCode', verifyToken, restrictUser(['admin','lecturer']
         });
 
         if (!assignment) {
+            logger.warn(`Assignment for ${assignCode} not found`);
             return res.status(404).send('Assignment not found.');
         }
 
-        res.status(200).send({ message: 'Assignment updated successfully.', assignment });
+        logger.info(`Assignment ${assignCode} updated successfully.`);
+        res.status(200).send({ message: 'Assignment updated successfully.' });
     } 
     catch (error) {
-        console.log(error);
+        logger.warn(`Error occured during update of assignment: ${err}`);
         res.status(500).send('Error updating assignment.');
     }  
 });

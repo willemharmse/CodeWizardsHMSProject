@@ -8,6 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { BlobServiceClient } from '@azure/storage-blob';
+import logger from '../config/logger.mjs';
 import verifyToken from '../middleware/verifyJWTToken.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,6 +23,7 @@ router.delete('/delete/:id', async (req, res) => {
         const file = await File.findOne({_id: id});
         if (!file)
         {
+            logger.warn(`File does not exist and cannot be deleted.`);
             return res.status(404).send("File does not exist");
         }
 
@@ -33,9 +35,10 @@ router.delete('/delete/:id', async (req, res) => {
         // Remove from MongoDB
         await File.findOneAndDelete({ fileName });
 
+        logger.info(`${fileName} successfully deleted`);
         res.status(200).send('File deleted successfully');
     } catch (err) {
-        console.error(err);
+        logger.warn(`Error during file deletion: ${err}`);
         res.status(500).send('Error during file deletion');
     }
 });
@@ -47,6 +50,7 @@ router.get('/download/:id', async (req, res) => {
         const file = await File.findOne({_id: id});
         if (!file)
         {
+            logger.warn(`File does not exist and cannot be downloaded.`);
             return res.status(404).send("File does not exist");
         }
 
@@ -65,7 +69,7 @@ router.get('/download/:id', async (req, res) => {
         // Send the file to the client
         res.download(downloadPath, fileName, (err) => {
             if (err) {
-                console.error('Error sending file:', err);
+                logger.warn(`Error during file download: ${err}`);
             } else {
                 // Clean up the downloaded file after sending it
                 if (fs.existsSync(downloadPath)) {
@@ -74,7 +78,7 @@ router.get('/download/:id', async (req, res) => {
             }
         });
     } catch (err) {
-        console.error('Error during file download:', err);
+        logger.warn(`Error during file download: ${err}`);
         res.status(500).send('Error during file download');
     }
 });
@@ -86,6 +90,7 @@ router.get('/stream/:id', async (req, res) => {
         const file = await File.findOne({_id: id});
         if (!file)
         {
+            logger.warn(`File does not exist and cannot be streamed.`);
             return res.status(404).send("File does not exist");
         }
 
@@ -94,6 +99,7 @@ router.get('/stream/:id', async (req, res) => {
         const range = req.headers.range;
 
         if (!range) {
+            logger.warn(`Range header erquired to stream ${fileName}`);
             return res.status(400).send('Requires Range header');
         }
 
@@ -107,6 +113,7 @@ router.get('/stream/:id', async (req, res) => {
         const fileSize = properties.contentLength;
 
         if (!properties) {
+            logger.warn(`File: ${fileName} not found`);
             return res.status(404).send('File not found');
         }
 
@@ -130,7 +137,7 @@ router.get('/stream/:id', async (req, res) => {
         const downloadResponse = await blobClient.download(start, chunkSize);
         downloadResponse.readableStreamBody.pipe(res);
     } catch (err) {
-        console.error('Error streaming video:', err);
+        logger.warn(`Error streaming video: ${err}`);
         res.status(500).send('Error streaming video');
     }
 });

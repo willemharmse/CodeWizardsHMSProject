@@ -15,7 +15,7 @@ import { Student } from '../models/student.mjs';
 const router = express.Router();
 router.use(express.json());
 
-router.get('/:assignCode', async (req, res) => { 
+router.get('/assignment/:assignCode', async (req, res) => { 
     try{
         const assignCode = req.params.assignCode;
 
@@ -33,6 +33,44 @@ router.get('/:assignCode', async (req, res) => {
         }
     
         logger.info(`Assignments found for ${assignCode} successfully loaded`);
+        res.status(200).json(submissions);
+    }
+    catch (err){
+        logger.warn(`Error during submission retrieval: ${err}`);
+        res.status(500).send("Error retrieving submissions");
+    }
+});
+
+router.get('/:username/:assignCode', async (req, res) => { 
+    try{
+        const assignCode = req.params.assignCode;
+        const username = req.params.username;
+
+        const assignment = await Assignment.findOne({ assignCode: assignCode });
+        if (!assignment){
+            logger.warn(`Failed retrieving info for ${assignCode}. Assignment does not exist`);
+            return res.status(404).send('Assignment not found');
+        }
+
+        const user = await User.findOne({ username: username });
+        if (!user){
+            logger.warn(`Failed retrieving info for ${username}. User does not exist`);
+            return res.status(404).send('Assignment not found');
+        }
+        else if (user.role === 'lecturer')
+        {
+            logger.warn(`User is a lecturer and cannot have submissions`);
+            return res.status(400).send('Assignment not found');
+        }
+
+        const submissions = await Submission.find({ assignment: assignment, user: user });
+    
+        if (submissions.length === 0) {
+            logger.info(`No assignments found for user: ${username} for assignment: ${assignCode}`);
+            return res.status(404).send('No submissions found');
+        }
+    
+        logger.info(`Assignments found for user: ${username} for assignment: ${assignCode} successfully loaded`);
         res.status(200).json(submissions);
     }
     catch (err){
@@ -155,7 +193,7 @@ router.put('/grade/:username/:assignCode', verifyToken, restrictUser(['admin','l
         if (grade < 0 || grade > assignment.mark)
         {
             logger.warn(`Mark entered is out of bounds.`);
-            return res.status(400).send('The grade given to the submission is out of bounds')
+            return res.status(400).send('The grade given to the submission is out of bounds');
         }
         
         submission.grade = grade;
