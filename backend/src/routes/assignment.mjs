@@ -152,7 +152,7 @@ router.delete('/delete/:assignCode', verifyToken, restrictUser(['admin','lecture
         logger.info(`Assignment ${assignCode} deleted.`);
         res.status(200).send('Assignment deleted successfully.');
     } 
-    catch (error) {
+    catch (err) {
         logger.warn(`Error occured during deletion of assignment: ${err}`);
         res.status(500).send('Error deleting assignment.');
     }  
@@ -176,7 +176,7 @@ router.put('/update/:assignCode', verifyToken, restrictUser(['admin','lecturer']
         logger.info(`Assignment ${assignCode} updated successfully.`);
         res.status(200).send({ message: 'Assignment updated successfully.' });
     } 
-    catch (error) {
+    catch (err) {
         logger.warn(`Error occured during update of assignment: ${err}`);
         res.status(500).send('Error updating assignment.');
     }  
