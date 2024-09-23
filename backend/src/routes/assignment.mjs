@@ -160,18 +160,31 @@ router.delete('/delete/:assignCode', verifyToken, restrictUser(['admin','lecture
 
 router.put('/update/:assignCode', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
     const assignCode = req.params.assignCode;
-    const updates = req.body; // The fields to update, sent in the request body
+    const title = req.body.title;
+    const description = req.body.description;
+    const dueDate = req.body.dueDate;
+    const mark = req.body.mark;
 
     try {
-        const assignment = await Assignment.findOneAndUpdate({ assignCode: assignCode }, updates, {
-            new: true, // Return the updated document
-            runValidators: true, // Validate the updates against the schema
-        });
+        if (mark < 0 || mark > 250)
+        {
+            logger.warn(`Mark entered is out of bounds.`);
+            return res.status(400).send('Mark value is out of bounds');
+        }
+    
+        const assignment = await Assignment.findOne({ assignCode: assignCode });
 
         if (!assignment) {
             logger.warn(`Assignment for ${assignCode} not found`);
             return res.status(404).send('Assignment not found.');
         }
+
+        assignment.title = title || assignment.title;
+        assignment.description = description || assignment.description;
+        assignment.dueDate = dueDate || assignment.dueDate;
+        assignment.mark = mark || assignment.mark;
+
+        await assignment.save();
 
         logger.info(`Assignment ${assignCode} updated successfully.`);
         res.status(200).send({ message: 'Assignment updated successfully.' });

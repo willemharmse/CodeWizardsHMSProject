@@ -122,3 +122,7 @@
 2024-09-23 18:04:19 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
 2024-09-23 18:04:32 info: Request: PUT /api/course/update/CS101 - Query: {} - Body: {"courseCode":"CS101"}
 2024-09-23 18:04:32 info: Course: CS101 successfully updated
+2024-09-23 18:10:35 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 18:10:35 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 18:11:09 info: Request: PUT /api/assignment/update/CS101-3 - Query: {} - Body: {"title":"Assignment 3"}
+2024-09-23 18:11:09 info: Assignment CS101-3 updated successfully.
