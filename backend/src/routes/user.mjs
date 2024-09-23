@@ -265,7 +265,7 @@ router.put('/update/:username', verifyToken, restrictUser(['admin']), async (req
     }
 });
 
-router.delete('/delete/:username', async function(req, res) {
+router.delete('/delete/:username', verifyToken, restrictUser(['admin']), async function(req, res) {
     const username = req.params.username;
 
     try {

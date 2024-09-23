@@ -52,3 +52,49 @@
 2024-09-23 09:39:16 info: Submission for 12345678 graded for Basic Programming Concepts
 2024-09-23 09:39:27 info: Request: GET /api/grades/CS101-1 - Query: {} - Body: {}
 2024-09-23 09:39:27 info: Excel file cointaining feedback and marks successfully created
+2024-09-23 10:02:54 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:02:54 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:03:27 info: Request: POST /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:03:30 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:03:56 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:03:56 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:04:03 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:04:03 warn: Error during course deletion: ReferenceError: assignment is not defined
+2024-09-23 10:06:28 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:06:28 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:06:37 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:06:37 warn: Error during course deletion: ReferenceError: file is not defined
+2024-09-23 10:06:48 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:06:48 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:07:01 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:07:01 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 10:13:45 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:13:45 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:13:53 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:13:53 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 10:15:15 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:15:15 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:15:24 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:15:24 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 10:16:06 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:16:06 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:16:13 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:16:13 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 10:17:56 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:17:57 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:18:04 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:18:41 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:18:47 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 10:21:01 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:21:01 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:21:02 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:21:02 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:21:17 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 10:21:17 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 10:21:53 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:21:53 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:22:00 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 10:22:00 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 13:12:23 info: Request: GET /users/student/12345678 - Query: {} - Body: {}
+2024-09-23 13:13:30 info: Request: GET /api/users/student/12345678 - Query: {} - Body: {}
+2024-09-23 13:36:15 info: Request: OPTIONS /api/user/login - Query: {} - Body: {}
