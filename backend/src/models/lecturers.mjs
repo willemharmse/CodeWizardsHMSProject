@@ -14,12 +14,7 @@ const LecturerSchema = new mongoose.Schema({
     department: {
         type: String,
         required: true,
-    },
-    profilePicture: {
-        type: String,
-        required: false,
     }
-    
 });
 
 export const Lecturer = mongoose.model('Lecturer', LecturerSchema);

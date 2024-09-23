@@ -3,6 +3,12 @@ import { Course } from '../models/courses.mjs';
 import { User } from '../models/users.mjs';
 import { Student } from '../models/student.mjs';
 import { Lecturer } from '../models/lecturers.mjs';
+import { Assignment } from '../models/assignments.mjs';
+import { Submission } from '../models/submission.mjs';
+import { File } from '../models/file.mjs';
+import { deleteFromAzure } from '../config/azureStorage.mjs';
+import verifyToken from '../middleware/verifyJWTToken.mjs'
+import restrictUser from '../middleware/restrictUser.mjs';
 import logger from '../config/logger.mjs';
 
 const router = express.Router();
@@ -46,7 +52,7 @@ router.get('/:courseCode', async function(req, res){
     }
 });
 
-router.post('/create', async function(req, res) {
+router.post('/create', verifyToken, restrictUser(['admin']), async function(req, res) {
     try {
         const { courseName, courseCode, description } = req.body;
 
@@ -66,30 +72,8 @@ router.post('/create', async function(req, res) {
     }
 });
 
-router.delete('/delete/:courseCode', async function(req, res){
+router.delete('/delete/:courseCode', verifyToken, restrictUser(['admin']), async function(req, res){
     const courseCode = req.params.courseCode;
-
-    try {
-        const course = await Course.findOneAndDelete({ courseCode });
-
-        if (!course) {
-            logger.warn(`Course not found in database`);
-            return res.status(404).send('Course not found.');
-        }
-
-        logger.info(`Course: ${courseCode} successfully deleted`);
-        res.status(200).send('Course deleted successfully.');
-    } 
-    catch (error) {
-        logger.warn(`Error during course deletion: ${err}`);
-        res.status(500).send('Error deleting course.');
-    }  
-});
-
-router.put('/update/:courseCode', async function(req, res) {
-    const Code = req.params.courseCode;
-    const Name = req.params.courseName;
-    const desc = req.params.description; // The fields to update, sent in the request body
 
     try {
         const course = await Course.findOne({ courseCode });
@@ -99,7 +83,50 @@ router.put('/update/:courseCode', async function(req, res) {
             return res.status(404).send('Course not found.');
         }
 
-        course.courseCode = Code;
+        const assignments = await Assignment.find({course: course._id});
+        for (const assignment of assignments){
+            const submissions = await Submission.find({assignment: assignment._id});
+            for (const submission of submissions)
+            {
+                const file = await File.find({_id: { $in: submission.file._id }});
+                
+                await deleteFromAzure(file.fileName);
+
+                await Submission.findByIdAndDelete(submission._id);
+            }
+
+            await Assignment.findByIdAndDelete(assignment._id);
+        }
+
+        await Student.updateMany({ coursesEnrolled: course._id }, { $pull: { coursesEnrolled: course._id } });
+        await Lecturer.updateMany({ coursesTaught: course._id }, { $pull: { coursesTaught: course._id } });
+
+        await Course.findByIdAndDelete(course._id);
+
+        logger.info(`Course: ${courseCode} successfully deleted`);
+        res.status(200).send('Course deleted successfully.');
+    } 
+    catch (err) {
+        logger.warn(`Error during course deletion: ${err}`);
+        res.status(500).send('Error deleting course.');
+    }  
+});
+
+router.put('/update/:courseCode', verifyToken, restrictUser(['admin']), async function(req, res) {
+    const Code = req.params.courseCode;
+    const newCode = req.body.courseCode;
+    const Name = req.body.courseName;
+    const desc = req.body.description; // The fields to update, sent in the request body
+
+    try {
+        const course = await Course.findOne({ courseCode });
+
+        if (!course) {
+            logger.warn(`Course not found in database`);
+            return res.status(404).send('Course not found.');
+        }
+
+        course.courseCode = newCode;
         course.courseName = Name;
         course.description = desc;
         
@@ -108,13 +135,13 @@ router.put('/update/:courseCode', async function(req, res) {
         logger.info(`Course: ${courseCode} successfully updated`);
         res.status(200).send({ message: 'Course updated successfully.' });
     } 
-    catch (error) {
+    catch (err) {
         logger.warn(`Error during course update: ${err}`);
         res.status(500).send('Error updating course.');
     }  
 });
 
-router.post('/lecturer/:username/:courseCode', async (req, res) => {
+router.post('/lecturer/:username/:courseCode', verifyToken, restrictUser(['admin']), async (req, res) => {
     const username = req.params.username;
     const courseCode = req.params.courseCode;
 
@@ -128,7 +155,7 @@ router.post('/lecturer/:username/:courseCode', async (req, res) => {
         else if (!user.role === 'lecturer')
         {
             logger.warn(`User is not a lecturer.`);
-            res.status(500).send('User is not a lecturer');
+            res.status(400).send('User is not a lecturer');
         }
 
         const lecturer = await Lecturer.findOne({user: user});
@@ -164,7 +191,7 @@ router.post('/lecturer/:username/:courseCode', async (req, res) => {
     }
 });
 
-router.post('/student/:username/:courseCode', async (req, res) => {
+router.post('/student/:username/:courseCode', verifyToken, restrictUser(['admin']), async (req, res) => {
     const username = req.params.username;
     const courseCode = req.params.courseCode;
 
@@ -178,7 +205,7 @@ router.post('/student/:username/:courseCode', async (req, res) => {
         else if (!user.role === 'student')
         {
             logger.warn(`User is not a student.`);
-            res.status(500).send('User is not a student');
+            res.status(400).send('User is not a student');
         }
 
         const student = await Student.findOne({user: user});
