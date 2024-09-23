@@ -119,20 +119,20 @@ router.put('/update/:courseCode', verifyToken, restrictUser(['admin']), async fu
     const desc = req.body.description; // The fields to update, sent in the request body
 
     try {
-        const course = await Course.findOne({ courseCode });
+        const course = await Course.findOne({ courseCode: Code });
 
         if (!course) {
             logger.warn(`Course not found in database`);
             return res.status(404).send('Course not found.');
         }
 
-        course.courseCode = newCode;
-        course.courseName = Name;
-        course.description = desc;
+        course.courseCode = newCode || course.courseCode;
+        course.courseName = Name || course.courseName;
+        course.description = desc || course.description;
         
         await course.save();
 
-        logger.info(`Course: ${courseCode} successfully updated`);
+        logger.info(`Course: ${Code} successfully updated`);
         res.status(200).send({ message: 'Course updated successfully.' });
     } 
     catch (err) {
