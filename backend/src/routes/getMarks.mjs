@@ -52,7 +52,7 @@ router.get('/:assignCode', verifyToken, restrictUser(['admin', 'lecturer']), asy
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         res.send(buffer);
 
-        logger.info(`Excel file cointaining feedback and marks successfully created`);
+        logger.info(`Excel file containing feedback and marks successfully created`);
     } catch (err) {
         logger.warn(`Error during excel file creation: ${err}`);
         res.status(500).send('Error generating the Excel file');
