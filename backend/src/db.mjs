@@ -11,7 +11,7 @@ mongoose.connect(dbURI);
 const db = mongoose.connection;
 
 db.on('connected', () => {
-  logger.info('Mongoose connected to ' + dbURI);
+  logger.info('Mongoose connected');
 });
 
 db.on('error', (err) => {
