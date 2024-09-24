@@ -219,7 +219,6 @@
 2024-09-24 09:20:13 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
 2024-09-24 09:20:13 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
 2024-09-24 09:20:13 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
-2024-09-24 12:03:08 info: Mongoose connected to mongodb+srv://admin:Hf64L70nTohqWrVY@hms.wz3nnrw.mongodb.net/?retryWrites=true&w=majority&appName=HMS
 2024-09-24 12:03:58 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
 2024-09-24 12:03:58 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
 2024-09-24 12:08:09 info: Request: POST /api/user/create - Query: {} - Body: {"username":"43041450","password":"******","email":"student@hms.com","role":"student","enrollmentYear":"2020"}
@@ -235,7 +234,6 @@
 2024-09-24 12:09:56 info: Request: GET /api/user/logout - Query: {} - Body: {}
 2024-09-24 12:10:12 info: Request: GET /api/user/logout - Query: {} - Body: {}
 2024-09-24 12:10:12 error: Error during logging out: ReferenceError: username is not defined
-2024-09-24 12:10:28 info: Mongoose connected to mongodb+srv://admin:Hf64L70nTohqWrVY@hms.wz3nnrw.mongodb.net/?retryWrites=true&w=majority&appName=HMS
 2024-09-24 12:10:29 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
 2024-09-24 12:10:29 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
 2024-09-24 12:10:51 info: Request: GET /api/user/logout - Query: {} - Body: {}
@@ -299,13 +297,11 @@
 2024-09-24 12:23:35 info: Assignments for CS201 successfully returned
 2024-09-24 12:25:05 info: Request: POST /api/assignment/create - Query: {} - Body: {"title":"Assignment 1","description":"This is the first assignment","dueDate":"2024-10-16","courseCode":"CS101","mark":"200"}
 2024-09-24 12:25:05 error: Error occured during creation of assignment: ReferenceError: coures is not defined
-2024-09-24 12:25:41 info: Mongoose connected to mongodb+srv://admin:Hf64L70nTohqWrVY@hms.wz3nnrw.mongodb.net/?retryWrites=true&w=majority&appName=HMS
 2024-09-24 12:25:45 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
 2024-09-24 12:25:45 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
 2024-09-24 12:26:15 info: Request: POST /api/assignment/create - Query: {} - Body: {"title":"Assignment 1","description":"This is the first assignment","dueDate":"2024-10-16","courseCode":"CS101","mark":"200"}
 2024-09-24 12:26:16 error: Error occured during creation of assignment: ReferenceError: coures is not defined
 2024-09-24 12:26:28 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
-2024-09-24 12:26:29 info: Mongoose connected to mongodb+srv://admin:Hf64L70nTohqWrVY@hms.wz3nnrw.mongodb.net/?retryWrites=true&w=majority&appName=HMS
 2024-09-24 12:26:29 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
 2024-09-24 12:26:55 info: Request: POST /api/assignment/create - Query: {} - Body: {"title":"Assignment 1","description":"This is the first assignment","dueDate":"2024-10-16","courseCode":"CS101","mark":"200"}
 2024-09-24 12:26:55 info: Assignment created for CS101 by admin: Willem.
@@ -316,7 +312,6 @@
 2024-09-24 12:27:27 info: Assignments for CS101 successfully returned
 2024-09-24 12:29:02 info: Request: DELETE /api/assignment/delete/CS101-2 - Query: {} - Body: {}
 2024-09-24 12:29:02 error: Error occured during deletion of assignment: ReferenceError: Submission is not defined
-2024-09-24 12:29:51 info: Mongoose connected to mongodb+srv://admin:Hf64L70nTohqWrVY@hms.wz3nnrw.mongodb.net/?retryWrites=true&w=majority&appName=HMS
 2024-09-24 12:29:52 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
 2024-09-24 12:29:52 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
 2024-09-24 12:30:03 info: Request: DELETE /api/assignment/delete/CS101-2 - Query: {} - Body: {}
@@ -359,3 +354,6 @@
 2024-09-24 12:34:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
 2024-09-24 12:34:33 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
 2024-09-24 12:34:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:41:40 info: Request: OPTIONS /api/user/login - Query: {} - Body: {}
+2024-09-24 12:43:31 info: Request: POST /api/user/login - Query: {} - Body: {"username":"43041450","password":"******"}
+2024-09-24 12:43:31 info: Login attempt for user: 43041450 successful with body: {"username":"43041450","password":"******"}
