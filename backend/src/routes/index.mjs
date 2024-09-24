@@ -8,11 +8,11 @@ import markRoute from '../routes/getMarks.mjs';
 
 const router = express();
 
-router.use('/api/user', userRoute);
-router.use('/api/file', fileRoute);
-router.use('/api/submission', subRoute);
-router.use('/api/assignment', assignRoute);
-router.use('/api/course', courseRoute);
-router.use('/api/grades', markRoute);
+router.use('/user', userRoute);
+router.use('/file', fileRoute);
+router.use('/submission', subRoute);
+router.use('/assignment', assignRoute);
+router.use('/course', courseRoute);
+router.use('/grades', markRoute);
 
 export default router;
