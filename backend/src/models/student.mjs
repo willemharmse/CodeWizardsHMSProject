@@ -14,11 +14,7 @@ const StudentSchema = new mongoose.Schema({
     enrollmentYear: {
         type: Number,
         required: true,
-    },
-    profilePicture: {
-        type: String,
-        required: false,
-    },
+    }
 });
 
 export const Student = mongoose.model('Student', StudentSchema);

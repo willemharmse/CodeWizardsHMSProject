@@ -20,10 +20,12 @@ const subSchema = new mongoose.Schema({
       grade: {
         type: mongoose.Schema.Types.Number,
         min: 0,
-        max: 100,
+        max: 250,
+        default: null
       },
       feedback: {
         type: mongoose.Schema.Types.String,
+        default: null
       },
       file: {
         type: mongoose.Schema.Types.ObjectId,
