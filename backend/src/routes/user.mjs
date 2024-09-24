@@ -207,7 +207,7 @@ router.get('/logout', verifyToken, async (req, res) => {
             return res.status(404).send('User not found');
         }
 
-        logger.info(`User: ${username} successfully logged out`);
+        logger.info(`User: ${user.username} successfully logged out`);
         res.status(200).send('Successfully logged out');
     } catch (err) {
         logger.error(`Error during logging out: ${err}`);
