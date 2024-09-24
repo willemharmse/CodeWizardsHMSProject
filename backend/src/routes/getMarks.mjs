@@ -54,7 +54,7 @@ router.get('/:assignCode', verifyToken, restrictUser(['admin', 'lecturer']), asy
 
         logger.info(`Excel file containing feedback and marks successfully created`);
     } catch (err) {
-        logger.warn(`Error during excel file creation: ${err}`);
+        logger.error(`Error during excel file creation: ${err}`);
         res.status(500).send('Error generating the Excel file');
     }
 });

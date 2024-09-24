@@ -31,7 +31,7 @@ router.get('/course/:courseCode', async function(req, res){
         logger.info(`Assignments for ${courseCode} successfully returned`);
         return res.status(200).send(assignment);
     }catch(err){
-        logger.warn(`Error occured during retrieval of assignments: ${err}`);
+        logger.error(`Error occured during retrieval of assignments: ${err}`);
         res.status(500).send("Something went wrong");
     }
 });
@@ -50,7 +50,7 @@ router.get('/:assignCode', async function(req, res){
         logger.info(`Assignment for ${assignCode} successfully found`);
         res.status(200).send(assignment);
     }catch(err){
-        logger.warn(`Error occured during retrieval of assignment: ${err}`);
+        logger.error(`Error occured during retrieval of assignment: ${err}`);
         res.status(500).send("Something went wrong");
     }
 });
@@ -133,7 +133,7 @@ router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async fu
             res.status(201).send('Assignment created successfully');
         }
     } catch (err) {
-        logger.warn(`Error occured during creation of assignment: ${err}`);
+        logger.error(`Error occured during creation of assignment: ${err}`);
         res.status(500).send('Error creating assignment');
     }
 });
@@ -165,7 +165,7 @@ router.delete('/delete/:assignCode', verifyToken, restrictUser(['admin','lecture
         res.status(200).send('Assignment deleted successfully.');
     } 
     catch (err) {
-        logger.warn(`Error occured during deletion of assignment: ${err}`);
+        logger.error(`Error occured during deletion of assignment: ${err}`);
         res.status(500).send('Error deleting assignment.');
     }  
 });
@@ -202,7 +202,7 @@ router.put('/update/:assignCode', verifyToken, restrictUser(['admin','lecturer']
         res.status(200).send({ message: 'Assignment updated successfully.' });
     } 
     catch (err) {
-        logger.warn(`Error occured during update of assignment: ${err}`);
+        logger.error(`Error occured during update of assignment: ${err}`);
         res.status(500).send('Error updating assignment.');
     }  
 });

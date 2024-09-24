@@ -61,7 +61,7 @@ router.post('/create', verifyToken, restrictUser(['admin']), async function(req,
         res.status(200).send('User account created');
     }
     catch (err) {
-        logger.warn(`Error during creation of user account: ${err}`);
+        logger.error(`Error during creation of user account: ${err}`);
         res.status(500).send('Error during creation of account');
     }
 });
@@ -97,7 +97,7 @@ router.get('/student/:username', async (req, res) => {
         logger.info(`User info for user: ${username} successfully loaded`);
         res.status(200).json(student);
     } catch (err) {
-        logger.warn(`Error during retrieval of user details: ${err}`);
+        logger.error(`Error during retrieval of user details: ${err}`);
         res.status(500).send('Error fetching student details');
     }
 });
@@ -133,7 +133,7 @@ router.get('/lecturer/:username', async (req, res) => {
         logger.info(`User info for user: ${username} successfully loaded`);
         res.status(200).json(lecturer);
     } catch (err) {
-        logger.warn(`Error during retrieval of user details: ${err}`);
+        logger.error(`Error during retrieval of user details: ${err}`);
         res.status(500).send('Error fetching lecturer details');
     }
 });
@@ -168,7 +168,7 @@ router.get('/admin/:username', async (req, res) => {
         logger.info(`User info for user: ${username} successfully loaded`);
         res.status(200).json(admin);
     } catch (err) {
-        logger.warn(`Error during retrieval of user details: ${err}`);
+        logger.error(`Error during retrieval of user details: ${err}`);
         res.status(500).send('Error fetching admin details');
     }
 });
@@ -210,7 +210,7 @@ router.get('/logout', verifyToken, async (req, res) => {
         logger.info(`User: ${username} successfully logged out`);
         res.status(200).send('Successfully logged out');
     } catch (err) {
-        logger.warn(`Error during logging out: ${err}`);
+        logger.error(`Error during logging out: ${err}`);
         res.status(500).send('Error during logout');
     }
 });
@@ -260,7 +260,7 @@ router.put('/update/:username', verifyToken, restrictUser(['admin']), async (req
         res.status(200).send('User updated successfully');
     }
     catch (err){
-        logger.warn(`Error during update: ${err}`);
+        logger.error(`Error during update: ${err}`);
         res.status(500).send('Error during update');
     }
 });
@@ -288,7 +288,7 @@ router.delete('/delete/:username', verifyToken, restrictUser(['admin']), async f
         logger.info(`User: ${username} successfully deleted`);
         res.status(200).send('User deleted successfully');
     } catch (err) {
-        logger.warn(`Error during delete: ${err}`);
+        logger.error(`Error during delete: ${err}`);
         res.status(500).send('Error deleting user');
     }
 });
