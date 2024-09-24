@@ -359,3 +359,8 @@
 2024-09-24 12:34:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
 2024-09-24 12:34:33 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
 2024-09-24 12:34:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:41:04 info: Mongoose connected to mongodb+srv://admin:Hf64L70nTohqWrVY@hms.wz3nnrw.mongodb.net/?retryWrites=true&w=majority&appName=HMS
+2024-09-24 12:41:40 info: Request: OPTIONS /api/user/login - Query: {} - Body: {}
+2024-09-24 12:43:22 info: Mongoose connected to mongodb+srv://admin:Hf64L70nTohqWrVY@hms.wz3nnrw.mongodb.net/?retryWrites=true&w=majority&appName=HMS
+2024-09-24 12:43:31 info: Request: POST /api/user/login - Query: {} - Body: {"username":"43041450","password":"******"}
+2024-09-24 12:43:31 info: Login attempt for user: 43041450 successful with body: {"username":"43041450","password":"******"}

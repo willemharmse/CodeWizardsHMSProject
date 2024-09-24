@@ -700,6 +700,13 @@ paths:
       operationId: getAllAssignments
       tags:
         - Assignment
+      parameters:
+        - name: courseCode
+          in: path
+          required: true
+          description: The course code
+          schema:
+            type: string
       responses:
         '200':
           description: A list of assignments retrieved successfully
