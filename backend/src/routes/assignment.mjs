@@ -3,6 +3,7 @@ import { Assignment } from '../models/assignments.mjs';
 import logger from '../config/logger.mjs';
 import verifyToken from '../middleware/verifyJWTToken.mjs';
 import restrictUser from '../middleware/restrictUser.mjs';
+import { Submission } from '../models/submission.mjs';
 import { Course } from '../models/courses.mjs';
 import { User } from '../models/users.mjs';
 import { Lecturer } from '../models/lecturers.mjs';
@@ -104,7 +105,7 @@ router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async fu
 
                 await newAssignment.save();
 
-                logger.info(`Assignment created for ${coures.courseCode} by ${user.role}: ${user.username}.`);
+                logger.info(`Assignment created for ${course.courseCode} by ${user.role}: ${user.username}.`);
                 res.status(201).send('Assignment created successfully');
             }
             else
@@ -129,7 +130,7 @@ router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async fu
 
             await newAssignment.save();
 
-            logger.info(`Assignment created for ${coures.courseCode} by ${user.role}: ${user.username}.`);
+            logger.info(`Assignment created for ${course.courseCode} by ${user.role}: ${user.username}.`);
             res.status(201).send('Assignment created successfully');
         }
     } catch (err) {
