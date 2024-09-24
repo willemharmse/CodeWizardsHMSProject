@@ -88,10 +88,10 @@ router.delete('/delete/:courseCode', verifyToken, restrictUser(['admin']), async
             const submissions = await Submission.find({assignment: assignment._id});
             for (const submission of submissions)
             {
-                const file = await File.find({_id: { $in: submission.file._id }});
-                
-                await deleteFromAzure(file.fileName);
+                const file = await File.findOne({_id: { $in: submission.file._id }});
 
+                await deleteFromAzure(file.fileName);
+                await File.findByIdAndDelete(file._id);
                 await Submission.findByIdAndDelete(submission._id);
             }
 

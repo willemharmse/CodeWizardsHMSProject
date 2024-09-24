@@ -142,12 +142,24 @@ router.delete('/delete/:assignCode', verifyToken, restrictUser(['admin','lecture
     const assignCode = req.params.assignCode;
 
     try {
-        const assignment = await Assignment.findOneAndDelete({ assignCode: assignCode });
+        const assignment = await Assignment.findOne({ assignCode: assignCode });
 
         if (!assignment) {
             logger.warn(`Assignment for ${assignCode} not found`);
             return res.status(404).send('Assignment not found.');
         }
+
+        const submissions = await Submission.find({assignment: assignment._id});
+        for (const submission of submissions)
+        {
+            const file = await File.findOne({_id: { $in: submission.file._id }});
+
+            await deleteFromAzure(file.fileName);
+            await File.findByIdAndDelete(file._id);
+            await Submission.findByIdAndDelete(submission._id);
+        }
+
+        await Assignment.findByIdAndDelete(assignment._id);
 
         logger.info(`Assignment ${assignCode} deleted.`);
         res.status(200).send('Assignment deleted successfully.');
