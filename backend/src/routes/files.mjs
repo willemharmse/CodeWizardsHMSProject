@@ -38,7 +38,7 @@ router.delete('/delete/:id', async (req, res) => {
         logger.info(`${fileName} successfully deleted`);
         res.status(200).send('File deleted successfully');
     } catch (err) {
-        logger.warn(`Error during file deletion: ${err}`);
+        logger.error(`Error during file deletion: ${err}`);
         res.status(500).send('Error during file deletion');
     }
 });
@@ -78,7 +78,7 @@ router.get('/download/:id', async (req, res) => {
             }
         });
     } catch (err) {
-        logger.warn(`Error during file download: ${err}`);
+        logger.error(`Error during file download: ${err}`);
         res.status(500).send('Error during file download');
     }
 });
@@ -137,7 +137,7 @@ router.get('/stream/:id', async (req, res) => {
         const downloadResponse = await blobClient.download(start, chunkSize);
         downloadResponse.readableStreamBody.pipe(res);
     } catch (err) {
-        logger.warn(`Error streaming video: ${err}`);
+        logger.error(`Error streaming video: ${err}`);
         res.status(500).send('Error streaming video');
     }
 });

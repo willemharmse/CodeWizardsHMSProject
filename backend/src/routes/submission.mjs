@@ -36,7 +36,7 @@ router.get('/assignment/:assignCode', async (req, res) => {
         res.status(200).json(submissions);
     }
     catch (err){
-        logger.warn(`Error during submission retrieval: ${err}`);
+        logger.error(`Error during submission retrieval: ${err}`);
         res.status(500).send("Error retrieving submissions");
     }
 });
@@ -74,7 +74,7 @@ router.get('/:username/:assignCode', async (req, res) => {
         res.status(200).json(submissions);
     }
     catch (err){
-        logger.warn(`Error during submission retrieval: ${err}`);
+        logger.error(`Error during submission retrieval: ${err}`);
         res.status(500).send("Error retrieving submissions");
     }
 });
@@ -155,7 +155,7 @@ router.post('/submit', upload.single('file'), verifyToken, restrictUser(['admin'
             fs.unlinkSync(filePath);
         }
 
-        logger.warn(`Error during submission: ${err}`);
+        logger.error(`Error during submission: ${err}`);
 
         res.status(500).send('There was an error with the submission');
     }
@@ -205,7 +205,7 @@ router.put('/grade/:username/:assignCode', verifyToken, restrictUser(['admin','l
     }
     catch (err)
     {
-        logger.warn(`Error during grading: ${err}`);
+        logger.error(`Error during grading: ${err}`);
         res.status(500).send('There was an error with the grading');
     }
 });
@@ -230,7 +230,7 @@ router.delete('/delete/:id', verifyToken, restrictUser(['admin, student']), asyn
         logger.info(`Submission for deleted successfully`);
         res.status(200).send('Submission deleted successfully');
     } catch (err) {
-        logger.warn(`Error during submission deletion: ${err}`);
+        logger.error(`Error during submission deletion: ${err}`);
         res.status(500).send('Error deleting submission');
     }
 });
