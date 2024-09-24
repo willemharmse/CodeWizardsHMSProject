@@ -28,7 +28,7 @@ router.get('/', async function(req, res){
         logger.info(`Courses loaded successfully`);
         res.status(200).json(courses);
     } catch (err) {
-        logger.warn(`Error during courses loading: ${err}`);
+        logger.error(`Error during courses loading: ${err}`);
         res.status(500).send('Error fetching courses details');
     }
 });
@@ -47,7 +47,7 @@ router.get('/:courseCode', async function(req, res){
         logger.info(`Course loaded successfully`);
         res.status(200).json(course);
     } catch (err) {
-        logger.warn(`Error during course loading: ${err}`);
+        logger.error(`Error during course loading: ${err}`);
         res.status(500).send('Error fetching courses details');
     }
 });
@@ -67,7 +67,7 @@ router.post('/create', verifyToken, restrictUser(['admin']), async function(req,
         logger.info(`Course: ${courseName} successfully created`);
         res.status(201).send('Course created successfully');
     } catch (err) {
-        logger.warn(`Error during course creation: ${err}`);
+        logger.error(`Error during course creation: ${err}`);
         res.status(500).send('Error creating course');
     }
 });
@@ -107,7 +107,7 @@ router.delete('/delete/:courseCode', verifyToken, restrictUser(['admin']), async
         res.status(200).send('Course deleted successfully.');
     } 
     catch (err) {
-        logger.warn(`Error during course deletion: ${err}`);
+        logger.error(`Error during course deletion: ${err}`);
         res.status(500).send('Error deleting course.');
     }  
 });
@@ -136,7 +136,7 @@ router.put('/update/:courseCode', verifyToken, restrictUser(['admin']), async fu
         res.status(200).send({ message: 'Course updated successfully.' });
     } 
     catch (err) {
-        logger.warn(`Error during course update: ${err}`);
+        logger.error(`Error during course update: ${err}`);
         res.status(500).send('Error updating course.');
     }  
 });
@@ -186,7 +186,7 @@ router.post('/lecturer/:username/:courseCode', verifyToken, restrictUser(['admin
     }
     catch (err)
     {
-        logger.warn(`Error adding course to lecturer: ${err}`);
+        logger.error(`Error adding course to lecturer: ${err}`);
         res.status(500).send('Error adding course.');
     }
 });
@@ -236,7 +236,7 @@ router.post('/student/:username/:courseCode', verifyToken, restrictUser(['admin'
     }
     catch (err)
     {
-        logger.warn(`Error adding course to lecturer: ${err}`);
+        logger.error(`Error adding course to lecturer: ${err}`);
         res.status(500).send('Error adding course.');
     }
 });
