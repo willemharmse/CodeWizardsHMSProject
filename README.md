@@ -27,24 +27,24 @@ Ensure that you have the following installed on your system:
   Run the following command to clone the repository to your local machine:
 
   ```bash
-  git clone https://github.com/willemharmse/CodeWizardsHMSProject
-  cd CodeWizardsHMSProject
+    git clone https://github.com/willemharmse/CodeWizardsHMSProject
+    cd CodeWizardsHMSProject
 
 2. **Install Dependencies**
 
   Install all the required Node.js dependencies by running:
 
   ```bash
-  npm install
+    npm install
 
 3. **Set Up Environment Variables**
 
   Create a .env file in the root of the backend folder and provide the following environment variables:
 
   ```bash
-  PORT=This is the port that you want to host the backend on default: 3000
-  MONGO_URI=This is your mongodb URI
-  JWT_SECRET=your_jwt_secret
+    PORT=This is the port that you want to host the backend on default: 3000
+    MONGO_URI=This is your mongodb URI
+    JWT_SECRET=your_jwt_secret
 
   Recommended to use MongoDB Atlas as application was build with it in mind, but follow step 4 if you prefer a local install or install on server
 
@@ -65,7 +65,7 @@ Ensure that you have the following installed on your system:
   ```bash
   cd backend
   npm run start:dev
-  
+
 # Team Members
   - Willem Harmse
   - Shaldon Senekal
