@@ -726,6 +726,13 @@ paths:
       operationId: getAssignments
       tags:
         - Assignment
+      parameters:
+        - name: assignCode
+          in: path
+          required: true
+          description: The assignment code
+          schema:
+            type: string
       responses:
         '200':
           description: Details for assignment successfully retrieved
