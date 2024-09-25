@@ -360,3 +360,6 @@
 2024-09-25 08:24:01 info: Mongoose connected
 2024-09-25 08:24:13 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
 2024-09-25 08:24:13 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-25 10:51:57 info: Mongoose connected
+2024-09-25 10:52:10 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Piet","password":"******"}
+2024-09-25 10:52:10 warn: Failed login attempt for user: Piet
