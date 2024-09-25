@@ -44,29 +44,106 @@ router.post('/create', verifyToken, restrictUser(['admin','lecturer']), async fu
             course: course
         });
 
-        await newAssignment.save();
+        const user = await User.findOne({ _id: userID});
+        if (!user)
+        {
+            logger.warn(`Failed retrieving info for user. User does not exist`);
+            return res.status(404).send('User not found.');
+        }
 
-        res.status(201).send('Assignment created successfully');
+        if (mark < 0 || mark > 250)
+        {
+            logger.warn(`Mark entered is out of bounds.`);
+            return res.status(400).send('Mark value is out of bounds');
+        }
+
+        if (user.role === 'lecturer')
+        {
+            const lecturer = await Lecturer.findOne({user: user._id});
+            if (!lecturer)
+            {
+                logger.warn(`User is not a lecturer.`);
+                return res.status(404).send('Lecturer not found.');
+            }
+
+            if (lecturer.coursesTaught.includes(course._id))
+            {
+                const assignmentCount = await Assignment.countDocuments({ course: course });
+                const assignCode = `${course.courseCode}-${assignmentCount + 1}`;
+
+                const newAssignment = new Assignment({
+                    title,
+                    description,
+                    dueDate,
+                    course: course,
+                    assignCode,
+                    mark
+                });
+
+                await newAssignment.save();
+
+                logger.info(`Assignment created for ${course.courseCode} by ${user.role}: ${user.username}.`);
+                res.status(201).send('Assignment created successfully');
+            }
+            else
+            {
+                logger.warn(`User is not a lecturer for ${coures.courseCode}.`);
+                res.status(404).send('Lecturer not found as a course lecturer');
+            }
+        }
+        else if (user.role === 'admin')
+        {
+            const assignmentCount = await Assignment.countDocuments({ course: course });
+            const assignCode = `${course.courseCode}-${assignmentCount + 1}`;
+
+            const newAssignment = new Assignment({
+                title,
+                description,
+                dueDate,
+                course: course,
+                assignCode,
+                mark
+            });
+
+            await newAssignment.save();
+
+            logger.info(`Assignment created for ${course.courseCode} by ${user.role}: ${user.username}.`);
+            res.status(201).send('Assignment created successfully');
+        }
     } catch (err) {
-        console.error(err);
+        logger.error(`Error occured during creation of assignment: ${err}`);
         res.status(500).send('Error creating assignment');
     }
 });
 
-router.delete('/delete/:title', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
-    const title = req.params.title;
+router.delete('/delete/:assignCode', verifyToken, restrictUser(['admin','lecturer']), async function(req, res) {
+    const assignCode = req.params.assignCode;
 
     try {
-        const assignment = await Assignment.findOneAndDelete({ title });
+        const assignment = await Assignment.findOne({ assignCode: assignCode });
 
         if (!assignment) {
+            logger.warn(`Assignment for ${assignCode} not found`);
             return res.status(404).send('Assignment not found.');
         }
 
+        const submissions = await Submission.find({assignment: assignment._id});
+        for (const submission of submissions)
+        {
+            const file = await File.findOne({_id: { $in: submission.file._id }});
+
+            await deleteFromAzure(file.fileName);
+            await File.findByIdAndDelete(file._id);
+            await Submission.findByIdAndDelete(submission._id);
+        }
+
+        await Assignment.findByIdAndDelete(assignment._id);
+
+        logger.info(`Assignment ${assignCode} deleted.`);
         res.status(200).send('Assignment deleted successfully.');
     } 
-    catch (error) {
-        console.log(error);
+    catch (err) {
+        logger.error(`Error occured during deletion of assignment: ${err}`);
         res.status(500).send('Error deleting assignment.');
     }  
 });
@@ -76,19 +153,31 @@ router.put('/update/:title', verifyToken, restrictUser(['admin','lecturer']), as
     const updates = req.body; // The fields to update, sent in the request body
 
     try {
-        const assignment = await Assignment.findOneAndUpdate({ title }, updates, {
-            new: true, // Return the updated document
-            runValidators: true, // Validate the updates against the schema
-        });
+        if (mark < 0 || mark > 250)
+        {
+            logger.warn(`Mark entered is out of bounds.`);
+            return res.status(400).send('Mark value is out of bounds');
+        }
+    
+        const assignment = await Assignment.findOne({ assignCode: assignCode });
 
         if (!assignment) {
+            logger.warn(`Assignment for ${assignCode} not found`);
             return res.status(404).send('Assignment not found.');
         }
 
-        res.status(200).send({ message: 'Assignment updated successfully.', assignment });
+        assignment.title = title || assignment.title;
+        assignment.description = description || assignment.description;
+        assignment.dueDate = dueDate || assignment.dueDate;
+        assignment.mark = mark || assignment.mark;
+
+        await assignment.save();
+
+        logger.info(`Assignment ${assignCode} updated successfully.`);
+        res.status(200).send({ message: 'Assignment updated successfully.' });
     } 
-    catch (error) {
-        console.log(error);
+    catch (err) {
+        logger.error(`Error occured during update of assignment: ${err}`);
         res.status(500).send('Error updating assignment.');
     }  
 });

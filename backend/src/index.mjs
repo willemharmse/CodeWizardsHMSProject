@@ -10,6 +10,17 @@ import courseRoute from '../src/routes/course.mjs';
 
 dotenv.config();
 const app = express();
+app.use(express.json());
+app.use(cors());
+app.use(statusMonitor());
+
+app.get('/status', statusMonitor().pageRoute);
+
+app.use(logRequests);
+
+app.use('/api', index);
+
+app.use(logErrors);
 
 app.use('/api/auth', authRoute);
 app.use('/api/user', userRoute);

@@ -16,6 +16,16 @@ const assignmentSchema = new mongoose.Schema({
     course: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
+    },
+    mark: {
+        type: mongoose.Schema.Types.Number,
+        min: 0,
+        max: 250,
+        required: true
+    },
+    assignCode: {
+        type: mongoose.Schema.Types.String,
+        required: true
     }
 });
 
