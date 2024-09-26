@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.get('/', async function(req, res){
+router.get('/', verifyToken, async function(req, res){
     try {
         // Find all lecturer documents
         const courses = await Course.find({});
@@ -33,7 +33,7 @@ router.get('/', async function(req, res){
     }
 });
 
-router.get('/:courseCode', async function(req, res){
+router.get('/:courseCode', verifyToken, async function(req, res){
     try {
         // Find all lecturer documents
         const courseCode = req.params.courseCode;

@@ -66,7 +66,7 @@ router.post('/create', verifyToken, restrictUser(['admin']), async function(req,
     }
 });
 
-router.get('/student/:username', async (req, res) => {
+router.get('/student/:username', verifyToken, async (req, res) => {
     try {
         const username = req.params.username;
 
@@ -102,7 +102,7 @@ router.get('/student/:username', async (req, res) => {
     }
 });
 
-router.get('/lecturer/:username', async (req, res) => {
+router.get('/lecturer/:username', verifyToken, async (req, res) => {
     try {
         const username = req.params.username;
 
@@ -138,7 +138,7 @@ router.get('/lecturer/:username', async (req, res) => {
     }
 });
 
-router.get('/admin/:username', async (req, res) => {
+router.get('/admin/:username', verifyToken, async (req, res) => {
     try {
         const username = req.params.username;
 
@@ -173,7 +173,7 @@ router.get('/admin/:username', async (req, res) => {
     }
 });
 
-router.post('/login', async function(req, res) {
+router.post('/login', verifyToken, async function(req, res) {
     try {
         const { username, password } = req.body;
 
@@ -198,7 +198,7 @@ router.post('/login', async function(req, res) {
     }
 });
 
-router.get('/logout', verifyToken, async (req, res) => {
+router.get('/logout', verifyToken, verifyToken, async (req, res) => {
     try{
         const userID = req.user.userId;
 

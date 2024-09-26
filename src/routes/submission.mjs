@@ -15,7 +15,7 @@ import { Student } from '../models/student.mjs';
 const router = express.Router();
 router.use(express.json());
 
-router.get('/assignment/:assignCode', async (req, res) => { 
+router.get('/assignment/:assignCode', verifyToken, async (req, res) => { 
     try{
         const assignCode = req.params.assignCode;
 
@@ -41,7 +41,7 @@ router.get('/assignment/:assignCode', async (req, res) => {
     }
 });
 
-router.get('/:username/:assignCode', async (req, res) => { 
+router.get('/:username/:assignCode', verifyToken, async (req, res) => { 
     try{
         const assignCode = req.params.assignCode;
         const username = req.params.username;

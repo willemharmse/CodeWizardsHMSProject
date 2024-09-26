@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', verifyToken, async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -43,7 +43,7 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
-router.get('/download/:id', async (req, res) => {
+router.get('/download/:id', verifyToken, async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -83,7 +83,7 @@ router.get('/download/:id', async (req, res) => {
     }
 });
 
-router.get('/stream/:id', async (req, res) => {
+router.get('/stream/:id', verifyToken, async (req, res) => {
     try{
         const { id } = req.params;
 

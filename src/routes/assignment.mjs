@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.get('/course/:courseCode', async function(req, res){
+router.get('/course/:courseCode', verifyToken, async function(req, res){
     try{
         const courseCode = req.params.courseCode;
         const course = await Course.findOne({ courseCode: courseCode }); // Find assignment by title or any other field
@@ -37,7 +37,7 @@ router.get('/course/:courseCode', async function(req, res){
     }
 });
 
-router.get('/:assignCode', async function(req, res){
+router.get('/:assignCode', verifyToken, async function(req, res){
     try{
         const assignCode = req.params.assignCode;
 
