@@ -173,7 +173,7 @@ router.get('/admin/:username', verifyToken, async (req, res) => {
     }
 });
 
-router.post('/login', verifyToken, async function(req, res) {
+router.post('/login', async function(req, res) {
     try {
         const { username, password } = req.body;
 
