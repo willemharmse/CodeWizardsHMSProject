@@ -81,7 +81,9 @@ router.get('/:username/:assignCode', verifyToken, async (req, res) => {
 
 router.post('/submit', upload.single('file'), verifyToken, restrictUser(['admin','student']), compressVideo, async (req, res) =>{
     const assignCode = req.body.assignCode;
-
+    const filePath = req.file.path;
+    const fileName = req.file.filename;
+    
     try 
     {
         const userID = req.user.userId;
@@ -112,9 +114,6 @@ router.post('/submit', upload.single('file'), verifyToken, restrictUser(['admin'
                 return res.status(400).send('Student not enrolled in this course');
             }
         }
-
-        const filePath = req.file.path;
-        const fileName = req.file.filename;
     
         // Upload the compressed file to Azure
         const { blobName, url } = await uploadToAzure(filePath, fileName);
