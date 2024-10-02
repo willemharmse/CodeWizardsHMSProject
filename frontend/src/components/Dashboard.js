@@ -1,85 +1,133 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 import './Dashboard.css';
 
 const Dashboard = () => {
+  const [courses, setCourses] = useState([]); // Store courses
   const [assignments, setAssignments] = useState([]); // Store assignments
-  const [submissions, setSubmissions] = useState([]); // Store submissions for the selected assignment
-  const [selectedAssignment, setSelectedAssignment] = useState(null); // Track the currently selected assignment
-  const [token, setToken] = useState(''); // State to store the token
+  const [submissions, setSubmissions] = useState([]); // Store submissions
+  const [selectedCourse, setSelectedCourse] = useState(null); // Track selected course
+  const [selectedAssignment, setSelectedAssignment] = useState(null); // Track selected assignment
+  const [token, setToken] = useState(''); // Store the token
+  const [role, setRole] = useState(''); // Store user role (admin/lecturer)
 
+  // Decode the token and get the role
   useEffect(() => {
-    // Retrieve the token when the component mounts
-    const storedToken = localStorage.getItem('token'); // Adjust this to your token retrieval logic
+    const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
+      const decodedToken = jwtDecode(storedToken); // Decode the token
+      setRole(decodedToken.role); // Extract role from the token
     }
-  }, []); // Run only once when the component mounts
+  }, []);
 
-  // Fetch assignments from backend
+  // Fetch courses based on the user's role
   useEffect(() => {
-    const fetchAssignments = async () => {
-      if (!token) return; // Don't fetch if token is not available
+    const fetchCourses = async () => {
+      if (!token || !role) return;
 
       try {
-        const response = await axios.get('http://localhost:5000/api/assignment/course/CS201', {
-          headers: {
-            Authorization: `Bearer ${token}` // Include the bearer token in the header
-          }
-        });
-        setAssignments(response.data); // Assuming response.data is an array of assignments
+        let response;
+        if (role === 'admin') {
+          // Admin: Fetch all courses
+          response = await axios.get('http://localhost:5000/api/course/', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        } else if (role === 'lecturer') {
+          // Lecturer: Fetch their own courses
+          response = await axios.get('http://localhost:5000/api/course/courses/lecturer', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        }
+
+        setCourses(response.data); // Assuming response.data contains an array of courses
       } catch (error) {
-        console.error('Error fetching assignments', error);
+        console.error('Error fetching courses', error);
       }
     };
 
-    fetchAssignments();
-  }, [token]); // Fetch assignments whenever the token changes
+    fetchCourses();
+  }, [token, role]);
 
-  // Function to handle click on each assignment
-// Function to handle click on each assignment
-const handleClick = async (assignCode) => {
-    setSelectedAssignment(assignCode); // Set the currently selected assignment
+  // Fetch assignments for the selected course
+  const handleCourseClick = async (courseCode) => {
+    setSelectedCourse(courseCode); // Set selected course
+    setAssignments([]); // Clear previous assignments
     setSubmissions([]); // Clear previous submissions
-    console.log(`Clicked assignment with AssignCode: ${assignCode}`);
-  
+
     try {
-      // Fetch submissions for this assignment using assignCode
+      const response = await axios.get(`http://localhost:5000/api/assignment/course/${courseCode}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAssignments(response.data); // Assuming response.data contains an array of assignments
+    } catch (error) {
+      console.error('Error fetching assignments', error);
+    }
+  };
+
+  // Fetch submissions for the selected assignment
+  const handleAssignmentClick = async (assignCode) => {
+    setSelectedAssignment(assignCode); // Set selected assignment
+    setSubmissions([]); // Clear previous submissions
+
+    try {
       const response = await axios.get(`http://localhost:5000/api/submission/assignment/${assignCode}`, {
         headers: {
-          Authorization: `Bearer ${token}` // Include the bearer token in the header
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-  
-      const submissionsData = response.data; // Assuming the response contains submission data
-      console.log('Submissions for this assignment:', submissionsData);
-      setSubmissions(submissionsData); // Update submissions state
+      setSubmissions(response.data); // Assuming response.data contains an array of submissions
     } catch (error) {
       console.error('Error fetching submissions', error);
     }
   };
-  
 
   return (
     <div className="dashboard">
-      <h1>Assignments</h1>
-      <div className="assignment-list">
-        {assignments.map((assignment) => (
+      <h1>{role === 'admin' ? 'Admin Dashboard' : 'Lecturer Dashboard'}</h1>
+
+      {/* Courses Row */}
+      <div className="courses-row">
+        {courses.map((course) => (
           <div
-            key={assignment._id}
-            className="assignment-button"
-            onClick={() => handleClick(assignment.assignCode)} // Pass assignCode
+            key={course._id}
+            className={`course-button ${selectedCourse === course.courseCode ? 'selected' : ''}`}
+            onClick={() => handleCourseClick(course.courseCode)} // Load assignments when a course is clicked
           >
-            {assignment.title} {/* Display assignment title */}
+            {course.courseCode} {/* Display course name */}
           </div>
         ))}
       </div>
-      {selectedAssignment && submissions.length > 0 && ( // Check if an assignment is selected and submissions exist
+
+      {/* Assignments Row */}
+      {selectedCourse && assignments.length > 0 && (
+        <div className="assignment-list">
+          <h2>Assignments for Course: {selectedCourse}</h2>
+          {assignments.map((assignment) => (
+            <div
+              key={assignment._id}
+              className={`assignment-button ${selectedAssignment === assignment.assignCode ? 'selected' : ''}`}
+              onClick={() => handleAssignmentClick(assignment.assignCode)} // Load submissions when an assignment is clicked
+            >
+              {assignment.title} {/* Display assignment title */}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Submissions Row */}
+      {selectedAssignment && submissions.length > 0 && (
         <div className="submissions-list">
           <h2>Submissions for Assignment: {selectedAssignment}</h2>
           {submissions.map((submission) => (
             <div key={submission._id} className="submission-item">
-              {/* Display submission data; customize as needed */}
               <p>Submission ID: {submission._id}</p>
               <p>Grade: {submission.grade}</p>
               <p>Feedback: {submission.feedback}</p>
