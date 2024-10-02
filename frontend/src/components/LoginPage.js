@@ -44,9 +44,8 @@ function LoginPage() {
 
   return (
     <div className="login-container">
+      <h2>Login</h2>
       <div className="login-box">
-        <h2>Login</h2>
-        {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleLogin}>
           <div className="input-group">
             <label>Username</label>
@@ -66,6 +65,7 @@ function LoginPage() {
               required
             />
           </div>
+          {error && <div className="error-message">{error}</div>}
           <button type="submit" className="login-button">Login</button>
         </form>
       </div>
