@@ -44,10 +44,9 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_36826D1151984F0484151E5B5C052B54 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F375B6335BF8493EA732E383B994B2E0 }}
 
-      - name: List files before deployment
+      - name: List all files in the root directory
         run: |
           ls -al
-          ls -al ./src
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
