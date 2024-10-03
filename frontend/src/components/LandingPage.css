@@ -6,9 +6,12 @@
   font-family: Arial;
 }
 
-.landing-container {
-  display: flex;
-  height: 100vh;
+.landing-header h2 {
+  font-size: 80px;
+  position: relative;
+  color: azure;
+  margin-top: 70px;
+  margin-left: 70px;
 }
 
 .header-content {
@@ -36,53 +39,65 @@
   position: absolute;
 }
 
-.logout-button {
+.landing-page-login-button {
+  font-size: 20px;
   background-color: transparent;
   border: 3px solid;
   border-color: azure;
+  padding: 20px 30px;
   color: azure;
-  padding: 10px 35px;
   cursor: pointer;
   border-radius: 5px;
-  margin-right: 60px;
-  margin-top: 32px;
+  transition: background-color 0.3s ease;
+  margin-top: 45px;
+  margin-right: 70px;
 }
 
-.logout-button:hover {
+.landing-page-login-button:hover {
   background-color: azure;
   color: #050a30;
-  transition: 0.5s;
+  transition: 0.5s ease;
 }
 
-.box {
-  width: 800px;
-  padding: 40px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+.landing-page-content {
   color: azure;
+  margin-left: 70px;
+  margin-right: 70px;
 }
 
-.landing-button {
+.landing-page-content h1{
+  font-size: 110px;
+  margin: 0;
+  margin-top: 50px;
+}
+
+.landing-page-content p{
+  font-size: 32px;
+  margin-bottom: 100px;
+}
+
+.button-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.landing-page-button {
+  font-size: 20px;
   background-color: transparent;
   border: 3px solid;
   border-color: azure;
+  padding: 30px 100px;
   color: azure;
-  padding: 10px 35px;
   cursor: pointer;
   border-radius: 5px;
-  margin-right: 20px;
-  margin-top: 15px;
+  transition: background-color 0.3s ease;
+  margin-top: 45px;
+  margin-right: 70px;
 }
 
-.landing-button:hover {
+.landing-page-button:hover {
   background-color: azure;
   color: #050a30;
-  transition: 0.5s;
-}
-
-
-.box h1 {
-  font-size: 50px;
+  transition: 0.5s ease;
 }

@@ -43,7 +43,16 @@ function LoginPage() {
   };
 
   return (
+    
     <div className="login-container">
+      <div className='login-header'>
+      <header className="landing-header">
+        <div className="header-content">
+          <h2>HMS</h2>
+        </div>
+      </header>
+      </div>
+      <div className='login-page-box'>
       <h2>Login</h2>
       <div className="login-box">
         <form onSubmit={handleLogin}>
@@ -68,6 +77,7 @@ function LoginPage() {
           {error && <div className="error-message">{error}</div>}
           <button type="submit" className="login-button">Login</button>
         </form>
+        </div>
       </div>
     </div>
   );
