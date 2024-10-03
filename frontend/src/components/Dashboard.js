@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import './Dashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [courses, setCourses] = useState([]); // Store courses
@@ -11,6 +12,7 @@ const Dashboard = () => {
   const [selectedAssignment, setSelectedAssignment] = useState(null); // Track selected assignment
   const [token, setToken] = useState(''); // Store the token
   const [role, setRole] = useState(''); // Store user role (admin/lecturer)
+  const navigate = useNavigate(); // Use navigate for routing
 
   // Decode the token and get the role
   useEffect(() => {
@@ -89,6 +91,10 @@ const Dashboard = () => {
     }
   };
 
+  const handleSubmissionClick = (submissionId) => {
+    navigate(`/submission/${submissionId}`);
+  };
+
   return (
     <div className="dashboard">
       <h1>{role === 'admin' ? 'Admin Dashboard' : 'Lecturer Dashboard'}</h1>
@@ -127,11 +133,15 @@ const Dashboard = () => {
         <div className="submissions-list">
           <h2>Submissions for Assignment: {selectedAssignment}</h2>
           {submissions.map((submission) => (
-            <div key={submission._id} className="submission-item">
-              <p>Submission ID: {submission._id}</p>
-              <p>Grade: {submission.grade}</p>
-              <p>Feedback: {submission.feedback}</p>
-            </div>
+              <div
+                key={submission._id}
+                className="submission-item"
+                onClick={() => handleSubmissionClick(submission._id)} // Redirect to submission page
+              >
+                <p>Submission by: {submission.user.username}</p>
+                <p>Grade: {submission.grade || 'Not graded'}</p>
+                <p>Feedback: {submission.feedback || 'No Feedback'}</p>
+                </div>
           ))}
         </div>
       )}
