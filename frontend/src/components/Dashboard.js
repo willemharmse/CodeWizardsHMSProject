@@ -21,8 +21,12 @@ const Dashboard = () => {
       setToken(storedToken);
       const decodedToken = jwtDecode(storedToken); // Decode the token
       setRole(decodedToken.role); // Extract role from the token
+      
+      if (decodedToken.role === 'student') {
+        navigate('/403'); // Redirect to your 403 page
+      }    
     }
-  }, []);
+  }, [navigate]);
 
   // Fetch courses based on the user's role
   useEffect(() => {
