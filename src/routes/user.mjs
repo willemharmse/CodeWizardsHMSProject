@@ -66,6 +66,20 @@ router.post('/create', verifyToken, restrictUser(['admin']), async function(req,
     }
 });
 
+router.get('/', verifyToken, async (req, res) => {
+    try {
+        const username = req.params.username;
+
+        // Find the user by username
+        const users = await User.find({});
+
+        res.status(200).json(users);
+    } catch (err) {
+        logger.error(`Error during retrieval of user details: ${err}`);
+        res.status(500).send('Error fetching student details');
+    }
+});
+
 router.get('/student/:username', verifyToken, async (req, res) => {
     try {
         const username = req.params.username;

@@ -25,7 +25,8 @@ router.get('/assignment/:assignCode', verifyToken, async (req, res) => {
             return res.status(404).send('Assignment not found');
         }
 
-        const submissions = await Submission.find({ assignment: assignment });
+        const submissions = await Submission.find({ assignment: assignment })
+                                            .populate('user');
     
         if (submissions.length === 0) {
             logger.info(`No assignments found for ${assignCode}`);
@@ -72,6 +73,27 @@ router.get('/:username/:assignCode', verifyToken, async (req, res) => {
     
         logger.info(`Assignments found for user: ${username} for assignment: ${assignCode} successfully loaded`);
         res.status(200).json(submissions);
+    }
+    catch (err){
+        logger.error(`Error during submission retrieval: ${err}`);
+        res.status(500).send("Error retrieving submissions");
+    }
+});
+
+router.get('/:id', verifyToken, async (req, res) => { 
+    try{
+        const id = req.params.id;
+
+        const submission = await Submission.findOne({ _id: id })
+                                           .populate('assignment');
+    
+        if (!submission) {
+            logger.info(`Submission not found`);
+            return res.status(404).send('No submissions found');
+        }
+    
+        logger.info(`Submission found`);
+        res.status(200).json(submission);
     }
     catch (err){
         logger.error(`Error during submission retrieval: ${err}`);
@@ -160,36 +182,21 @@ router.post('/submit', upload.single('file'), verifyToken, restrictUser(['admin'
     }
 });
 
-router.put('/grade/:username/:assignCode', verifyToken, restrictUser(['admin','lecturer']), async (req, res) =>{
+router.put('/grade/:id', verifyToken, restrictUser(['admin','lecturer']), async (req, res) =>{
     try{
-        const username = req.params.username;
+        const subID = req.params.id;
         const grade = req.body.grade;
         const feedback = req.body.feedback;
 
-        const user = await User.findOne({ username: username});
-        if (!user)
-        {
-            logger.warn(`Failed retrieving info for user. User does not exist`);
-            return res.status(404).send('User not found');
-        }
-
-        const assignCode = req.params.assignCode;
-        
-        const assignment = await Assignment.findOne({ assignCode: assignCode });
-        if (!assignment)
-        {
-            logger.warn(`Failed retrieving info for ${assignCode}. Assignment does not exist`);
-            return res.status(404).send('Assignment not found');
-        }
-
-        const submission = await Submission.findOne({ user: user._id, assignment: assignment._id});
+        const submission = await Submission.findOne({ _id: subID})
+                                            .populate('assignment');
         if (!submission)
         {
             logger.warn(`Failed retrieving info for submission. Submission does not exist`);
             return res.status(404).send('Submission does not exist');
         }
 
-        if (grade < 0 || grade > assignment.mark)
+        if (grade < 0 || grade > submission.assignment.mark)
         {
             logger.warn(`Mark entered is out of bounds.`);
             return res.status(400).send('The grade given to the submission is out of bounds');
@@ -199,7 +206,6 @@ router.put('/grade/:username/:assignCode', verifyToken, restrictUser(['admin','l
         submission.feedback = feedback;
         await submission.save();
 
-        logger.info(`Submission for ${user.username} graded for ${assignment.title}`);
         return res.status(200).send('Submission graded successfully');
     }
     catch (err)

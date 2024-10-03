@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const subSchema = new mongoose.Schema({
       assignment: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Assignment',
+        ref: 'Assigment',
         required: true,
         default: () => new mongoose.Types.ObjectId()
       },
