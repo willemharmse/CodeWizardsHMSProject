@@ -102,12 +102,20 @@ const Dashboard = () => {
     navigate(`/submission/${submissionId}`);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');  // Remove the JWT from localStorage
+    navigate('/');  // Redirect to login page or home page after logging out
+  };  
+
   return (
     <div className="dashboard">
       <div className='dashboard-header'>
-      <header className="landing-header">
+      <header className="dashboard-header-body">
         <div className="header-content">
           <h2>HMS</h2>
+          <a href=''>
+            <button className="dashboard-logout-button" onClick={handleLogout}>Logout</button>
+          </a>
         </div>
       </header>
       </div>
