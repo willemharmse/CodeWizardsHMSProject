@@ -16,6 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0 # Fetch all history so all files are accessible
           path: . # Ensure it checks out in the current directory
 
