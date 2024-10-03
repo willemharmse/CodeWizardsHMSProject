@@ -6,7 +6,7 @@
   font-family: Arial;
 }
 
-.landing-header h2 {
+.landing-page-header h2 {
   font-size: 80px;
   position: relative;
   color: azure;
@@ -19,24 +19,6 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  position: absolute;
-  top: 0;
-}
-
-.landing-header h2 {
-  position: relative;
-  color: azure;
-  top: 25px;
-  left: 50px;
-  font-size: 40px;
-}
-
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  position: absolute;
 }
 
 .landing-page-login-button {

@@ -2,11 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css'; // Import the CSS file for styling
 
-// Check links of buttons
 function LandingPage() {
   return (
     <div className="landing-container">
-      <header className="landing-header">
+      <header className="landing-page-header">
         <div className="header-content">
           <h2>HMS</h2>
           <Link to="/login">

@@ -111,7 +111,7 @@ const Dashboard = () => {
     <div className="dashboard">
       <div className='dashboard-header'>
       <header className="dashboard-header-body">
-        <div className="header-content">
+        <div className="dashboard-header-content">
           <h2>HMS</h2>
           <a href=''>
             <button className="dashboard-logout-button" onClick={handleLogout}>Logout</button>
@@ -147,6 +147,9 @@ const Dashboard = () => {
         {selectedAssignment ? (
           <div className="submission-section">
             <h2>Submissions for {selectedAssignment}</h2>
+            <div className="search-bar">
+              <input type="text" placeholder="Search courses..." />
+            </div>
             <div className="submission-list">
               {submissions.map((submission) => (
                 <div
@@ -167,6 +170,9 @@ const Dashboard = () => {
         ) : (
           <div className="assignment-section">
             <h2>Assignments for {selectedCourse}</h2>
+            <div className="search-bar">
+              <input type="text" placeholder="Search courses..." />
+            </div>
             <div className="assignment-list">
               {assignments.map((assignment) => (
                 <div
