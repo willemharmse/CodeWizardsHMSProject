@@ -8,18 +8,22 @@ function LandingPage() {
       <header className="landing-header">
         <div className="header-content">
           <h2>HMS</h2>
-          <button className="logout-button">Logout</button>
+          <Link to="/login">
+            <button className="landing-page-login-button">Login</button>
+          </Link>
         </div>
+      </header>
+      <div className='landing-page-content'>
         <h1>Welcome</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempus varius justo eget faucibus. Duis vestibulum laoreet elit, in blandit justo luctus nec. Nullam et vehicula est. Aenean convallis lobortis tellus, ut tempor arcu gravida sit amet. Proin sit amet neque at velit fringilla tristique non vestibulum mi. Nullam viverra, ante in consectetur viverra, augue odio ultrices diam, eget pharetra felis lectus quis arcu. Phasellus malesuada metus ut neque pellentesque, ut viverra mi tempus. Duis ultrices sit amet sapien nec auctor. Sed eget mauris aliquet, dignissim risus consectetur, dapibus diam.</p>
-      </header>
-      <div className="button-container">
+        <div className="button-container">
         <Link to="/login">
-          <button className="landing-button">See your courses</button>
+          <button className="landing-page-button">See your courses</button>
         </Link>
         <Link to="/admin">
-          <button className="landing-button">Manage Users</button>
+          <button className="landing-page-button">Manage Users</button>
         </Link>
+      </div>
       </div>
     </div>
   );

@@ -60,9 +60,11 @@ const Dashboard = () => {
     fetchCourses();
   }, [token, role]);
 
+ 
   // Fetch assignments for the selected course
   const handleCourseClick = async (courseCode) => {
     setSelectedCourse(courseCode); // Set selected course
+    setSelectedAssignment(null); // Reset the selected assignment to show assignments instead of submissions
     setAssignments([]); // Clear previous assignments
     setSubmissions([]); // Clear previous submissions
 
@@ -77,6 +79,7 @@ const Dashboard = () => {
       console.error('Error fetching assignments', error);
     }
   };
+
 
   // Fetch submissions for the selected assignment
   const handleAssignmentClick = async (assignCode) => {
@@ -101,54 +104,80 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <h1>{role === 'admin' ? 'Admin Dashboard' : 'Lecturer Dashboard'}</h1>
-
-      {/* Courses Row */}
-      <div className="courses-row">
-        {courses.map((course) => (
-          <div
-            key={course._id}
-            className={`course-button ${selectedCourse === course.courseCode ? 'selected' : ''}`}
-            onClick={() => handleCourseClick(course.courseCode)} // Load assignments when a course is clicked
-          >
-            {course.courseCode} {/* Display course name */}
-          </div>
-        ))}
+      <div className='dashboard-header'>
+      <header className="landing-header">
+        <div className="header-content">
+          <h2>HMS</h2>
+        </div>
+      </header>
       </div>
-
-      {/* Assignments Row */}
-      {selectedCourse && assignments.length > 0 && (
-        <div className="assignment-list">
-          <h2>Assignments for Course: {selectedCourse}</h2>
-          {assignments.map((assignment) => (
+      
+      <div className='dashboard-body'>
+      <div className="sidebar">
+        <h2>Courses</h2>
+        <div className="search-bar">
+          <input type="text" placeholder="Search courses..." />
+        </div>
+        <div className="course-list">
+          {courses.map((course) => (
             <div
-              key={assignment._id}
-              className={`assignment-button ${selectedAssignment === assignment.assignCode ? 'selected' : ''}`}
-              onClick={() => handleAssignmentClick(assignment.assignCode)} // Load submissions when an assignment is clicked
+              key={course._id}
+              className={`course-item ${selectedCourse === course.courseCode ? 'selected' : ''}`}
+              onClick={() => handleCourseClick(course.courseCode)}
             >
-              {assignment.title} {/* Display assignment title */}
+              <div className="course-icon"></div>
+              <div className="course-details">
+                <h3>{course.courseCode}</h3>
+                <p>{course.courseName}</p>
+              </div>
             </div>
           ))}
         </div>
-      )}
-
-      {/* Submissions Row */}
-      {selectedAssignment && submissions.length > 0 && (
-        <div className="submissions-list">
-          <h2>Submissions for Assignment: {selectedAssignment}</h2>
-          {submissions.map((submission) => (
-              <div
-                key={submission._id}
-                className="submission-item"
-                onClick={() => handleSubmissionClick(submission._id)} // Redirect to submission page
-              >
-                <p>Submission by: {submission.user.username}</p>
-                <p>Grade: {submission.grade || 'Not graded'}</p>
-                <p>Feedback: {submission.feedback || 'No Feedback'}</p>
+      </div>
+      
+      <div className="main-content">
+        {selectedAssignment ? (
+          <div className="submission-section">
+            <h2>Submissions for {selectedAssignment}</h2>
+            <div className="submission-list">
+              {submissions.map((submission) => (
+                <div
+                  key={submission._id}
+                  className="submission-item"
+                  onClick={() => handleSubmissionClick(submission._id)}
+                >
+                  <div className="submission-icon"></div>
+                  <div className="submission-details">
+                    <h3>{submission.user.username}</h3>
+                    <p>Grade: {submission.grade || 'Not graded'}</p>
+                    <p>Feedback: {submission.feedback || 'No feedback'}</p>
+                  </div>
                 </div>
-          ))}
-        </div>
-      )}
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="assignment-section">
+            <h2>Assignments for {selectedCourse}</h2>
+            <div className="assignment-list">
+              {assignments.map((assignment) => (
+                <div
+                  key={assignment._id}
+                  className="assignment-item"
+                  onClick={() => handleAssignmentClick(assignment.assignCode)}
+                >
+                  <div className="assignment-icon"></div>
+                  <div className="assignment-details">
+                    <h3>{assignment.title}</h3>
+                    <p>{assignment.courseName}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+      </div>
     </div>
   );
 };

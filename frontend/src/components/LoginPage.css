@@ -5,12 +5,12 @@ body {
   background-image: linear-gradient(to right, #050a30,#524271);
 }
 
-.login-container {
+.login-page-box {
+  margin-top: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 .login-box {
