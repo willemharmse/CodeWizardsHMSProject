@@ -1,62 +1,17 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
+name: Check out code
 
-name: Build and deploy Node.js app to Azure Web App - HMSBackendCW
-
-on:
+on: 
   push:
     branches:
       - backend
-  workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: windows-latest
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0 # Fetch all history so all files are accessible
-          path: . # Ensure it checks out in the current directory
-
-      - name: Set up Node.js version
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
-
-      - name: npm install, build, and test
-        run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
-
-  deploy:
+  checkout:
     runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
 
     steps:
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3F6308EC0E154CB4852661DD804B5A92 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_36826D1151984F0484151E5B5C052B54 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F375B6335BF8493EA732E383B994B2E0 }}
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: List all files in the root directory
-        run: |
-          ls -al
-
-      - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v3
-        id: deploy-to-webapp
-        with:
-          app-name: 'HMSBackendCW'
-          slot-name: 'Production'
-          package: .
-          
+      - name: List files
+        run: ls -al
