@@ -152,41 +152,6 @@ router.get('/lecturer/:username', verifyToken, async (req, res) => {
     }
 });
 
-router.get('/admin/:username', verifyToken, async (req, res) => {
-    try {
-        const username = req.params.username;
-
-        // Find the user by username
-        const user = await User.findOne({ username });
-
-        if (!user) {
-            logger.warn(`Failed retrieving info for ${username}. User does not exist`);
-            return res.status(404).send('User not found');
-        }
-
-        // Check if the user is a student
-        if (user.role !== 'admin') {
-            logger.warn(`Failed retrieving info for ${username}. User is not a admin`);
-            return res.status(400).send('User is not a admin');
-        }
-
-        // Find the student document associated with the user
-        const admin = await Admin.findOne({ user: user._id })
-                                     .populate('user')  // This will populate user details
-
-        if (!admin) {
-            logger.warn(`Failed retrieving info for ${username}. User info not found for admin`);
-            return res.status(404).send('Admin details not found');
-        }
-
-        logger.info(`User info for user: ${username} successfully loaded`);
-        res.status(200).json(admin);
-    } catch (err) {
-        logger.error(`Error during retrieval of user details: ${err}`);
-        res.status(500).send('Error fetching admin details');
-    }
-});
-
 router.post('/login', async function(req, res) {
     try {
         const { username, password } = req.body;
