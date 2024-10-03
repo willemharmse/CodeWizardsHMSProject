@@ -91,7 +91,8 @@ const SubmissionDetail = () => {
   return (
     <div className="submission-detail">
       <h1 className="submission-title">Submission Grading</h1>
-      
+      <h2 className="submission-user">User: {submission.user.username}</h2>
+      <h2 className="submission-user">Video file submitted:</h2>
       {/* Video player */}
       {videoSrc ? (
         <video controls width="600" className="video-player">
@@ -130,7 +131,7 @@ const SubmissionDetail = () => {
           className="submit-button"
           disabled={!!gradeWarning || grade === ''} // Disable if gradeWarning or empty grade
         >
-          Submit Grade and Feedback
+          Grade Submission
         </button>
       </div>
     </div>

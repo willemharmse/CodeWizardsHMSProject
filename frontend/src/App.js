@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard';
 import SubmissionDetail from './components/SubmissionDetail';
 import AdminPage from './components/AdminPage';
 import Forbidden from './components/Forbidden';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/submission/:submissionId" element={<SubmissionDetail />} />
         <Route path='/userManagement' element={<AdminPage/>} />
         <Route path='/403' element={<Forbidden/>}/>
+        <Route path='*' element={<NotFound/>}/>
       </Routes>
     </Router>
   );
