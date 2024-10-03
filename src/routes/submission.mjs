@@ -85,7 +85,7 @@ router.get('/:id', verifyToken, async (req, res) => {
         const id = req.params.id;
 
         const submission = await Submission.findOne({ _id: id })
-                                           .populate('assignment');
+                                           .populate('assignment user');
     
         if (!submission) {
             logger.info(`Submission not found`);
