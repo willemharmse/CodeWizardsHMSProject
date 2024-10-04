@@ -1,7 +1,7 @@
 .landing-container, html {
   margin: 0;
   padding: 0;
-  background-image: linear-gradient(to right, #050a30,#524271);
+  background-color: #1c3f60;
   height: 100%;
   font-family: Arial;
 }
@@ -9,7 +9,7 @@
 .landing-page-header h2 {
   font-size: 80px;
   position: relative;
-  color: azure;
+  color: #f3f6fa;
   margin-top: 70px;
   margin-left: 70px;
 }
@@ -25,9 +25,9 @@
   font-size: 20px;
   background-color: transparent;
   border: 3px solid;
-  border-color: azure;
+  border-color: #f3f6fa;
   padding: 20px 30px;
-  color: azure;
+  color: #f3f6fa;
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease;
@@ -36,13 +36,13 @@
 }
 
 .landing-page-login-button:hover {
-  background-color: azure;
-  color: #050a30;
-  transition: 0.5s ease;
+  background-color: #f3f6fa;
+  color: #1c3f60;
+  transition: 0.3s ease;
 }
 
 .landing-page-content {
-  color: azure;
+  color: #f3f6fa;
   margin-left: 70px;
   margin-right: 70px;
 }
@@ -68,9 +68,9 @@
   font-size: 20px;
   background-color: transparent;
   border: 3px solid;
-  border-color: azure;
+  border-color: #f3f6fa;
   padding: 30px 100px;
-  color: azure;
+  color: #f3f6fa;
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease;
@@ -79,7 +79,7 @@
 }
 
 .landing-page-button:hover {
-  background-color: azure;
-  color: #050a30;
-  transition: 0.5s ease;
+  background-color: #f3f6fa;
+  color: #1c3f60;
+  transition: 0.3s ease;
 }
