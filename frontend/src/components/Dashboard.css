@@ -37,6 +37,7 @@
   border: 3px solid;
   background-color: #365679;
   border-color: #365679;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   color: #f3f6fa;
   padding: 10px 30px;
   cursor: pointer;

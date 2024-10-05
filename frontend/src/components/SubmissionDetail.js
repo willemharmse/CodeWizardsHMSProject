@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 import axios from 'axios';
 import './SubmissionDetail.css'; // Importing the CSS file if you choose to separate it
 
 const SubmissionDetail = () => {
   const { submissionId } = useParams();
+  const navigate = useNavigate(); // Initialize navigate
   const [submission, setSubmission] = useState(null);
   const [grade, setGrade] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -61,6 +62,11 @@ const SubmissionDetail = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Remove the JWT from localStorage
+    navigate('/'); // Redirect to login page or home page after logging out
+  };
+
   const handleGradeSubmit = async () => {
     if (gradeWarning) {
       alert('Please correct the grade before submitting.');
@@ -89,6 +95,15 @@ const SubmissionDetail = () => {
   }
 
   return (
+    <div className='submission-page'>
+      <div className='submission-page-header'>
+        <header className="submission-header-body">
+          <div className="submission-header-content">
+            <h2>HMS</h2>
+            <button className="submission-logout-button" onClick={handleLogout}>Logout</button>
+          </div>
+        </header>
+      </div>
     <div className="submission-detail">
       <h1 className="submission-title">Submission Grading</h1>
       <h2 className="submission-user">User: {submission.user.username}</h2>
@@ -134,6 +149,7 @@ const SubmissionDetail = () => {
           Grade Submission
         </button>
       </div>
+    </div>
     </div>
   );
 };
