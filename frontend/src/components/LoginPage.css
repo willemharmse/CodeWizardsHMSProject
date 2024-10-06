@@ -72,8 +72,8 @@ h2 {
 .login-button {
   background-color: transparent;
   border: 3px solid;
-  border-color: #f3f6fa;
-  color: #f3f6fa;
+  border-color: #f4f6fc;
+  color: #f4f6fc;
   padding: 12px;
   border-radius: 5px;
   font-size: 1rem;
@@ -83,7 +83,7 @@ h2 {
 }
 
 .login-button:hover {
-  background-color: #f3f6fa;
+  background-color: #f4f6fc;
   color: #0b1320;
 }
 

@@ -1,37 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import './Dashboard.css';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const Dashboard = () => {
-  const [courses, setCourses] = useState([]); // Store courses
-  const [assignments, setAssignments] = useState([]); // Store assignments
-  const [submissions, setSubmissions] = useState([]); // Store submissions
-  const [selectedCourse, setSelectedCourse] = useState(null); // Track selected course
-  const [selectedAssignment, setSelectedAssignment] = useState(null); // Track selected assignment
-  const [token, setToken] = useState(''); // Store the token
-  const [role, setRole] = useState(''); // Store user role (admin/lecturer)
-  const [courseSearch, setCourseSearch] = useState(''); // Search query for courses
-  const [assignmentSearch, setAssignmentSearch] = useState(''); // Search query for assignments
-  const [submissionSearch, setSubmissionSearch] = useState(''); // Search query for submissions
-  const navigate = useNavigate(); // Use navigate for routing
+  const [title, setAssignmentTitle] = useState('');
+  const [dueDate, setAssignmentDueDate] = useState('');
+  const [mark, setAssignmentMark] = useState('');
+  const [courseCode, setCourseCode] = useState('');
+  const [courseName, setCourseTitle] = useState('');
+  const [description, setCourseDescription] = useState('');//course description
+  const [courses, setCourses] = useState([]);
+  const [assignments, setAssignments] = useState([]);
+  const [submissions, setSubmissions] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
+  const [isAddingCourse, setIsAddingCourse] = useState(false); // New state for adding courses
+  const [isAddingAssignment, setIsAddingAssignment] = useState(false); // New state for adding assignments
+  const [token, setToken] = useState('');
+  const [role, setRole] = useState('');
+  const [courseSearch, setCourseSearch] = useState('');
+  const [assignmentSearch, setAssignmentSearch] = useState('');
+  const [submissionSearch, setSubmissionSearch] = useState('');
+  const navigate = useNavigate();
 
-  // Decode the token and get the role
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
-      const decodedToken = jwtDecode(storedToken); // Decode the token
-      setRole(decodedToken.role); // Extract role from the token
+      const decodedToken = jwtDecode(storedToken);
+      setRole(decodedToken.role);
 
       if (decodedToken.role === 'student') {
-        navigate('/403'); // Redirect to 403 page
+        navigate('/403');
       }
     }
   }, [navigate]);
 
-  // Fetch courses based on the user's role
   useEffect(() => {
     const fetchCourses = async () => {
       if (!token || !role) return;
@@ -39,22 +47,16 @@ const Dashboard = () => {
       try {
         let response;
         if (role === 'admin') {
-          // Admin: Fetch all courses
           response = await axios.get('http://localhost:5000/api/course/', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           });
         } else if (role === 'lecturer') {
-          // Lecturer: Fetch their own courses
           response = await axios.get('http://localhost:5000/api/course/courses/lecturer', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           });
         }
 
-        setCourses(response.data); // Assuming response.data contains an array of courses
+        setCourses(response.data);
       } catch (error) {
         console.error('Error fetching courses', error);
       }
@@ -63,37 +65,34 @@ const Dashboard = () => {
     fetchCourses();
   }, [token, role]);
 
-  // Fetch assignments for the selected course
   const handleCourseClick = async (courseCode) => {
-    setSelectedCourse(courseCode); // Set selected course
-    setSelectedAssignment(null); // Reset the selected assignment to show assignments instead of submissions
-    setAssignments([]); // Clear previous assignments
-    setSubmissions([]); // Clear previous submissions
+    setSelectedCourse(courseCode);
+    setSelectedAssignment(null);
+    setAssignments([]);
+    setSubmissions([]);
+    setIsAddingCourse(false); // Reset any "add" mode when navigating
+    setIsAddingAssignment(false);
 
     try {
       const response = await axios.get(`http://localhost:5000/api/assignment/course/${courseCode}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-      setAssignments(response.data); // Assuming response.data contains an array of assignments
+      setAssignments(response.data);
     } catch (error) {
       console.error('Error fetching assignments', error);
     }
   };
 
-  // Fetch submissions for the selected assignment
   const handleAssignmentClick = async (assignCode) => {
-    setSelectedAssignment(assignCode); // Set selected assignment
-    setSubmissions([]); // Clear previous submissions
+    setSelectedAssignment(assignCode);
+    setSubmissions([]);
+    setIsAddingAssignment(false); // Reset "add assignment" mode
 
     try {
       const response = await axios.get(`http://localhost:5000/api/submission/assignment/${assignCode}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-      setSubmissions(response.data); // Assuming response.data contains an array of submissions
+      setSubmissions(response.data);
     } catch (error) {
       console.error('Error fetching submissions', error);
     }
@@ -103,23 +102,87 @@ const Dashboard = () => {
     navigate(`/submission/${submissionId}`);
   };
 
-  // Handle logout
-  const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove the JWT from localStorage
-    navigate('/'); // Redirect to login page or home page after logging out
+  const handleAddCourse = () => {
+    setIsAddingCourse(true);
+    setIsAddingAssignment(false);
   };
 
-  // Search filtering functions
-  const filteredCourses = courses.filter(course =>
+  const handleAddAssignment = () => {
+    setIsAddingAssignment(true);
+    setIsAddingCourse(false);
+  };
+
+  const handleBackToView = () => {
+    setIsAddingCourse(false);
+    setIsAddingAssignment(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
+
+  const handleCourseCreation = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:5000/api/course/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', 
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          courseCode,
+          courseName,
+          description
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Course creation failed.');
+      }
+    } catch (err) {
+      console.log(err.message); // Display the error to the user
+    }
+  };
+
+  const handleAssignmentCreation = (courseCode) => async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:5000/api/assignment/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', 
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          dueDate,
+          courseCode,
+          mark
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Assignment creation failed.');
+      }
+    } catch (err) {
+      console.log(err.message); // Display the error to the user
+    }
+  };
+
+  const filteredCourses = courses.filter((course) =>
     course.courseCode.toLowerCase().includes(courseSearch.toLowerCase()) ||
     course.courseName.toLowerCase().includes(courseSearch.toLowerCase())
   );
 
-  const filteredAssignments = assignments.filter(assignment =>
+  const filteredAssignments = assignments.filter((assignment) =>
     assignment.title.toLowerCase().includes(assignmentSearch.toLowerCase())
   );
 
-  const filteredSubmissions = submissions.filter(submission =>
+  const filteredSubmissions = submissions.filter((submission) =>
     submission.user.username.toLowerCase().includes(submissionSearch.toLowerCase())
   );
 
@@ -135,89 +198,165 @@ const Dashboard = () => {
       </div>
 
       <div className='dashboard-body'>
+        {/* Sidebar */}
         <div className="sidebar">
-          <h2>Courses</h2>
-          <div className="search-bar">
-            <input 
-              type="text" 
-              placeholder="Search courses..." 
-              value={courseSearch}
-              onChange={(e) => setCourseSearch(e.target.value)} // Handle course search input
-            />
-          </div>
-          <div className="course-list">
-            {filteredCourses.map((course) => (
-              <div
-                key={course._id}
-                className={`course-item ${selectedCourse === course.courseCode ? 'selected' : ''}`}
-                onClick={() => handleCourseClick(course.courseCode)}
-              >
-                <div className="course-icon"></div>
-                <div className="course-details">
-                  <h3>{course.courseCode}</h3>
-                  <p>{course.courseName}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="sidebar-header">
+        <h2>{isAddingCourse ? 'Add Course' : 'Courses'}</h2>
+          {isAddingCourse ? (
+            <FontAwesomeIcon className="logo-link" icon={faArrowLeft} onClick={handleBackToView} />
+          ) : (
+            // Only show the plus icon if the user is an admin
+            role === 'admin' && <FontAwesomeIcon className="logo-link" icon={faPlus} onClick={handleAddCourse} />
+          )}
         </div>
 
-        <div className="main-content">
-          {selectedAssignment ? (
-            <div className="submission-section">
-              <h2>Submissions for {selectedAssignment}</h2>
+          
+          {isAddingCourse ? (
+            <form className="add-course-form" onSubmit={handleCourseCreation}>
+              <input 
+                className="add-course-form-code" 
+                type="text" 
+                placeholder="Course Code" 
+                value={courseCode}
+                onChange={(e) => setCourseCode(e.target.value)}
+                required/>
+              <input 
+                className="add-course-form-title" 
+                type="text" 
+                placeholder="Course Title" 
+                value={courseName}
+                onChange={(e) => setCourseTitle(e.target.value)}
+                required/>
+              <input 
+                className="add-course-form-description" 
+                type="text" 
+                placeholder="Course Description" 
+                value={description}
+                onChange={(e) => setCourseDescription(e.target.value)}
+                required/>
+              <button type='submit' className="add-course-form-add-button" >Add Course</button>
+            </form>
+          ) : (
+            <>
               <div className="search-bar">
-                <input 
-                  type="text" 
-                  placeholder="Search submissions..." 
-                  value={submissionSearch}
-                  onChange={(e) => setSubmissionSearch(e.target.value)} // Handle submission search input
+                <input
+                  type="text"
+                  placeholder="Search courses..."
+                  value={courseSearch}
+                  onChange={(e) => setCourseSearch(e.target.value)}
                 />
               </div>
-              <div className="submission-list">
-                {filteredSubmissions.map((submission) => (
+              <div className="course-list">
+                {filteredCourses.map((course) => (
                   <div
-                    key={submission._id}
-                    className="submission-item"
-                    onClick={() => handleSubmissionClick(submission._id)}
+                    key={course._id}
+                    className={`course-item ${selectedCourse === course.courseCode ? 'selected' : ''}`}
+                    onClick={() => handleCourseClick(course.courseCode)}
                   >
-                    <div className="submission-icon"></div>
-                    <div className="submission-details">
-                      <h3>{submission.user.username}</h3>
-                      <p>Grade: {submission.grade || 'Not graded'}</p>
-                      <p>Feedback: {submission.feedback || 'No feedback'}</p>
+                    <div className="course-icon"></div>
+                    <div className="course-details">
+                      <h3>{course.courseCode}</h3>
+                      <p>{course.courseName}</p>
                     </div>
                   </div>
                 ))}
               </div>
+            </>
+          )}
+        </div>
+
+        {/* Main Content */}
+        <div className="main-content">
+          {isAddingAssignment ? (
+            <div>
+              <div className="assignment-header">
+                <h2>Add Assignment for {selectedCourse}</h2>
+                <FontAwesomeIcon className="logo-link" icon={faArrowLeft} onClick={handleBackToView} />
+              </div>
+              <form onSubmit={handleAssignmentCreation(selectedCourse)} className="add-assignment-form">
+                <input type="text" placeholder="Assignment Title"
+                value={title}
+                onChange={(e) => setAssignmentTitle(e.target.value)} 
+                required
+                />
+                <input type="text" placeholder="Assignment Description"
+                value={description}
+                onChange={(e) => setCourseDescription(e.target.value)} 
+                required
+                />
+                <input type="date" placeholder="Assignment Due Date" 
+                value={dueDate}
+                onChange={(e) => setAssignmentDueDate(e.target.value)}
+                required
+                />
+                <input type="text" placeholder="Assignment Max Mark" 
+                value={mark}
+                onChange={(e) => setAssignmentMark(e.target.value)}
+                required
+                />
+                <button type='submit' className="add-assignment-form-add-button">Add Assignment</button>
+              </form>
             </div>
           ) : (
-            <div className="assignment-section">
-              <h2>Assignments for {selectedCourse}</h2>
-              <div className="search-bar">
-                <input 
-                  type="text" 
-                  placeholder="Search assignments..." 
-                  value={assignmentSearch}
-                  onChange={(e) => setAssignmentSearch(e.target.value)} // Handle assignment search input
-                />
-              </div>
-              <div className="assignment-list">
-                {filteredAssignments.map((assignment) => (
-                  <div
-                    key={assignment._id}
-                    className="assignment-item"
-                    onClick={() => handleAssignmentClick(assignment.assignCode)}
-                  >
-                    <div className="assignment-icon"></div>
-                    <div className="assignment-details">
-                      <h3>{assignment.title}</h3>
-                      <p>{assignment.courseName}</p>
+            selectedAssignment ? (
+              <div className="submission-section">
+                <h2>Submissions for {selectedAssignment}</h2>
+                <div className="search-bar">
+                  <input
+                    type="text"
+                    placeholder="Search submissions..."
+                    value={submissionSearch}
+                    onChange={(e) => setSubmissionSearch(e.target.value)}
+                  />
+                </div>
+                <div className="submission-list">
+                  {filteredSubmissions.map((submission) => (
+                    <div
+                      key={submission._id}
+                      className="submission-item"
+                      onClick={() => handleSubmissionClick(submission._id)}
+                    >
+                      <div className="submission-icon"></div>
+                      <div className="submission-details">
+                        <h3>{submission.user.username}</h3>
+                        <p>Grade: {submission.grade || 'Not graded'}</p>
+                        <p>Feedback: {submission.feedback || 'No feedback'}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="assignment-section">
+                <div className="assignment-header">
+                  <h2>Assignments for {selectedCourse}</h2>
+                  <FontAwesomeIcon className="logo-link" icon={faPlus} onClick={handleAddAssignment} />
+                </div>
+                <div className="search-bar">
+                  <input
+                    type="text"
+                    placeholder="Search assignments..."
+                    value={assignmentSearch}
+                    onChange={(e) => setAssignmentSearch(e.target.value)}
+                  />
+                </div>
+                <div className="assignment-list">
+                  {filteredAssignments.map((assignment) => (
+                    <div
+                      key={assignment._id}
+                      className={`assignment-item ${selectedAssignment === assignment.assignCode ? 'selected' : ''}`}
+                      onClick={() => handleAssignmentClick(assignment.assignCode)}
+                    >
+                      <div className="assignment-icon"></div>
+                      <div className="assignment-details">
+                        <h3>{assignment.title}</h3>
+                        <p>Due: {new Date(assignment.dueDate).toLocaleDateString()}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
           )}
         </div>
       </div>
