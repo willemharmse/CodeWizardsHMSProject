@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './AdminPage.css'; // Import the CSS file
+import { useNavigate } from 'react-router-dom';
 
 const AdminPage = () => {
   const [lecturers, setLecturers] = useState([]);
   const [students, setStudents] = useState([]);
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch all users
@@ -62,6 +64,30 @@ const AdminPage = () => {
     fetchUsers();
   }, []);
 
+  // Handle edit action
+  const handleEdit = (username) => {
+    navigate(`/update/${username}`);
+  };
+
+  // Handle delete action
+  const handleDelete = async (username) => {
+    // Logic for deleting the user
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`http://localhost:5000/api/user/delete/${username}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // Optionally, refresh the user list after deletion
+      setLecturers(lecturers.filter(lecturer => lecturer.username !== username));
+      setStudents(students.filter(student => student.username !== username));
+      setAdmins(admins.filter(admin => admin.username !== username));
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
+  };
+
   // Toggle the dropdown visibility
   const toggleDropdown = (id) => {
     const dropdown = document.getElementById(`dropdown-${id}`);
@@ -98,8 +124,8 @@ const AdminPage = () => {
                   <div className="dropdown">
                     <button className="dropbtn" onClick={() => toggleDropdown(lecturer._id)}>⋮</button>
                     <div id={`dropdown-${lecturer._id}`} className="dropdown-content">
-                      <button>Edit</button>
-                      <button>Delete</button>
+                    <button onClick={() => handleEdit(lecturer.username)}>Edit</button>
+                    <button onClick={() => handleDelete(lecturer.username)}>Delete</button>
                     </div>
                   </div>
                 </td>
@@ -131,8 +157,8 @@ const AdminPage = () => {
                   <div className="dropdown">
                     <button className="dropbtn" onClick={() => toggleDropdown(student._id)}>⋮</button>
                     <div id={`dropdown-${student._id}`} className="dropdown-content">
-                      <button>Edit</button>
-                      <button>Delete</button>
+                    <button onClick={() => handleEdit(student.username)}>Edit</button>
+                    <button onClick={() => handleDelete(student.username)}>Delete</button>
                     </div>
                   </div>
                 </td>
@@ -162,8 +188,7 @@ const AdminPage = () => {
                   <div className="dropdown">
                     <button className="dropbtn" onClick={() => toggleDropdown(admin._id)}>⋮</button>
                     <div id={`dropdown-${admin._id}`} className="dropdown-content">
-                      <button>Edit</button>
-                      <button>Delete</button>
+                    <button onClick={() => handleDelete(admin.username)}>Delete</button>
                     </div>
                   </div>
                 </td>

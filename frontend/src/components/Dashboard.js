@@ -122,6 +122,10 @@ const Dashboard = () => {
     navigate('/');
   };
 
+  const handleUserManagement = () => {
+    navigate('/userManagement');
+  };
+
   const handleCourseCreation = async (e) => {
     e.preventDefault();
 
@@ -192,6 +196,11 @@ const Dashboard = () => {
         <header className="dashboard-header-body">
           <div className="dashboard-header-content">
             <h2>HMS</h2>
+            {role === 'admin' && (
+              <button className="dashboard-logout-button" onClick={handleUserManagement}>
+                User Management
+              </button>
+            )}
             <button className="dashboard-logout-button" onClick={handleLogout}>Logout</button>
           </div>
         </header>
