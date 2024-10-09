@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
-import { useParams, useNavigate } from 'react-router-dom'; // To get user ID from URL and navigate back after editing
+import { useParams, useNavigate } from 'react-router-dom';
+import './EditUser.css'; // Import the CSS file
 
 const EditUser = () => {
-  const { username } = useParams(); // Get user ID from the URL
-  const navigate = useNavigate(); // Navigate after editing
-  const [user, setUser] = useState(null); // State for storing user information
+  const { username } = useParams();
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [courses, setCourses] = useState([]); // State for available courses
-  const [selectedCourse, setSelectedCourse] = useState(''); // State for the selected course
+  const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState('');
 
-  // Fetch the user information based on the username
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -22,8 +21,8 @@ const EditUser = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUser(response.data); // Set user data
-        setLoading(false); // Turn off loading state
+        setUser(response.data);
+        setLoading(false);
       } catch (err) {
         console.error('Error fetching user data:', err);
         setError('Failed to load user data');
@@ -39,7 +38,7 @@ const EditUser = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setCourses(response.data); // Set available courses
+        setCourses(response.data);
       } catch (err) {
         console.error('Error fetching courses:', err);
         setError('Failed to load courses');
@@ -50,37 +49,63 @@ const EditUser = () => {
     fetchCourses();
   }, [username]);
 
-  // Handle form changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
 
-  // Handle course selection
   const handleCourseChange = (e) => {
     setSelectedCourse(e.target.value);
   };
 
-  // Handle course addition/removal
   const handleCourseAdding = async () => {
     try {
       const token = localStorage.getItem('token');
-
-      await axios.post(`http://localhost:5000/api/course/student/${username}/${selectedCourse}`, {}, {
+      const endpoint = user.user.role === 'student'
+        ? `http://localhost:5000/api/course/student/${username}/${selectedCourse}`
+        : `http://localhost:5000/api/course/lecturer/${username}/${selectedCourse}`;
+      await axios.post(endpoint, {}, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
-
-      setSelectedCourse(''); // Clear the selection
+      // Refresh user data after adding course
+      const updatedUser = await axios.get(`http://localhost:5000/api/user/${username}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(updatedUser.data);
+      setSelectedCourse('');
     } catch (err) {
       console.error('Error updating courses:', err);
       setError('Failed to update courses');
     }
   };
 
-  // Handle form submission
+  const handleCourseRemoving = async (courseCode) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`http://localhost:5000/api/course/remove/${username}/${courseCode}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      // Refresh the user's data after removing the course
+      const updatedUser = await axios.get(`http://localhost:5000/api/user/${username}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(updatedUser.data);
+    } catch (err) {
+      console.error('Error removing course:', err);
+      setError(`Failed to remove course: ${err.message}`);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -90,7 +115,6 @@ const EditUser = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      // Redirect back to admin page or show success message
       navigate('/userManagement');
     } catch (err) {
       console.error('Error updating user:', err);
@@ -98,66 +122,100 @@ const EditUser = () => {
     }
   };
 
-  if (loading) return <div>Loading user information...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <div className="loading-message">Loading user information...</div>;
+  if (error) return <div className="error-message">{error}</div>;
+
+  // Filter courses to exclude already enrolled or taught courses
+  const availableCourses = courses.filter(
+    (course) => !user.coursesTaught?.some((c) => c.courseCode === course.courseCode) &&
+                !user.coursesEnrolled?.some((c) => c.courseCode === course.courseCode)
+  );
 
   return (
     <div className="edit-user-page">
       <h1>Edit User: {user.user.username}</h1>
       <form onSubmit={handleSubmit}>
-        {/* Role-specific fields */}
         {user.user.role === 'lecturer' && (
-          <>
-            <div>
-              <label>Department:</label>
-              <input
-                type="text"
-                name="department"
-                value={user.department || ''}
-                onChange={handleChange}
-              />
-            </div>
-          </>
+          <div>
+            <label>Department:</label>
+            <input
+              type="text"
+              name="department"
+              value={user.department || ''}
+              onChange={handleChange}
+            />
+          </div>
         )}
 
         {user.user.role === 'student' && (
-        <>
-            <div>
+          <div>
             <label>Enrollment Year:</label>
             <input
-                type="number"
-                name="enrollmentYear"
-                value={user.enrollmentYear || ''}
-                onChange={handleChange}
+              type="number"
+              name="enrollmentYear"
+              value={user.enrollmentYear || ''}
+              onChange={handleChange}
             />
-            </div>
-
-            <div>
-            <label>Enrolled Courses:</label>
-            <ul>
-                {user.coursesEnrolled.map((course) => (
-                <li key={course._id}>{course.courseCode}</li>
-                ))}
-            </ul>
-            </div>
-
-            <div>
-            <label>Select Course:</label>
-            <select value={selectedCourse} onChange={handleCourseChange}>
-                <option value="">Select a course</option>
-                {courses.map((course) => (
-                <option key={course._id} value={course.courseCode}>  {/* Changed to courseCode */}
-                    {course.courseCode}  {/* Displaying courseName */}
-                </option>
-                ))}
-            </select>
-            <button type="button" onClick={() => handleCourseAdding()}>Add Course</button>
-            <button type="button" onClick={() => handleCourseAdding('remove')}>Remove Course</button>
-            </div>
-        </>
+          </div>
         )}
+
         <button type="submit">Save Changes</button>
       </form>
+
+      {/* Courses section */}
+      {user.user.role === 'lecturer' && (
+        <div className="course-section">
+          <h2>Courses Taught</h2>
+          <ul>
+            {user.coursesTaught.map((course) => (
+              <li key={course._id} className="course-item">
+                {course.courseCode}
+                <button
+                  className="delete-btn"
+                  onClick={() => handleCourseRemoving(course.courseCode)}
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {user.user.role === 'student' && (
+        <div className="course-section">
+          <h2>Enrolled Courses</h2>
+          <ul>
+            {user.coursesEnrolled.map((course) => (
+              <li key={course._id} className="course-item">
+                {course.courseCode}
+                <button
+                  className="delete-btn"
+                  onClick={() => handleCourseRemoving(course.courseCode)}
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Add Course Section */}
+      <div className="add-course-section">
+        <h3>Add Course</h3>
+        <select value={selectedCourse} onChange={handleCourseChange}>
+          <option value="">Select a course</option>
+          {availableCourses.map((course) => (
+            <option key={course._id} value={course.courseCode}>
+              {course.courseCode} - {course.courseName}
+            </option>
+          ))}
+        </select>
+        <button onClick={handleCourseAdding} disabled={!selectedCourse}>
+          Add Course
+        </button>
+      </div>
     </div>
   );
 };
