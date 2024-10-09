@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import './Dashboard.css';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faArrowLeft, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 const Dashboard = () => {
   const [title, setAssignmentTitle] = useState('');
@@ -81,6 +81,35 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Error fetching assignments', error);
     }
+  };
+
+  const handleDownloadResource = async (assignCode) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/grades/${assignCode}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          responseType: 'blob', // Set responseType to blob for binary data
+      });
+
+      // Create a URL for the blob response
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+
+      // Create a link element and set the URL to it
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'grades.xlsx'); // Set the file name
+
+      // Append the link to the body
+      document.body.appendChild(link);
+
+      // Programmatically click the link to trigger the download
+      link.click();
+
+      // Clean up and remove the link
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url); // Free up memory
+  } catch (error) {
+      console.error('Error downloading resource:', error);
+  }
   };
 
   const handleAssignmentClick = async (assignCode) => {
@@ -310,6 +339,9 @@ const Dashboard = () => {
             selectedAssignment ? (
               <div className="submission-section">
                 <h2>Submissions for {selectedAssignment}</h2>
+                <button className="download-button" onClick={() => handleDownloadResource(selectedAssignment)}>
+                <FontAwesomeIcon className="logo-link" icon={faDownload}/>
+                </button>
                 <div className="search-bar">
                   <input
                     type="text"
