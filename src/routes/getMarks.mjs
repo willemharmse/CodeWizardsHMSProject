@@ -13,7 +13,8 @@ router.get('/:assignCode', verifyToken, restrictUser(['admin', 'lecturer']), asy
     try {
         const { assignCode } = req.params;
 
-        const assignment = await Assignment.findOne({assignCode: assignCode});
+        const assignment = await Assignment.findOne({assignCode: assignCode})
+                                           .populate('course');
         if (!assignment) {
             logger.warn(`Failed retrieving info for ${assignCode}. Assignment does not exist`);
             return res.status(404).send('Assignment not found');
@@ -42,7 +43,7 @@ router.get('/:assignCode', verifyToken, restrictUser(['admin', 'lecturer']), asy
         // Create a new workbook and add the data
         const workbook = xlsx.utils.book_new();
         const worksheet = xlsx.utils.json_to_sheet(data);
-        xlsx.utils.book_append_sheet(workbook, worksheet, 'Grades');
+        xlsx.utils.book_append_sheet(workbook, worksheet, `Grades_${assignment.course.courseCode}`);
 
         // Create buffer from the workbook
         const buffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'buffer' });

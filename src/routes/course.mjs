@@ -299,4 +299,64 @@ router.post('/student/:username/:courseCode', verifyToken, restrictUser(['admin'
     }
 });
 
+router.delete('/remove/:username/:courseCode', verifyToken, restrictUser(['admin']), async (req, res) => {
+    const username = req.params.username;
+    const courseCode = req.params.courseCode;
+
+    try{
+        const user = await User.findOne({ username: username});
+        if (!user)
+        {
+            logger.warn(`Failed retrieving info for user. User does not exist`);
+            return res.status(404).send('User not found.');
+        }
+
+        const course = await Course.findOne({ courseCode: courseCode });
+        if (!course) {
+            logger.warn(`Course not found in database`);
+            return res.status(404).send('Course not found.');
+        }
+
+        if (user.role === 'student')
+        {
+            const student = await Student.findOne({user: user});
+            if (!student)
+            {
+                logger.warn(`Failed retrieving info for user. User is not a student`);
+                return res.status(404).send('Student not found.');
+            }
+
+            await student.coursesEnrolled.pull(course._id);
+            await student.save();
+
+            logger.info(`Course ${courseCode} removed from course enrolled for student: ${username}.`);
+            res.status(200).send('Course removed successfully from courses enrolled.');
+        }
+        else if (user.role === 'lecturer')
+        {
+            const lecturer = await Lecturer.findOne({user: user});
+            if (!lecturer)
+            {
+                logger.warn(`Failed retrieving info for user. User is not a lecturer`);
+                return res.status(404).send('Lecturer not found.');
+            }
+
+            await lecturer.coursesTaught.pull(course._id);
+            await lecturer.save();
+
+            logger.info(`Course ${courseCode} removed from course taught for lecturer: ${username}.`);
+            res.status(200).send('Course removed successfully from courses taught.');
+        }
+        else {
+            logger.info(`Course could not be removed from user.`);
+            res.status(200).send('Failed to remove course.');
+        }
+    }
+    catch (err)
+    {
+        logger.error(`Error removing course: ${err}`);
+        res.status(500).send('Error removing course.');
+    }
+});
+
 export default router;

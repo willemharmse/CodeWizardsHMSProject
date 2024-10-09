@@ -1,5 +1,5 @@
 import express from 'express';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { User } from '../models/users.mjs'; 
 import { Student } from '../models/student.mjs';
 import { Admin } from '../models/admins.mjs';
@@ -74,6 +74,69 @@ router.get('/', verifyToken, async (req, res) => {
         const users = await User.find({});
 
         res.status(200).json(users);
+    } catch (err) {
+        logger.error(`Error during retrieval of user details: ${err}`);
+        res.status(500).send('Error fetching student details');
+    }
+});
+
+router.get('/:username', verifyToken, async (req, res) => {
+    try {
+        const username = req.params.username;
+
+        // Find the user by username
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            logger.warn(`Failed retrieving info for ${username}. User does not exist`);
+            return res.status(404).send('User not found');
+        }
+
+        // Check if the user is a student
+        if (user.role === 'student') {
+            const student = await Student.findOne({ user: user._id })
+            .populate('user')  // This will populate user details
+            .populate('coursesEnrolled')
+
+            if (!student) {
+                logger.warn(`Failed retrieving info for ${username}. User info not found for student`);
+                return res.status(404).send('Student details not found');
+            }
+
+            logger.info(`User info for user: ${username} successfully loaded`);
+            res.status(200).json(student);
+        } 
+        else if (user.role === 'lecturer')
+        {
+            const lecturer = await Lecturer.findOne({ user: user._id })
+            .populate('user')  // This will populate user details
+            .populate('coursesTaught')
+
+            if (!lecturer) {
+                logger.warn(`Failed retrieving info for ${username}. User info not found for lecturer`);
+                return res.status(404).send('Lecturer details not found');
+            }       
+            
+            logger.info(`User info for user: ${username} successfully loaded`);
+            res.status(200).json(lecturer);
+        }
+        else if (user.role === 'admin')
+        {
+            const admin = await Admin.findOne({ user: user._id })
+            .populate('user');
+
+            if (!admin) {
+                logger.warn(`Failed retrieving info for ${username}. User info not found for admin`);
+                return res.status(404).send('Admin details not found');
+            }
+
+            logger.info(`User info for user: ${username} successfully loaded`);
+            res.status(200).json(admin);
+        }
+        else{
+            logger.warn(`Failed retrieving info for ${username}.`);
+            return res.status(400).send('User not found');
+        }
     } catch (err) {
         logger.error(`Error during retrieval of user details: ${err}`);
         res.status(500).send('Error fetching student details');
@@ -197,7 +260,7 @@ router.get('/logout', verifyToken, verifyToken, async (req, res) => {
 router.put('/update/:username', verifyToken, restrictUser(['admin']), async (req, res) => {
     try{
         const username = req.params.username;
-        const { email, role, department } = req.body;
+        const { email, department, enrollmentYear } = req.body;
         
         // Find the user by username
         const user = await User.findOne({ username });
@@ -207,33 +270,51 @@ router.put('/update/:username', verifyToken, restrictUser(['admin']), async (req
             return res.status(404).send('User not found');
         }
 
-        // Check if the role has changed
-        const oldRole = user.role;
-        if (role && role !== oldRole) {
-            // Remove from the old role-specific collection
-            if (oldRole === 'admin') {
-                await Admin.findOneAndDelete({ user: user._id });
-            } else if (oldRole === 'student') {
-                await Student.findOneAndDelete({ user: user._id });
-            }
-            else if (oldRole === 'lecturer') {
-                await Lecturer.findOneAndDelete({ user: user._id });
+        if (user.role === 'student') {
+            const student = await Student.findOne({ user: user._id });
+
+            if (!student) {
+                logger.warn(`Failed retrieving info for ${username}. User info not found for student`);
+                return res.status(404).send('Student details not found');
             }
 
-            // Add to the new role-specific collection
-            if (role === 'admin') {
-                await new Admin({ user: user._id }).save();
-            } else if (role === 'student') {
-                await new Student({ user: user._id, enrollmentYear: 2000 }).save();
-            }
-            else if (role === 'lecturer') {
-                await new Lecturer({ user: user._id, department: department}).save();
-            }
+            student.enrollmentYear = enrollmentYear;
+            await student.save();
+
+            user.email = email || user.email;
+            await user.save();
+        } 
+        else if (user.role === 'lecturer')
+        {
+            const lecturer = await Lecturer.findOne({ user: user._id });
+
+            if (!lecturer) {
+                logger.warn(`Failed retrieving info for ${username}. User info not found for lecturer`);
+                return res.status(404).send('Lecturer details not found');
+            }       
+            
+            lecturer.department = department;
+            await lecturer.save();
+
+            user.email = email || user.email;
+            await user.save();
         }
+        else if (user.role === 'admin')
+        {
+            const admin = await Admin.findOne({ user: user._id });
 
-        user.email = email || user.email;
-        user.role = role || user.role;
-        await user.save();
+            if (!admin) {
+                logger.warn(`Failed retrieving info for ${username}. User info not found for admin`);
+                return res.status(404).send('Admin details not found');
+            }
+
+            user.email = email || user.email;
+            await user.save();
+        }
+        else{
+            logger.warn(`Failed retrieving info for ${username}.`);
+            return res.status(400).send('User not found');
+        }
 
         logger.info(`User: ${username} successfully updated`);
         res.status(200).send('User updated successfully');
