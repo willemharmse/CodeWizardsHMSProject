@@ -225,12 +225,14 @@ const Dashboard = () => {
         <header className="dashboard-header-body">
           <div className="dashboard-header-content">
             <h2>HMS</h2>
+            <div className='dashboard-management-and-logout-buttons'>
             {role === 'admin' && (
-              <button className="dashboard-logout-button" onClick={handleUserManagement}>
+              <button className="dashboard-user-management" onClick={handleUserManagement}>
                 User Management
               </button>
             )}
             <button className="dashboard-logout-button" onClick={handleLogout}>Logout</button>
+            </div>
           </div>
         </header>
       </div>
@@ -338,10 +340,10 @@ const Dashboard = () => {
           ) : (
             selectedAssignment ? (
               <div className="submission-section">
-                <h2>Submissions for {selectedAssignment}</h2>
-                <button className="download-button" onClick={() => handleDownloadResource(selectedAssignment)}>
-                <FontAwesomeIcon className="logo-link" icon={faDownload}/>
-                </button>
+                <div className='submission-section-header'>
+                  <h2>Submissions for {selectedAssignment}</h2>
+                  <FontAwesomeIcon className="logo-link" onClick={() => handleDownloadResource(selectedAssignment)} icon={faDownload}/>
+                </div>
                 <div className="search-bar">
                   <input
                     type="text"

@@ -122,8 +122,8 @@ const EditUser = () => {
     }
   };
 
-  if (loading) return <div className="loading-message">Loading user information...</div>;
-  if (error) return <div className="error-message">{error}</div>;
+  if (loading) return <div className="edit-user-loading-message">Loading user information...</div>;
+  if (error) return <div className="edit-user-error-message">{error}</div>;
 
   // Filter courses to exclude already enrolled or taught courses
   const availableCourses = courses.filter(
@@ -159,38 +159,38 @@ const EditUser = () => {
           </div>
         )}
 
-        <button type="submit">Save Changes</button>
+        <button className='edit-user-page-save-changes-button' type="submit">Save Changes</button>
       </form>
 
       {/* Courses section */}
       {user.user.role === 'lecturer' && (
-        <div className="course-section">
+        <div className="edit-user-course-section">
           <h2>Courses Taught</h2>
-          <ul>
+          <div>
             {user.coursesTaught.map((course) => (
-              <li key={course._id} className="course-item">
+              <li key={course._id} className="edit-user-course-item">
                 {course.courseCode}
                 <button
-                  className="delete-btn"
+                  className="edit-user-delete-btn"
                   onClick={() => handleCourseRemoving(course.courseCode)}
                 >
                   Remove
                 </button>
               </li>
             ))}
-          </ul>
+          </div>
         </div>
       )}
 
       {user.user.role === 'student' && (
-        <div className="course-section">
+        <div className="edit-user-course-section">
           <h2>Enrolled Courses</h2>
           <ul>
             {user.coursesEnrolled.map((course) => (
-              <li key={course._id} className="course-item">
+              <li key={course._id} className="edit-user-course-item">
                 {course.courseCode}
                 <button
-                  className="delete-btn"
+                  className="edit-user-delete-btn"
                   onClick={() => handleCourseRemoving(course.courseCode)}
                 >
                   Remove
@@ -202,7 +202,7 @@ const EditUser = () => {
       )}
 
       {/* Add Course Section */}
-      <div className="add-course-section">
+      <div className="edit-user-add-course-section">
         <h3>Add Course</h3>
         <select value={selectedCourse} onChange={handleCourseChange}>
           <option value="">Select a course</option>
@@ -212,7 +212,7 @@ const EditUser = () => {
             </option>
           ))}
         </select>
-        <button onClick={handleCourseAdding} disabled={!selectedCourse}>
+        <button className='edit-user-page-add-course-btn' onClick={handleCourseAdding} disabled={!selectedCourse}>
           Add Course
         </button>
       </div>
