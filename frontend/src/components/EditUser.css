@@ -1,126 +1,183 @@
-.edit-user-page {
+.user-edit-page {
   width: 50%;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #1c3f60;
+  border-radius: 20px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  color: #f3f6fa;
 }
 
-.edit-user-page h1 {
+.user-edit-page-header-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-edit-page-header-content h2{
+  margin-top: 14px;
+  margin-left: 30px;
+  color: #f3f6fa;
+}
+
+.user-edit-page-logout-button, .user-edit-page-user-management {
+  height: 80%;
+  font-size: 20px;
+  background-color: transparent;
+  border: 3px solid;
+  background-color: #365679;
+  border-color: #365679;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  color: #f3f6fa;
+  padding: 10px 30px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin-right: 25px;
+}
+
+.user-edit-page-logout-button:hover, .user-edit-page-user-management:hover {
+  background-color: #afc1d0;
+  color: #365679;
+  transition: 0.5s ease;
+}
+
+.user-edit-page h1 {
   text-align: center;
-  color: #333;
+  color: #afc1d0;
   margin-bottom: 20px;
 }
 
-.edit-user-page form {
+.user-edit-page form {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 20px;
   margin-bottom: 30px;
 }
 
-.edit-user-page label {
+.user-edit-page label {
   font-weight: bold;
-  color: #555;
+  color: #afc1d0;
 }
 
-.edit-user-page input[type="text"],
-.edit-user-page input[type="number"],
-.edit-user-page select {
+.user-edit-page input[type="text"],
+.user-edit-page input[type="number"],
+.user-edit-page select {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 14px;
-  background-color: #fff;
+  border: 0;
+  border-bottom: 1px solid #afc1d0;
+  background-color: transparent;
+  color: #f3f6fa;
+  transition: border-color 0.3s ease;
 }
 
-.edit-user-delete-btn {
-  background-color: #d9534f;
-  color: white;
-  border: none;
+.user-edit-page input:focus,
+.user-edit-page select:focus {
+  outline: none;
+  border-color: #f3f6fa;
+}
+
+.user-edit-delete-btn {
+  background-color: #365679;
+  color: #f3f6fa;
+  border: 3px solid #365679;
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-.edit-user-delete-btn:hover {
-  background-color: #c9302c;
+.user-edit-delete-btn:hover {
+  background-color: #afc1d0;
+  color: #1c3f60;
 }
 
-.edit-user-page-add-course-btn, .edit-user-page-save-changes-button{
-  padding: 10px 20px;
-  background-color: #45a29e;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
+.user-edit-page-add-course-btn, 
+.user-edit-page-save-changes-button {
+  padding: 10px;
+  background-color: #afc1d0;
+  font-weight: 800;
+  color: #1c3f60;
+  border: 3px solid #afc1d0;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-.edit-user-page button:hover {
-  background-color: #397e77;
+.user-edit-page button:hover {
+  background-color: #1c3f60;
+  color: #afc1d0;
 }
 
-.edit-user-page button[type="submit"] {
-  width: 100%;
-}
-
-.edit-user-course-section {
-  background-color: #fff;
+.user-edit-course-section {
+  background-color: #365679;
   padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
 }
 
-.edit-user-course-section h2 {
+.user-edit-course-section h2 {
   font-size: 20px;
   margin-bottom: 10px;
-  color: #333;
+  color: #afc1d0;
 }
 
-.edit-user-course-item {
+.user-edit-course-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background-color: #f9f9f9;
+  padding: 15px;
+  background-color: #1c3f60;
   margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
-  transition: color 0.3s ease,background-color 0.3s ease;
+  border-radius: 24px;
+  color: #f3f6fa;
+  cursor: pointer;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  transition: color 0.5s ease, background-color 0.5s ease;
 }
 
-.edit-user-course-item:hover {
+.user-edit-course-item:hover {
   color: #1c3f60;
   background-color: #afc1d0;
 }
 
-.edit-user-add-course-section {
+.user-edit-add-course-section {
   margin-top: 20px;
 }
 
-.edit-user-add-course-section h3 {
+.user-edit-add-course-section h3 {
   font-size: 18px;
   margin-bottom: 10px;
+  color: #afc1d0;
 }
 
-.edit-user-add-course-section select {
+.user-edit-add-course-section select, .user-edit-add-course-section option{
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 4px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: #1c3f60;
+  color: #f3f6fa;
+  border: 1px solid #afc1d0;
 }
 
-.edit-user-add-course-section button {
+.user-edit-add-course-section button {
   width: 100%;
   padding: 10px;
+  background-color: #afc1d0;
+  color: #1c3f60;
+  font-weight: 900;
+  border: 3px solid #afc1d0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.user-edit-add-course-section button:hover {
+  background-color: #1c3f60;
+  color: #afc1d0;
 }

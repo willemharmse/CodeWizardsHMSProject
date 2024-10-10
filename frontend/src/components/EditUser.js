@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import './EditUser.css'; // Import the CSS file
+import './EditUser.css'; // Import the updated CSS file
 
 const EditUser = () => {
   const { username } = useParams();
@@ -70,7 +70,6 @@ const EditUser = () => {
           'Content-Type': 'application/json',
         },
       });
-      // Refresh user data after adding course
       const updatedUser = await axios.get(`http://localhost:5000/api/user/${username}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -93,7 +92,6 @@ const EditUser = () => {
           'Content-Type': 'application/json',
         },
       });
-      // Refresh the user's data after removing the course
       const updatedUser = await axios.get(`http://localhost:5000/api/user/${username}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -122,17 +120,39 @@ const EditUser = () => {
     }
   };
 
-  if (loading) return <div className="edit-user-loading-message">Loading user information...</div>;
-  if (error) return <div className="edit-user-error-message">{error}</div>;
+  if (loading) return <div className="user-edit-loading-message">Loading user information...</div>;
+  if (error) return <div className="user-edit-error-message">{error}</div>;
 
-  // Filter courses to exclude already enrolled or taught courses
   const availableCourses = courses.filter(
     (course) => !user.coursesTaught?.some((c) => c.courseCode === course.courseCode) &&
                 !user.coursesEnrolled?.some((c) => c.courseCode === course.courseCode)
   );
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
+
+  const handleUserManagement = () => {
+    navigate('/userManagement');
+  };
+
   return (
-    <div className="edit-user-page">
+    <div className="user-edit-page-main">
+      <div className='user-edit-page-header'>
+        <header className="user-edit-page-header-body">
+          <div className="user-edit-page-header-content">
+            <h2>HMS</h2>
+            <div className='user-edit-page-management-and-logout-buttons'>
+              <button className="user-edit-page-user-management" onClick={handleUserManagement}>
+                User Management
+              </button>
+            <button className="user-edit-page-logout-button" onClick={handleLogout}>Logout</button>
+            </div>
+          </div>
+        </header>
+      </div>
+      <div className="user-edit-page">
       <h1>Edit User: {user.user.username}</h1>
       <form onSubmit={handleSubmit}>
         {user.user.role === 'lecturer' && (
@@ -159,19 +179,18 @@ const EditUser = () => {
           </div>
         )}
 
-        <button className='edit-user-page-save-changes-button' type="submit">Save Changes</button>
+        <button className="user-edit-page-save-changes-button" type="submit">Save Changes</button>
       </form>
 
-      {/* Courses section */}
       {user.user.role === 'lecturer' && (
-        <div className="edit-user-course-section">
+        <div className="user-edit-course-section">
           <h2>Courses Taught</h2>
           <div>
             {user.coursesTaught.map((course) => (
-              <li key={course._id} className="edit-user-course-item">
-                {course.courseCode}
+              <li key={course._id} className="user-edit-course-item">
+                {course.courseCode} - {course.courseName}
                 <button
-                  className="edit-user-delete-btn"
+                  className="user-edit-delete-btn"
                   onClick={() => handleCourseRemoving(course.courseCode)}
                 >
                   Remove
@@ -183,27 +202,26 @@ const EditUser = () => {
       )}
 
       {user.user.role === 'student' && (
-        <div className="edit-user-course-section">
-          <h2>Enrolled Courses</h2>
-          <ul>
+        <div className="user-edit-course-section">
+          <h2>Courses Enrolled</h2>
+          <div>
             {user.coursesEnrolled.map((course) => (
-              <li key={course._id} className="edit-user-course-item">
-                {course.courseCode}
+              <li key={course._id} className="user-edit-course-item">
+                {course.courseCode} - {course.courseName}
                 <button
-                  className="edit-user-delete-btn"
+                  className="user-edit-delete-btn"
                   onClick={() => handleCourseRemoving(course.courseCode)}
                 >
                   Remove
                 </button>
               </li>
             ))}
-          </ul>
+          </div>
         </div>
       )}
 
-      {/* Add Course Section */}
-      <div className="edit-user-add-course-section">
-        <h3>Add Course</h3>
+      <div className="user-edit-add-course-section">
+        <h3>Add a New Course</h3>
         <select value={selectedCourse} onChange={handleCourseChange}>
           <option value="">Select a course</option>
           {availableCourses.map((course) => (
@@ -212,9 +230,8 @@ const EditUser = () => {
             </option>
           ))}
         </select>
-        <button className='edit-user-page-add-course-btn' onClick={handleCourseAdding} disabled={!selectedCourse}>
-          Add Course
-        </button>
+        <button onClick={handleCourseAdding}>Add Course</button>
+      </div>
       </div>
     </div>
   );

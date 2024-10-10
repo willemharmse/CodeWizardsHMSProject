@@ -2,20 +2,60 @@
 .admin-page {
     padding: 20px;
     font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-    color: #333;
+    background-color: #afc1d0; /* Match background color */
+    color: #f3f6fa; /* Update font color */
 }
+
+.admin-page-header-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .admin-page-header-content h2{
+    margin-top: 14px;
+    margin-left: 30px;
+    color: #0b1320;
+  }
+  
+  .admin-page-logout-button, .admin-page-user-management {
+    height: 80%;
+    font-size: 20px;
+    background-color: transparent;
+    border: 3px solid;
+    background-color: #365679;
+    border-color: #365679;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    color: #f3f6fa;
+    padding: 10px 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-right: 25px;
+  }
+  
+  .admin-page-logout-button:hover, .admin-page-user-management:hover {
+    background-color: #afc1d0;
+    color: #365679;
+    transition: 0.5s ease;
+  }
+  
 
 /* Main title styling */
 .admin-page h1 {
+    font-size: 40px;
+    font-weight: 750;
     text-align: center;
-    color: #2c3e50;
-    margin-bottom: 40px;
+    color: #0b1320; /* Update color */
+    margin: 20px;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 /* Section titles for each role */
 .admin-page h2 {
-    color: #34495e;
+    color: #1c3f60; /* Updated to match section headers */
     margin-bottom: 15px;
     font-size: 24px;
 }
@@ -25,39 +65,43 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 40px;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #1c3f60; /* Update background */
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2); /* Match shadow */
+    border-radius: 20px; /* Add rounded corners */
 }
 
 /* Table header styling */
 table th {
-    background-color: #2c3e50;
-    color: #fff;
+    background-color: #365679; /* Update header color */
+    color: #f3f6fa; /* Update text color */
     padding: 12px;
     text-align: left;
+    border-radius: 10px 10px 0 0; /* Rounded top corners for header */
 }
 
 /* Table data cell styling */
 table td {
     padding: 12px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #afc1d0; /* Update border color */
     text-align: left;
+    color: #f3f6fa; /* Update text color */
 }
 
 /* Table row hover effect */
 table tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #365679; /* Update hover effect */
 }
 
 /* Dropdown button */
 .dropbtn {
-    background-color: #3498db;
-    color: white;
+    background-color: #1c3f60; /* Match button background */
+    color: #f3f6fa; /* Update text color */
     padding: 8px;
     font-size: 14px;
-    border: none;
+    border: 3px solid #1c3f60; /* Update border */
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 10px; /* Add rounded corners */
+    transition: background-color 0.3s ease;
 }
 
 /* Dropdown container */
@@ -66,12 +110,16 @@ table tbody tr:hover {
     display: inline-block;
 }
 
+.admin-page-table-actions-button {
+    justify-content: right;
+}
+
 /* Dropdown content (hidden by default) */
 .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
     min-width: 100px;
     z-index: 1;
 }
@@ -96,7 +144,9 @@ table tbody tr:hover {
 
 /* Button hover effect */
 button:hover {
-    background-color: #2980b9;
+    background-color: #afc1d0; /* Update hover effect */
+    color: #365679; /* Change text color on hover */
+    transition: 0.5s ease;
 }
 
 .dropdown-content button:hover {

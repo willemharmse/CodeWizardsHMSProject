@@ -64,6 +64,11 @@ const AdminPage = () => {
     fetchUsers();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
+
   // Handle edit action
   const handleEdit = (username) => {
     navigate(`/update/${username}`);
@@ -100,7 +105,18 @@ const AdminPage = () => {
 
   return (
     <div className="admin-page">
-      <h1>User Management</h1>
+      <div className='admin-page-header'>
+        <header className="admin-page-header-body">
+          <div className="admin-page-header-content">
+            <h1>HMS</h1>
+            <h1>User Management</h1>
+            <div className='admin-page-management-and-logout-buttons'>
+            <button className="admin-page-logout-button" onClick={handleLogout}>Logout</button>
+            </div>
+          </div>
+        </header>
+      </div>
+      
 
       {/* Lecturer Section */}
       <section>
@@ -120,7 +136,7 @@ const AdminPage = () => {
                 <td>{lecturer.username}</td>
                 <td>{lecturer.email}</td>
                 <td>{lecturer.department}</td>
-                <td>
+                <td className='admin-page-table-actions-button'>
                   <div className="dropdown">
                     <button className="dropbtn" onClick={() => toggleDropdown(lecturer._id)}>⋮</button>
                     <div id={`dropdown-${lecturer._id}`} className="dropdown-content">
@@ -153,7 +169,7 @@ const AdminPage = () => {
                 <td>{student.username}</td>
                 <td>{student.email}</td>
                 <td>{student.enrollmentYear}</td>
-                <td>
+                <td className='admin-page-table-actions-button'>
                   <div className="dropdown">
                     <button className="dropbtn" onClick={() => toggleDropdown(student._id)}>⋮</button>
                     <div id={`dropdown-${student._id}`} className="dropdown-content">
@@ -184,7 +200,7 @@ const AdminPage = () => {
               <tr key={admin._id}>
                 <td>{admin.username}</td>
                 <td>{admin.email}</td>
-                <td>
+                <td className='admin-page-table-actions-button'>
                   <div className="dropdown">
                     <button className="dropbtn" onClick={() => toggleDropdown(admin._id)}>⋮</button>
                     <div id={`dropdown-${admin._id}`} className="dropdown-content">
