@@ -1,4 +1,0 @@
-2024-09-24 12:10:12 error: Error during logging out: ReferenceError: username is not defined
-2024-09-24 12:25:05 error: Error occured during creation of assignment: ReferenceError: coures is not defined
-2024-09-24 12:26:16 error: Error occured during creation of assignment: ReferenceError: coures is not defined
-2024-09-24 12:29:02 error: Error occured during deletion of assignment: ReferenceError: Submission is not defined
