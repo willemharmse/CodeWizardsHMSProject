@@ -81,29 +81,46 @@ router.get('/courses/lecturer', verifyToken, restrictUser(['lecturer']), async f
     }    
 });
 
-router.get('/courses/student', verifyToken, restrictUser(['student']), async function(req, res){
+router.get('/courses/student', verifyToken, restrictUser(['student', 'admin']), async function(req, res){
     try {
         const userID = req.user.userId;
-    
-        // Find the lecturer and populate the courses they teach
-        const student = await Student.findOne({ user: userID })
-                                       .populate('coursesEnrolled');
-    
-        if (!student) {
-            logger.warn(`User not found in database`);
-            return res.status(404).send('No courses found');   
+
+        const user = await User.findOne({_id: userID});
+
+        if (user.role === 'student')
+        {
+            // Find the lecturer and populate the courses they teach
+            const student = await Student.findOne({ user: userID })
+                                        .populate('coursesEnrolled');
+        
+            if (!student) {
+                logger.warn(`User not found in database`);
+                return res.status(404).send('No courses found');   
+            }
+        
+            // Extract the coursesTaught from the lecturer object
+            const courses = student.coursesEnrolled;
+        
+            if (!courses || courses.length === 0) {
+                logger.warn(`No courses assigned to lecturer`);
+                return res.status(404).send('No courses found');
+            }
+        
+            logger.info(`Courses loaded successfully`);
+            res.status(200).json(courses);  // Return only the courses taught by the lecturer
         }
-    
-        // Extract the coursesTaught from the lecturer object
-        const courses = student.coursesEnrolled;
-    
-        if (!courses || courses.length === 0) {
-            logger.warn(`No courses assigned to lecturer`);
-            return res.status(404).send('No courses found');
+        else if (user.role === 'admin')
+        {
+            const courses = await Course.find({});
+        
+            if (courses.length === 0) {
+                logger.info(`No courses found in database`);
+                return res.status(404).send('No course found');
+            }
+        
+            logger.info(`Courses loaded successfully`);
+            res.status(200).json(courses);
         }
-    
-        logger.info(`Courses loaded successfully`);
-        res.status(200).json(courses);  // Return only the courses taught by the lecturer
     } catch (err) {
         logger.error(`Error during course loading: ${err}`);
         res.status(500).send('Error fetching course details');
