@@ -260,6 +260,16 @@ components:
         - message
 
 paths:
+  /status:
+    get:
+      tags:
+        - Status
+      summary: This loads a webpage that can be used for performance metrics
+      operationId: getSatus
+      responses:
+        '200':
+          description: Loads the webpage
+
   /api/user/create:
     post:
       tags:

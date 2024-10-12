@@ -16,7 +16,7 @@ router.use(express.json());
 router.get('/course/:courseCode', verifyToken, async function(req, res){
     try{
         const courseCode = req.params.courseCode;
-        const course = await Course.findOne({ courseCode: courseCode }); // Find assignment by title or any other field
+        const course = await Course.findOne({ courseCode: courseCode });
         if (!course) {
             logger.warn(`${courseCode} not found`);
             return res.status(404).send('Course not found');
