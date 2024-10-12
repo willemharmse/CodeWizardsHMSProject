@@ -6,7 +6,7 @@ import verifyToken from '../middleware/verifyJWTToken.mjs';
 import restrictUser from '../middleware/restrictUser.mjs';
 import { upload } from '../middleware/fileUpload.mjs';
 import { compressVideo } from '../middleware/compressVideo.mjs';
-import { uploadToAzure } from '../config/azureStorage.mjs';
+import { uploadToAzure, deleteFromAzure } from '../config/azureStorage.mjs';
 import { File } from '../models/file.mjs';
 import fs from 'fs';
 import { User } from '../models/users.mjs';
@@ -215,7 +215,7 @@ router.put('/grade/:id', verifyToken, restrictUser(['admin','lecturer']), async 
     }
 });
 
-router.delete('/delete/:id', verifyToken, restrictUser(['admin, student']), async function(req, res) {
+router.delete('/delete/:id', verifyToken, restrictUser(['admin', 'student']), async function(req, res) {
     const id = req.params.id;
 
     try {
