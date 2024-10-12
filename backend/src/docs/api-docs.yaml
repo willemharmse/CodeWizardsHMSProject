@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
   title: HMS Backend Code Wizards
-  version: 1.0.0
+  version: 2.0.0
   description:  Description of all the paths of the backend as well as needed information and status codes
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:5000
 components:
   schemas:
     User:
@@ -285,13 +285,60 @@ paths:
           description: User created successfully
         '400':
           description: Bad request. Username already used.
+        '401':
+          description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '500': 
           description: Error during creation of user account.
+
+  /api/user/:
+    get:
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      summary: Get all user information
+      operationId: getUsers
+      responses:
+        '200':
+          description: User information loaded
+        '401':
+          description: Unauthorized - Missing or invalid token
+        '500': 
+          description: Error during retrieval of users
+
+  /api/user/{username}:
+    get:
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      summary: Get information for certain user
+      operationId: getUser
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: User username
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User information loaded
+        '401':
+          description: Unauthorized - Missing or invalid token
+        '404':
+          description: User not found
+        '500': 
+          description: Error during retrieval of student details
 
   /api/user/student/{username}:
     get:
       tags:
         - Users
+      security:
+        - bearerAuth: []
       summary: Get student information
       operationId: getStudent
       parameters:
@@ -306,6 +353,8 @@ paths:
           description: Student information retrieved successfully
         '400': 
           description: Bad request. User is not a student.
+        '401':
+          description: Unauthorized - Missing or invalid token
         '404':
           description: Student or User not found
         '500': 
@@ -315,6 +364,8 @@ paths:
     get:
       tags:
         - Users
+      security:
+        - bearerAuth: []
       summary: Get lecturer information
       operationId: getLecturer
       parameters:
@@ -329,33 +380,12 @@ paths:
           description: Lecturer information retrieved successfully
         '400': 
           description: Bad request. User is not a lecturer.
+        '401':
+          description: Unauthorized - Missing or invalid token
         '404':
           description: Lecturer not found
         '500': 
           description: Error during retrieval of lecturer details
-
-  /api/user/admin/{username}:
-    get:
-      tags:
-        - Users
-      summary: Get admin information
-      operationId: getAdmin
-      parameters:
-        - name: username
-          in: path
-          required: true
-          description: The username of the admin
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Admin information retrieved successfully
-        '400': 
-          description: Bad request. User is not a admin.
-        '404':
-          description: Admin not found
-        '500': 
-          description: Error during retrieval of admin details
 
   /api/user/login:
     post:
@@ -398,9 +428,13 @@ paths:
       operationId: userLogout
       tags:
         - Users
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: User logged out successfully
+        '401':
+          description: Unauthorized - Missing or invalid token
         '404':
           description: User that is logged in not found
         '500':
@@ -428,13 +462,9 @@ paths:
             schema:
               type: object
               properties:
-                email:
+                enrollmentYear:
                   type: string
-                  description: New email for the user
-                role:
-                  type: string
-                  enum: [admin, student, lecturer]
-                  description: New role for the user (admin, student, lecturer)
+                  description: This is for the student if their enrollment year should be changed
                 department:
                   type: string
                   description: New department if the role is lecturer, not required is user is changed to admin or student
@@ -445,6 +475,8 @@ paths:
           description: Bad request or validation error
         '401':
           description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '404':
           description: User not found
         '500':
@@ -472,6 +504,8 @@ paths:
           description: Bad request or validation error
         '401':
           description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '404':
           description: User not found
         '500':
@@ -483,6 +517,8 @@ paths:
       operationId: getAllCourses
       tags:
         - Course
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: A list of courses retrieved successfully
@@ -498,6 +534,8 @@ paths:
                       type: string
                     courseCode:
                       type: string
+        '401':
+          description: Unauthorized - Missing or invalid token
         '404':
           description: No courses were found in the system
         '500':
@@ -509,6 +547,8 @@ paths:
       operationId: getCourse
       tags:
         - Course
+      security:
+        - bearerAuth: []
       parameters:
         - name: courseCode
           in: path
@@ -524,10 +564,62 @@ paths:
               schema:
                 $ref: '#components/schemas/Course'
                 type: object
+        '401':
+          description: Unauthorized - Missing or invalid token
         '404':
           description: Course not found
         '500':
           description: Internal server error    
+
+  /api/course/courses/lecturer:
+    post:
+      summary: Get lecturer courses
+      operationId: getLecturerCourses
+      security:
+        - bearerAuth: []
+      tags:
+        - Course
+      responses:
+        '200':
+          description: Courses retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Course'
+                type: object
+        '401':
+          description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
+        '404':
+          description: Course / User not found
+        '500':
+          description: Internal server error
+
+  /api/course/courses/student:
+    post:
+      summary: Get student courses / Admin courses
+      operationId: getStudentCourses
+      security:
+        - bearerAuth: []
+      tags:
+        - Course
+      responses:
+        '200':
+          description: Courses retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Course'
+                type: object
+        '401':
+          description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
+        '404':
+          description: Course / User not found
+        '500':
+          description: Internal server error
 
   /api/course/create:
     post:
@@ -557,6 +649,8 @@ paths:
           description: Bad request or validation error
         '401':
           description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '404':
           description: User not found
         '500':
@@ -598,6 +692,8 @@ paths:
           description: Course updated successfully
         '401':
           description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '404':
           description: Course not found
         '500':
@@ -623,6 +719,8 @@ paths:
           description: Course deleted successfully
         '401':
           description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '404':
           description: Course not found
         '500':
@@ -656,6 +754,8 @@ paths:
           description: Bad request
         '401':
           description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '404':
           description: Course not found
         '500':
@@ -689,6 +789,43 @@ paths:
           description: Bad request
         '401':
           description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
+        '404':
+          description: Course not found
+        '500':
+          description: Internal server error
+
+  /api/course/remove/{username}/{courseCode}:
+    delete:
+      summary: Remove a lecturer or student from a course
+      operationId: removeCourse
+      security:
+        - bearerAuth: []
+      tags:
+        - Course
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: The username of the student
+          schema:
+            type: string
+        - name: courseCode
+          in: path
+          required: true
+          description: The course code
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Course removed successfully
+        '400': 
+          description: Bad request
+        '401':
+          description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '404':
           description: Course not found
         '500':
@@ -700,6 +837,8 @@ paths:
       operationId: getAllAssignments
       tags:
         - Assignment
+      security:
+        - bearerAuth: []
       parameters:
         - name: courseCode
           in: path
@@ -715,6 +854,8 @@ paths:
               schema:
                 $ref: '#components/schemas/Assignment'
                 type: array
+        '401':
+          description: Unauthorized - Missing or invalid token
         '404':
           description: Assignments not found
         '500':
@@ -724,6 +865,8 @@ paths:
     get:
       summary: Get details for an assignment
       operationId: getAssignments
+      security:
+        - bearerAuth: []
       tags:
         - Assignment
       parameters:
@@ -741,6 +884,8 @@ paths:
               schema:
                 $ref: '#components/schemas/Assignment'
                 type: object
+        '401':
+          description: Unauthorized - Missing or invalid token
         '404':
           description: Assignments not found
         '500':
@@ -778,6 +923,8 @@ paths:
           description: Bad request
         '401':
           description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '404':
           description: Course not found
         '500':
@@ -819,6 +966,8 @@ paths:
           description: Bad request
         '401':
           description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '404':
           description: Assignment not found
         '500':
@@ -846,6 +995,8 @@ paths:
           description: Bad request
         '401':
           description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '404':
           description: Assignment not found
         '500':
@@ -873,6 +1024,8 @@ paths:
           description: Bad request
         '401':
           description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '404':
           description: Assignment not found
         '500':
@@ -901,12 +1054,14 @@ paths:
       responses:
         '201':
           description: Submission submitted successfully
-        '404':
-          description: User/Assignment not found
         '400':
-          description: Bad request
+          description: Bad request        
         '401':
           description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
+        '404':
+          description: User/Assignment not found
         '500':
           description: Internal server error
 
@@ -915,7 +1070,9 @@ paths:
       summary: Get submissions for an assignment
       operationId: getSubmissionsByAssignment
       tags:
-        - Submission
+        - Submission      
+      security:
+        - bearerAuth: []
       parameters:
         - name: assignCode
           in: path
@@ -930,7 +1087,9 @@ paths:
             application/json:
               schema:
                 $ref: '#components/schemas/Submission'
-                type: array
+                type: array           
+        '401':
+          description: Unauthorized - Missing or invalid token
         '404':
           description: Submissions not found
         '500':
@@ -942,6 +1101,8 @@ paths:
       operationId: getSubmissionByUserAndAssignment
       tags:
         - Submission
+      security:
+        - bearerAuth: []
       parameters:
         - name: username
           in: path
@@ -965,12 +1126,46 @@ paths:
                 type: object
         '400':
           description: Bad request
+        '401':
+          description: Unauthorized - Missing or invalid token
         '404':
           description: Submissions not found
         '500':
           description: Internal server error
 
-  /api/submission/grade/{username}/{assignCode}:
+  /api/submission/{id}:
+    get:
+      summary: Get a specific submission
+      operationId: getSubmissionByID
+      tags:
+        - Submission
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The submission id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Details for assignment successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Submission'
+                type: object
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized - Missing or invalid token
+        '404':
+          description: Submissions not found
+        '500':
+          description: Internal server error
+
+  /api/submission/grade/{id}:
     put:
       summary: Grade a submission
       operationId: gradeSubmission
@@ -979,16 +1174,10 @@ paths:
       tags:
         - Submission
       parameters:
-        - name: username
+        - name: id
           in: path
           required: true
-          description: The username of the student
-          schema:
-            type: string
-        - name: assignCode
-          in: path
-          required: true
-          description: The assignment code
+          description: The id of the submission
           schema:
             type: string
       requestBody:
@@ -1010,6 +1199,10 @@ paths:
           description: Submission graded successfully
         '400':
           description: Bad request
+        '401':
+          description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.
         '404':
           description: Submission or assignment not found
         '500':
@@ -1035,6 +1228,10 @@ paths:
           description: Submission deleted successfully
         '400':
           description: Bad request
+        '401':
+          description: Unauthorized - Missing or invalid token
+        '403':
+          description: Access Denied.          
         '404':
           description: Submission not found
         '500':
@@ -1046,6 +1243,8 @@ paths:
       operationId: deleteFile
       tags:
         - File
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -1058,6 +1257,8 @@ paths:
           description: File deleted successfully
         '400':
           description: Bad request
+        '401':
+          description: Unauthorized - Missing or invalid token
         '404':
           description: File not found
         '500':
@@ -1069,6 +1270,8 @@ paths:
       operationId: downloadFile
       tags:
         - File
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -1081,6 +1284,8 @@ paths:
           description: File downloaded successfully
         '400':
           description: Bad request
+        '401':
+          description: Unauthorized - Missing or invalid token
         '404':
           description: File not found
         '500':
@@ -1092,6 +1297,8 @@ paths:
       operationId: streamFile
       tags:
         - File
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -1104,6 +1311,8 @@ paths:
           description: File streamed successfully
         '400':
           description: Bad request
+        '401':
+          description: Unauthorized - Missing or invalid token
         '404':
           description: File not found
         '500':

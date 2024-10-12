@@ -68,8 +68,6 @@ router.post('/create', verifyToken, restrictUser(['admin']), async function(req,
 
 router.get('/', verifyToken, async (req, res) => {
     try {
-        const username = req.params.username;
-
         // Find the user by username
         const users = await User.find({});
 
@@ -240,7 +238,7 @@ router.post('/login', async function(req, res) {
     }
 });
 
-router.get('/logout', verifyToken, verifyToken, async (req, res) => {
+router.get('/logout', verifyToken, async (req, res) => {
     try{
         const userID = req.user.userId;
 
