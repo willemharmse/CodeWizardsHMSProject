@@ -1,6 +1,7 @@
 # CodeWizardsHMSProject
 
 This project contains the backend API for managing users (the users include students, lecturers and admins), assignments, submissions, files with the use of azure and courses in the database for the HMS project. This readme will provide details about the backend as well as how to host the backend locally for development and how to integrate with the API.
+This project also includes the frontend, and mobile application that can communicate with the backend to retrieve the data needed and provide it to the users that need it.
 
 ## Table of Contents
 
