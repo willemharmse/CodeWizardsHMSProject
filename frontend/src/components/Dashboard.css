@@ -227,7 +227,7 @@ h2 {
 .course-icon, .assignment-icon, .submission-icon {
   width: 60px;
   height: 60px;
-  background-color: #0b0c10;
+  background-color: transparent;
   margin-right: 15px;
   border-radius: 5px;
 }
@@ -238,4 +238,12 @@ h2 {
 
 .submission-details h3, .assignment-details h3, .course-details h3 {
   margin: 0;
+}
+
+.submission-details p, .assignment-details p, .course-details p {
+  margin: 0;
+}
+
+.edit-course-logo-link, .delete-course-logo-link, .delete-assignment-logo-link, .edit-assignment-logo-link, .delete-submission-logo-link {
+  margin: 10px;
 }

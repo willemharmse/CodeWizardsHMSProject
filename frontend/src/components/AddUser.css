@@ -8,6 +8,41 @@
     color: #ffffff;
   }
   
+  .add-user-page-header-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .add-user-page-header-content h2{
+    margin-top: 14px;
+    margin-left: 30px;
+    color: #f3f6fa;
+  }
+  
+  .add-user-page-logout-button, .add-user-page-user-management {
+    height: 80%;
+    font-size: 20px;
+    background-color: transparent;
+    border: 3px solid;
+    background-color: #365679;
+    border-color: #365679;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    color: #f3f6fa;
+    padding: 10px 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-right: 25px;
+  }
+  
+  .add-user-page-logout-button:hover, .add-user-page-user-management:hover {
+    background-color: #afc1d0;
+    color: #365679;
+    transition: 0.5s ease;
+  }
+
   .add-user-page-main h1 {
     text-align: center;
     color: #b0d4f1;

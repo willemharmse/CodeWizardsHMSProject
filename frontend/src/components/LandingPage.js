@@ -15,15 +15,18 @@ function LandingPage() {
       </header>
       <div className='landing-page-content'>
         <h1>Welcome</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempus varius justo eget faucibus. Duis vestibulum laoreet elit, in blandit justo luctus nec. Nullam et vehicula est. Aenean convallis lobortis tellus, ut tempor arcu gravida sit amet. Proin sit amet neque at velit fringilla tristique non vestibulum mi. Nullam viverra, ante in consectetur viverra, augue odio ultrices diam, eget pharetra felis lectus quis arcu. Phasellus malesuada metus ut neque pellentesque, ut viverra mi tempus. Duis ultrices sit amet sapien nec auctor. Sed eget mauris aliquet, dignissim risus consectetur, dapibus diam.</p>
+        <p>Here you can see the assignments and submissions for all your courses in the Faculty of Education Department of Human Movement Sciences at the North-West University.</p>
         <div className="button-container">
-        <Link to="/login">
-          <button className="landing-page-button">See your courses</button>
-        </Link>
-        <Link to="/admin">
-          <button className="landing-page-button">Manage Users</button>
-        </Link>
-      </div>
+          <Link to="/login">
+            <button className="landing-page-button">List assignments</button>
+          </Link>
+          <Link to="/login">
+            <button className="landing-page-button">Add assignment</button>
+          </Link>
+          <Link to="/login?redirect=/userManagement">
+            <button className="landing-page-button">Manage Users</button>
+          </Link>
+        </div>
       </div>
     </div>
   );

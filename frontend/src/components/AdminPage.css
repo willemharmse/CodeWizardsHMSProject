@@ -19,7 +19,7 @@
     color: #0b1320;
   }
   
-  .admin-page-logout-button, .admin-page-user-management {
+  .admin-page-logout-button, .admin-page-user-management, .admin-page-back-to-dashboard-button {
     height: 80%;
     font-size: 20px;
     background-color: transparent;
@@ -35,12 +35,21 @@
     margin-right: 25px;
   }
   
-  .admin-page-logout-button:hover, .admin-page-user-management:hover {
+  .admin-page-logout-button:hover, .admin-page-user-management:hover, .admin-page-back-to-dashboard-button:hover {
     background-color: #afc1d0;
     color: #365679;
     transition: 0.5s ease;
   }
   
+  .loading-users-div {
+    display: flex;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 40px;
+    margin-top: 14px;
+    margin-left: 30px;
+    color: #0b1320;
+  }
 
 /* Main title styling */
 .admin-page h1 {

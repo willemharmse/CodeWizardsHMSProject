@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './SubmissionDetail.css'; // Importing the CSS file if you choose to separate it
+import './SubmissionDetail.css'; 
 
 const SubmissionDetail = () => {
   const { submissionId } = useParams();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
   const [submission, setSubmission] = useState(null);
   const [grade, setGrade] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -49,22 +49,44 @@ const SubmissionDetail = () => {
     fetchSubmission();
   }, [submissionId]);
 
+  const handleVideoDownload = async (fileId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`http://localhost:5000/api/file/download/${fileId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        responseType: 'blob'
+      });
+
+      // Create a URL for the downloaded file and programmatically create an anchor to trigger the download
+      const downloadUrl = URL.createObjectURL(response.data);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `video_${fileId}.mp4`; // Name of the file to be downloaded
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link); // Cleanup
+    } catch (error) {
+      console.error('Error downloading video:', error); // Updated error message for clarity
+    }
+  };
+
   const handleGradeChange = (e) => {
     const enteredGrade = e.target.value;
     setGrade(enteredGrade);
 
-    // Check if grade is within bounds based on the assignment mark
-    const maxGrade = submission?.assignment?.mark || 100; // Default to 100 if max mark is not defined
+    const maxGrade = submission?.assignment?.mark || 100;
     if (enteredGrade < 0 || enteredGrade > maxGrade) {
       setGradeWarning(`Grade must be between 0 and ${maxGrade}.`);
     } else {
-      setGradeWarning(''); // Clear the warning if grade is valid
+      setGradeWarning('');
     }
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove the JWT from localStorage
-    navigate('/'); // Redirect to login page or home page after logging out
+    localStorage.removeItem('token');
+    navigate('/');
   };
 
   const handleGradeSubmit = async () => {
@@ -100,56 +122,67 @@ const SubmissionDetail = () => {
         <header className="submission-header-body">
           <div className="submission-header-content">
             <h2>HMS</h2>
-            <button className="submission-logout-button" onClick={handleLogout}>Logout</button>
+            <div>
+              <button className="back-to-dashboard-button" onClick={() => navigate('/dashboard')}>Dashboard</button>
+              <button className="submission-logout-button" onClick={handleLogout}>Logout</button>
+            </div>
           </div>
         </header>
       </div>
-    <div className="submission-detail">
-      <h1 className="submission-title">Submission Grading</h1>
-      <h2 className="submission-user">User: {submission.user.username}</h2>
-      <h2 className="submission-user">Video file submitted:</h2>
-      {/* Video player */}
-      {videoSrc ? (
-        <video controls width="600" className="video-player">
-          <source src={videoSrc} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      ) : (
-        <p>Loading video...</p>
-      )}
+      <div className="submission-detail">
+        <h1 className="submission-title">Submission Grading</h1>
+        <h2 className="submission-user">User: {submission.user.username}</h2>
+        <h2 className="submission-user">Video file submitted:</h2>
 
-      {/* Grade and Feedback form */}
-      <div className="grading-form">
-        <label htmlFor="grade">Grade:</label>
-        <input
-          id="grade"
-          className="input-field"
-          type="number"
-          value={grade}
-          onChange={handleGradeChange} // Validate grade on change
-          placeholder="Enter grade"
-        />
-        {/* Display warning if grade is out of bounds */}
-        {gradeWarning && <p className="warning">{gradeWarning}</p>}
-        
-        <label htmlFor="feedback">Feedback:</label>
-        <input
-          id="feedback"
-          className="input-field"
-          type="text"
-          value={feedback}
-          onChange={(e) => setFeedback(e.target.value)}
-          placeholder="Enter feedback"
-        />
-        <button
-          onClick={handleGradeSubmit}
-          className="submit-button"
-          disabled={!!gradeWarning || grade === ''} // Disable if gradeWarning or empty grade
-        >
-          Grade Submission
-        </button>
+        {/* Video player */}
+        {videoSrc ? (
+          <video controls width="600" className="video-player">
+            <source src={videoSrc} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <p>Loading video...</p>
+        )}
+
+        {/* Grade and Feedback form */}
+        <div className="grading-form">
+          <label htmlFor="grade">Grade:</label>
+          <input
+            id="grade"
+            className="input-field"
+            type="number"
+            value={grade}
+            onChange={handleGradeChange}
+            placeholder="Enter grade"
+          />
+          {gradeWarning && <p className="warning">{gradeWarning}</p>}
+          
+          <label htmlFor="feedback">Feedback:</label>
+          <input
+            id="feedback"
+            className="input-field"
+            type="text"
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            placeholder="Enter feedback"
+          />
+
+          <button
+            onClick={() => handleVideoDownload(submission.file)}
+            className="download-video-button"
+          >
+            Download Video
+          </button>
+          
+          <button
+            onClick={handleGradeSubmit}
+            className="submit-button"
+            disabled={!!gradeWarning || grade === ''}
+          >
+            Grade Submission
+          </button>
+        </div>
       </div>
-    </div>
     </div>
   );
 };

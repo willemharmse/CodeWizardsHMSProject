@@ -101,105 +101,106 @@ const AddUser = () => {
       // Handle the error, display a message to the user if needed
     }
   };
-  
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
+
+  const handleUserManagement = () => {
+    navigate('/userManagement');
+  };
 
   return (
-    <div className="add-user-page-main">
-      <h1>Add New User</h1>
-      <form onSubmit={handleUserCreation}>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            name="username"
-            value={userData.username}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={userData.password}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={userData.email}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label>Role:</label>
-          <select name="role" value={userData.role} onChange={handleRoleChange}>
-            <option value="">Select role</option>
-            <option value="admin">Admin</option>
-            <option value="lecturer">Lecturer</option>
-            <option value="student">Student</option>
-          </select>
-        </div>
-
-        {/* Show additional fields based on the role */}
-        {userData.role === 'lecturer' && (
-          <>
-            <div>
-              <label>Department:</label>
-              <input
-                type="text"
-                name="department"
-                value={userData.department}
-                onChange={handleInputChange}
-              />
+    <div className='add-user-page'>
+      <div className='add-user-page-header'>
+        <header className="add-user-page-header-body">
+          <div className="add-user-page-header-content">
+            <h2>HMS</h2>
+            <div className='add-user-page-management-and-logout-buttons'>
+              <button className="add-user-page-user-management" onClick={handleUserManagement}>
+                User Management
+              </button>
+            <button className="add-user-page-logout-button" onClick={handleLogout}>Logout</button>
             </div>
-            <div>
-              <label>Courses Taught:</label>
-              <select onChange={handleCourseSelect}>
-                <option value="">Select courses</option>
-                {availableCourses.map((course) => (
-                  <option key={course._id} value={course.courseCode}>
-                    {course.courseCode} - {course.courseName}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </>
-        )}
+          </div>
+        </header>
+      </div>
+      <div className="add-user-page-main">
+        <h1>Add New User</h1>
+        <form onSubmit={handleUserCreation}>
+          <div>
+            <label>Username:</label>
+            <input
+              type="text"
+              name="username"
+              value={userData.username}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        {userData.role === 'student' && (
-          <>
-            <div>
-              <label>Enrollment Year:</label>
-              <input
-                type="number"
-                name="enrollmentYear"
-                value={userData.enrollmentYear}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label>Courses Enrolled:</label>
-              <select onChange={handleCourseSelect}>
-                <option value="">Select courses</option>
-                {availableCourses.map((course) => (
-                  <option key={course._id} value={course.courseCode}>
-                    {course.courseCode} - {course.courseName}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </>
-        )}
+          <div>
+            <label>Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={userData.password}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <button type="submit">Add User</button>
-      </form>
+          <div>
+            <label>Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={userData.email}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div>
+            <label>Role:</label>
+            <select name="role" value={userData.role} onChange={handleRoleChange}>
+              <option value="">Select role</option>
+              <option value="admin">Admin</option>
+              <option value="lecturer">Lecturer</option>
+              <option value="student">Student</option>
+            </select>
+          </div>
+
+          {/* Show additional fields based on the role */}
+          {userData.role === 'lecturer' && (
+            <>
+              <div>
+                <label>Department:</label>
+                <input
+                  type="text"
+                  name="department"
+                  value={userData.department}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </>
+          )}
+
+          {userData.role === 'student' && (
+            <>
+              <div>
+                <label>Enrollment Year:</label>
+                <input
+                  type="number"
+                  name="enrollmentYear"
+                  value={userData.enrollmentYear}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </>
+          )}
+
+          <button type="submit">Add User</button>
+        </form>
+      </div>
     </div>
   );
 };

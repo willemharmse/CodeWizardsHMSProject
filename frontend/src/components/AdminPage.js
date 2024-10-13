@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './AdminPage.css'; // Import the CSS file
 import { useNavigate } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode';
 
 const AdminPage = () => {
   const [lecturers, setLecturers] = useState([]);
@@ -11,6 +12,27 @@ const AdminPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const decodeToken = async () => {
+      try{
+        const token = localStorage.getItem('token');
+        if (!token)
+          {
+            window.location.href = '/403';
+          }
+        else{
+        const decodedToken = jwtDecode(token);
+        const userRole = decodedToken.role;
+        if (!(userRole === 'admin'))
+        {
+          window.location.href = '/403';
+        }
+        }
+      }catch (err) {
+        alert(err.message); // Display the error to the user
+      }
+    }
+
+    decodeToken();
     // Fetch all users
     const fetchUsers = async () => {
       try {
@@ -76,6 +98,8 @@ const AdminPage = () => {
 
   // Handle delete action
   const handleDelete = async (username) => {
+    const confirmed = window.confirm(`Are you sure you want to delete user: ${username}?`);
+    if (!confirmed) return; // Exit if the user cancels
     // Logic for deleting the user
     try {
       const token = localStorage.getItem('token');
@@ -100,8 +124,12 @@ const AdminPage = () => {
   };
 
   if (loading) {
-    return <div>Loading users...</div>;
+    return <div className='loading-users-div'>Loading users...</div>;
   }
+
+  const handleAddUser = () => {
+    navigate('/user/create');
+  };
 
   return (
     <div className="admin-page">
@@ -110,7 +138,9 @@ const AdminPage = () => {
           <div className="admin-page-header-content">
             <h1>HMS</h1>
             <h1>User Management</h1>
-            <div className='admin-page-management-and-logout-buttons'>
+            <div className='admin-page-add-user-and-logout-buttons'>
+            <button className="admin-page-back-to-dashboard-button" onClick={() => navigate('/dashboard')}>Dashboard</button>
+            <button className="admin-page-logout-button" onClick={handleAddUser}>Add User</button>
             <button className="admin-page-logout-button" onClick={handleLogout}>Logout</button>
             </div>
           </div>

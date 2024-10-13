@@ -18,7 +18,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/submission/:submissionId" element={<SubmissionDetail />} />
         <Route path="/update/:username" element={<EditUser />} />        
-        <Route path="user/create" element={<AddUser />} />        
+        <Route path="/user/create" element={<AddUser />} />        
         <Route path='/userManagement' element={<AdminPage/>} />
         <Route path='/403' element={<Forbidden/>}/>
         <Route path='*' element={<NotFound/>}/>

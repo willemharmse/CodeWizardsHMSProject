@@ -16,7 +16,7 @@
   color: #0b1320;
 }
 
-.submission-logout-button {
+.submission-logout-button, .back-to-dashboard-button {
   height: 80%;
   font-size: 20px;
   background-color: transparent;
@@ -33,7 +33,7 @@
   margin-top: 20px;
 }
 
-.submission-logout-button:hover {
+.submission-logout-button:hover, .back-to-dashboard-button:hover{
   background-color: #f3f6fa;
   color: #365679;
   transition: 0.5s ease;
@@ -97,7 +97,7 @@
   }
   
   /* Button styling */
-  .submit-button {
+  .submit-button, .download-video-button {
     background-color: #1c3f60;
     color: #f3f6fa;
     border: none;
@@ -106,11 +106,12 @@
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
-  .submit-button:hover {
-    background-color: #0b1320;
+  .submit-button:hover, .download-video-button:hover {
+    background-color: #f3f6fa;
+    color: #1c3f60;
   }
   
   /* Loading indicator */
