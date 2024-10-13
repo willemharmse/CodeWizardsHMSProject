@@ -195,7 +195,7 @@ Ensure that you have the following installed on your system:
     route: '/'
   ```
 
-### Dahsboard route
+### Login route
   The login page route is the page that is loaded when the user clicks the login button
 
   ```bash
