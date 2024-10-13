@@ -23,7 +23,7 @@ Ensure that you have the following installed on your system:
 - [MongoDB](https://www.mongodb.com/) (for local development or cloud setup)
 - [Postman](https://www.postman.com/) or [Thunder Client](https://www.thunderclient.com/) (for testing APIs)
 - [Flutter](https://flutter.dev) (This should be the extension for Android Studio or VS Code)
-- [Android_Studio](developer.android.com/studio/install) (This is to download the emulator to emulate the android device to test the mobile app)
+- [Android Studio](developer.android.com/studio/install) (This is to download the emulator to emulate the android device to test the mobile app)
 
 ### Setup Instructions
 
