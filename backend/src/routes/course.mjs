@@ -131,6 +131,13 @@ router.post('/create', verifyToken, restrictUser(['admin']), async function(req,
     try {
         const { courseName, courseCode, description } = req.body;
 
+        const testCourse = await Course.findOne({courseCode: courseCode});
+        if (testCourse)
+        {
+            logger.warn(`Failed adding ${courseCode}. Already exsists in system`);
+            return res.status(400).send("Course with this course code already exists");
+        }
+
         const course = new Course({
             courseName: courseName,
             courseCode: courseCode,
