@@ -202,6 +202,12 @@ router.put('/update/:courseCode', verifyToken, restrictUser(['admin']), async fu
 
     try {
         const course = await Course.findOne({ courseCode: Code });
+        const courseTest = await Course.findOne({courseCode: newCode});
+        if (courseTest)
+        {
+            logger.warn(`Course code already found in database`);
+            return res.status(400).send('Course code duplicate found for new code.');
+        }
 
         if (!course) {
             logger.warn(`Course not found in database`);
