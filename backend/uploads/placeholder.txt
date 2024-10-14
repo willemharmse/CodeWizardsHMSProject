@@ -1,0 +1,2 @@
+Ensures this folder is not deleted
+          
