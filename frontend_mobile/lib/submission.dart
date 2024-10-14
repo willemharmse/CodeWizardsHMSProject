@@ -21,6 +21,8 @@ class SubmissionScreen extends StatefulWidget {
 
 class _SubmissionScreenState extends State<SubmissionScreen> {
   PlatformFile? pickedFile;
+  bool? _isSubmissionSuccess;
+  String? _submissionMessage;
 
   Future<void> pickFile() async {
     try {
@@ -67,18 +69,21 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
       var response = await request.send();
 
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('File submitted successfully!')),
-        );
+        setState(() {
+          _isSubmissionSuccess = true;
+          _submissionMessage = 'File submitted successfully!';
+        });
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to submit file. Please try again.')),
-        );
+        setState(() {
+          _isSubmissionSuccess = false;
+          _submissionMessage = 'Failed to submit file. Please try again.';
+        });
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('An error occurred. Please try again.')),
-      );
+      setState(() {
+        _isSubmissionSuccess = false;
+        _submissionMessage = 'An error occurred. Please try again.';
+      });
     }
   }
 
@@ -103,121 +108,145 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
             end: Alignment.bottomRight,
           ),
         ),
-        child: widget.submission == null
-            ? SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30),
-                    if (isPastDueDate)
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.redAccent,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Text(
-                          'Assignment due date has passed.',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                    else ...[
-                      Text(
-                        'Submit your assignment for ${widget.assignmentCode}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                          color: Colors.black,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 20),
-                      Card(
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: ListTile(
-                          leading: const Icon(Icons.upload_file, color: Colors.teal),
-                          title: const Text('Upload your file'),
-                          trailing: ElevatedButton.icon(
-                            onPressed: pickFile,
-                            icon: const Icon(Icons.attach_file),
-                            label: const Text('Select File'),
-                            style: ElevatedButton.styleFrom(
-                              //primary: Colors.teal.shade400,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      if (pickedFile != null)
-                        Card(
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: ListTile(
-                            leading: const Icon(Icons.insert_drive_file, color: Colors.teal),
-                            title: Text(
-                              'File selected: ${pickedFile!.name}',
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        ),
-                      const SizedBox(height: 20),
-                      if (pickedFile != null)
-                        ElevatedButton(
-                          onPressed: submitFile,
-                          child: const Text('Submit Assignment'),
-                          style: ElevatedButton.styleFrom(
-                            //primary: Colors.green.shade400,
-                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                          ),
-                        ),
-                    ],
-                    const SizedBox(height: 20), // Added space to avoid screen cut-off
-                  ],
-                ),
-              )
-            : Center(
+        child: _isSubmissionSuccess != null
+            ? Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.check_circle, color: Colors.green, size: 100),
+                    Icon(
+                      _isSubmissionSuccess! ? Icons.check_circle : Icons.error,
+                      color: _isSubmissionSuccess! ? Colors.green : Colors.red,
+                      size: 100,
+                    ),
                     const SizedBox(height: 20),
-                    const Text(
-                      'Submission Details:',
-                      style: const TextStyle(
+                    Text(
+                      _submissionMessage!,
+                      style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: _isSubmissionSuccess! ? Colors.green : Colors.red,
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      'Mark: ${widget.submission!['grade'] ?? 0}',
-                      style: const TextStyle(fontSize: 18, color: Colors.black),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      'Feedback: ${widget.submission!['feedback'] ?? 'No feedback'}',
-                      style: const TextStyle(fontSize: 18, color: Colors.black),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-              ),
+              )
+              : widget.submission == null
+                  ? Center(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(height: 30),
+                            if (isPastDueDate)
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.redAccent,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Text(
+                                  'Assignment due date has passed.',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            else ...[
+                              Text(
+                                'Submit your assignment for ${widget.assignmentCode}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                  color: Colors.black,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 20),
+                              Card(
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: ListTile(
+                                  leading: const Icon(Icons.upload_file, color: Colors.teal),
+                                  title: const Text('Upload your file'),
+                                  trailing: ElevatedButton.icon(
+                                    onPressed: pickFile,
+                                    icon: const Icon(Icons.attach_file),
+                                    label: const Text('Select File'),
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              if (pickedFile != null)
+                                Card(
+                                  elevation: 4,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: ListTile(
+                                    leading: const Icon(Icons.insert_drive_file, color: Colors.teal),
+                                    title: Text(
+                                      'File selected: ${pickedFile!.name}',
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                ),
+                              const SizedBox(height: 20),
+                              if (pickedFile != null)
+                                ElevatedButton(
+                                  onPressed: submitFile,
+                                  child: const Text('Submit Assignment'),
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                            const SizedBox(height: 20), // Added space to avoid screen cut-off
+                          ],
+                        ),
+                      ),
+                    )
+
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.check_circle, color: Colors.green, size: 100),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'Submission Details:',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          'Mark: ${widget.submission!['grade'] ?? 'Not graded yet'}',
+                          style: const TextStyle(fontSize: 18, color: Colors.black),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Feedback: ${widget.submission!['feedback'] ?? 'No feedback'}',
+                          style: const TextStyle(fontSize: 18, color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
       ),
     );
   }
