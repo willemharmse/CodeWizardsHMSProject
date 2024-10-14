@@ -1,0 +1,99 @@
+.add-user-page-main {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2c5079;
+    border-radius: 20px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+  }
+  
+  .add-user-page-header-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .add-user-page-header-content h2{
+    margin-top: 14px;
+    margin-left: 30px;
+    color: #f3f6fa;
+  }
+  
+  .add-user-page-logout-button, .add-user-page-user-management {
+    height: 80%;
+    font-size: 20px;
+    background-color: transparent;
+    border: 3px solid;
+    background-color: #365679;
+    border-color: #365679;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    color: #f3f6fa;
+    padding: 10px 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-right: 25px;
+  }
+  
+  .add-user-page-logout-button:hover, .add-user-page-user-management:hover {
+    background-color: #afc1d0;
+    color: #365679;
+    transition: 0.5s ease;
+  }
+
+  .add-user-page-main h1 {
+    text-align: center;
+    color: #b0d4f1;
+    margin-bottom: 20px;
+  }
+  
+  .add-user-page-main form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+  }
+  
+  .add-user-page-main label {
+    font-weight: bold;
+    color: #b0d4f1;
+  }
+  
+  .add-user-page-main input[type="text"],
+  .add-user-page-main input[type="password"],
+  .add-user-page-main input[type="email"],
+  .add-user-page-main input[type="number"],
+  .add-user-page-main select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 0;
+    border-bottom: 1px solid #b0d4f1;
+    background-color: transparent;
+    color: #ffffff;
+    transition: border-color 0.3s ease;
+  }
+  
+  .add-user-page-main input:focus,
+  .add-user-page-main select:focus {
+    outline: none;
+    border-color: #ffffff;
+  }
+  
+  .add-user-page-main button {
+    padding: 10px;
+    background-color: #b0d4f1;
+    font-weight: 800;
+    color: #2c5079;
+    border: 3px solid #b0d4f1;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+  
+  .add-user-page-main button:hover {
+    background-color: #2c5079;
+    color: #b0d4f1;
+  }
+  

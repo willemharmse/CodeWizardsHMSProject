@@ -1,0 +1,90 @@
+.landing-container, html {
+  margin: 0;
+  padding: 0;
+  background-color: #1c3f60;
+  height: 100%;
+  font-family: Arial;
+}
+
+.landing-page-header h2 {
+  font-size: 80px;
+  position: relative;
+  color: #f3f6fa;
+  margin-top: 70px;
+  margin-left: 70px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.landing-page-login-button {
+  font-size: 20px;
+  background-color: transparent;
+  border: 3px solid;
+  border-color: #f3f6fa;
+  padding: 20px 30px;
+  color: #f3f6fa;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin-top: 45px;
+  margin-right: 70px;
+}
+
+.landing-page-login-button:hover {
+  background-color: #f3f6fa;
+  color: #1c3f60;
+  transition: 0.3s ease;
+}
+
+.landing-page-content {
+  color: #1c3f60;
+  margin-top: 20px;
+  margin-left: 70px;
+  margin-right: 70px;
+  padding: 40px 80px;
+  border-radius: 20px;
+  
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+  background-color: #afc1d0;
+}
+
+.landing-page-content h1{
+  font-size: 110px;
+  margin: 0;
+}
+
+.landing-page-content p{
+  font-size: 32px;
+  margin-bottom: 100px;
+}
+
+.button-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.landing-page-button {
+  font-size: 20px;
+  background-color: transparent;
+  border: 3px solid;
+  border-color: #1c3f60;
+  padding: 30px 100px;
+  color: #1c3f60;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin-top: 45px;
+  margin-right: 70px;
+}
+
+.landing-page-button:hover {
+  background-color: #1c3f60;
+  color: #afc1d0;
+  transition: 0.3s ease;
+}

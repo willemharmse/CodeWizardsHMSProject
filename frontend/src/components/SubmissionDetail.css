@@ -1,0 +1,123 @@
+/* General layout and text */
+.submission-page {
+  background-color: #afc1d0 !important;
+  height: 100vh;
+}
+
+.submission-header-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.submission-header-content h2{
+  margin-top: 14px;
+  margin-left: 30px;
+  color: #0b1320;
+}
+
+.submission-logout-button, .back-to-dashboard-button {
+  height: 80%;
+  font-size: 20px;
+  background-color: transparent;
+  border: 3px solid;
+  background-color: #365679;
+  border-color: #365679;
+  color: #f3f6fa;
+  padding: 10px 30px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  margin-right: 30px;
+  margin-top: 20px;
+}
+
+.submission-logout-button:hover, .back-to-dashboard-button:hover{
+  background-color: #f3f6fa;
+  color: #365679;
+  transition: 0.5s ease;
+}
+
+.submission-detail {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #f3f6fa;
+    background-color: #365679;
+    border-radius: 8px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+    font-family: Arial, sans-serif;
+  }
+  
+  .submission-title {
+    text-align: center;
+    color: #f3f6fa;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .submission-user {
+    text-align: center;
+    color: #f3f6fa;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  /* Video player styling */
+  .video-player {
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+  
+  /* Form layout */
+  .grading-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+  
+  .input-field {
+    padding: 10px;
+    border: 0px;
+    color: #f3f6fa;
+    background-color: transparent;
+    border-bottom: 1px solid #f3f6fa;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input-field:focus {
+    border-color: #0b1320;
+    outline: none;
+  }
+  
+  /* Button styling */
+  .submit-button, .download-video-button {
+    background-color: #1c3f60;
+    color: #f3f6fa;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .submit-button:hover, .download-video-button:hover {
+    background-color: #f3f6fa;
+    color: #1c3f60;
+  }
+  
+  /* Loading indicator */
+  .loading {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+  }
+  
