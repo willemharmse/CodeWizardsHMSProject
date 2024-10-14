@@ -5,12 +5,14 @@ import 'package:universal_html/html.dart' as html;
 
 class SubmissionScreen extends StatefulWidget {
   final String assignmentCode;
+  final String assingmentTitle;
   final String dueDate;
   final Map<String, dynamic>? submission;
 
   const SubmissionScreen({
     Key? key,
     required this.dueDate,
+    required this.assingmentTitle,
     required this.assignmentCode,
     this.submission,
   }) : super(key: key);
@@ -157,7 +159,7 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
                               )
                             else ...[
                               Text(
-                                'Submit your assignment for ${widget.assignmentCode}',
+                                'Submit your assignment for: ${widget.assingmentTitle}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 24,

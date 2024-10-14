@@ -30,7 +30,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
   }
 
   // Fetch submissions for a specific assignment
-  Future<void> fetchSubmission(String assignCode, String dueDate) async {
+  Future<void> fetchSubmission(String assignCode, String dueDate, String title) async {
     try {
       final token = getToken();
       if (token == null) {
@@ -55,6 +55,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
             context,
             MaterialPageRoute(
               builder: (context) => SubmissionScreen(
+                assingmentTitle: title,
                 assignmentCode: assignCode,
                 dueDate: dueDate,
                 submission: submissionData[0], // Pass the first submission
@@ -67,6 +68,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
             context,
             MaterialPageRoute(
               builder: (context) => SubmissionScreen(
+                assingmentTitle: title,
                 assignmentCode: assignCode,
                 dueDate: dueDate,
               ),
@@ -79,6 +81,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => SubmissionScreen(
+              assingmentTitle: title,
               assignmentCode: assignCode,
               dueDate: dueDate,
             ),
@@ -115,10 +118,16 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
           isLoading = false;
         });
       } else {
-        print('Error fetching assignments: ${response.statusCode}');
+        setState(() {
+          assignments = [];
+          isLoading = false;
+        });
       }
     } catch (e) {
-      print('Failed to load assignments: $e');
+      setState(() {
+        assignments = [];
+        isLoading = false;
+      });
     }
   }
 
@@ -130,59 +139,78 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.all(16.0),  // Padding for the outer container
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,  // Background color for the box
-                  borderRadius: BorderRadius.circular(16.0),  // Rounded corners for the box
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),  // Shadow color
-                      spreadRadius: 5,
-                      blurRadius: 10,
-                      offset: const Offset(0, 8),  // Changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),  // Padding inside the box
-                  child: ListView.builder(
-                    itemCount: assignments.length,
-                    itemBuilder: (context, index) {
-                      final assignment = assignments[index];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2.0),  // Space between cards
-                        child: Card(
-                          elevation: 3.0,  // Adds shadow below each card
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),  // Rounded corners for cards
-                          ),
-                        child: ListTile(
-                          title: Text(assignment['title']),  // Display assignment title
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(assignment['description']),  // Display assignment description
-                              Text(
-                                'Due Date: ${DateFormat('yyyy-MM-dd hh:mm a').format(
-                                  DateTime.parse(assignment['dueDate']).subtract(Duration(days: 1)).copyWith(
-                                    hour: 23,
-                                    minute: 59,
-                                  )
-                                )}',  // Format and display due date as one day before at 11:59 PM
-                              ),
-                            ],
-                          ),
-                          onTap: () => fetchSubmission(assignment['assignCode'], assignment['dueDate']),
-                          ),
+          : assignments.isEmpty
+              ? const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.warning, size: 100, color: Colors.orangeAccent),
+                      SizedBox(height: 20),
+                      Text(
+                        'No assignments available for this course.',
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Please check back later.',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset: const Offset(0, 8),
                         ),
-                      );
-                    },
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ListView.builder(
+                        itemCount: assignments.length,
+                        itemBuilder: (context, index) {
+                          final assignment = assignments[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2.0),
+                            child: Card(
+                              elevation: 3.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                              child: ListTile(
+                                title: Text(assignment['title']),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(assignment['description']),
+                                    Text(
+                                      'Due Date: ${DateFormat('yyyy-MM-dd hh:mm a').format(
+                                        DateTime.parse(assignment['dueDate'])
+                                            .subtract(const Duration(days: 1))
+                                            .copyWith(hour: 23, minute: 59),
+                                      )}',
+                                    ),
+                                  ],
+                                ),
+                                onTap: () => fetchSubmission(
+                                    assignment['assignCode'], assignment['dueDate'], assignment['title']),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
     );
   }
 }
