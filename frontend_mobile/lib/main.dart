@@ -103,19 +103,24 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Welcome Back',
+        style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.w700, fontSize: 30),
+        ),
+        backgroundColor: Color.fromARGB(255, 175, 193, 208),
+        elevation: 0,
+        centerTitle: true,
+      ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.deepPurple.shade300, Colors.deepPurple.shade900],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          color: Color.fromARGB(255, 175, 193, 208),
         ),
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Card(
               elevation: 8,
+              color: Color.fromARGB(255, 28, 63, 96),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
@@ -125,37 +130,53 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                      'Welcome Back',
+                      'Login',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Colors.deepPurple,
+                        color: Color.fromARGB(255, 243, 246, 250),
                       ),
                     ),
                     const SizedBox(height: 20),
                     TextField(
                       controller: _usernameController,
+                      style: TextStyle(color: Color.fromARGB(255, 243, 246, 250)),
+                      cursorColor: Color.fromARGB(255, 243, 246, 250),
                       decoration: InputDecoration(
-                        labelText: 'Username',
-                        border: OutlineInputBorder(
+                        hintStyle: TextStyle(color: Color.fromARGB(255, 243, 246, 250)),
+                        hintText: 'Username',
+                        enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          borderSide: const BorderSide(),
+                          borderSide: const BorderSide(color: Color.fromARGB(255, 243, 246, 250)),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: const BorderSide(color: Color.fromARGB(255, 175, 193, 208)),
+                        ),
+                        border: const OutlineInputBorder(),
                         filled: true,
-                        fillColor: Colors.grey.shade200,
+                        fillColor: Color.fromARGB(255, 54, 86, 121),
                       ),
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       controller: _passwordController,
+                      style: TextStyle(color: Color.fromARGB(255, 243, 246, 250)),
+                      cursorColor: Color.fromARGB(255, 243, 246, 250),
                       decoration: InputDecoration(
-                        labelText: 'Password',
-                        border: OutlineInputBorder(
+                        hintStyle: TextStyle(color: Color.fromARGB(255, 243, 246, 250)),
+                        hintText: 'Password',
+                        enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          borderSide: const BorderSide(),
+                          borderSide: const BorderSide(color: Color.fromARGB(255, 243, 246, 250)),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: const BorderSide(color: Color.fromARGB(255, 175, 193, 208)),
+                        ),
+                        border: const OutlineInputBorder(),
                         filled: true,
-                        fillColor: Colors.grey.shade200,
+                        fillColor: Color.fromARGB(255, 54, 86, 121),
                       ),
                       obscureText: true,
                     ),
@@ -173,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                             ),
-                            child: const Text('Login'),
+                            child: const Text('Login', style: TextStyle(color: Color.fromARGB(255, 28, 63, 96), fontWeight: FontWeight.w700,),),
                           ),
                     const SizedBox(height: 20),
                     Text(

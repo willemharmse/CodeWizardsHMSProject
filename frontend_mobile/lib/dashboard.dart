@@ -72,11 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.deepPurple.shade300, Colors.deepPurple.shade900],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          color: Color.fromARGB(255, 175, 193, 208),
         ),
         child: Column(
           children: [
@@ -112,14 +108,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       padding: const EdgeInsets.all(16.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Color.fromARGB(255, 54, 86, 121),
                           borderRadius: BorderRadius.circular(12.0),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
-                              spreadRadius: 2,
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
+                              color: Color.fromARGB(255, 28, 63, 96).withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              offset: const Offset(0, 8),
                             ),
                           ],
                         ),
@@ -132,6 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                                 child: Card(
+                                  color: Color.fromARGB(255, 28, 63, 96),
                                   elevation: 1.0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.0),
@@ -139,7 +136,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   child: ListTile(
                                     title: Text(
                                       '${course['courseCode']} - ${course['courseName']}',
-                                      style: const TextStyle(color: Color.fromARGB(255, 82, 49, 138)), // Course name color
+                                      style: const TextStyle(color: Color.fromARGB(255, 243, 246, 250), fontWeight: FontWeight.w700), // Course name color
                                     ),
                                     onTap: () => onCourseTap(course['courseCode']),
                                   ),

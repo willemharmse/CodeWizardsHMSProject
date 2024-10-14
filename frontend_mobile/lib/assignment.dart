@@ -131,86 +131,105 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
     }
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Assignments for ${widget.courseCode}'),
+        title: Text('Assignments for ${widget.courseCode}',
+        style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.w700, fontSize: 30),
+        ),
+        backgroundColor: Color.fromARGB(255, 175, 193, 208),
+        elevation: 0,
       ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : assignments.isEmpty
-              ? const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.warning, size: 100, color: Colors.orangeAccent),
-                      SizedBox(height: 20),
-                      Text(
-                        'No assignments available for this course.',
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Please check back later.',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 5,
-                          blurRadius: 10,
-                          offset: const Offset(0, 8),
+      body: Container(
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 175, 193, 208),
+        ),
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : assignments.isEmpty
+                ? const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.warning, size: 100, color: Color.fromARGB(255, 28, 63, 96)),
+                        SizedBox(height: 20),
+                        Text(
+                          'No assignments available for this course.',
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Please check back later.',
+                          style: TextStyle(fontSize: 16),
                         ),
                       ],
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: ListView.builder(
-                        itemCount: assignments.length,
-                        itemBuilder: (context, index) {
-                          final assignment = assignments[index];
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 2.0),
-                            child: Card(
-                              elevation: 3.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
-                              child: ListTile(
-                                title: Text(assignment['title']),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(assignment['description']),
-                                    Text(
-                                      'Due Date: ${DateFormat('yyyy-MM-dd hh:mm a').format(
-                                        DateTime.parse(assignment['dueDate'])
-                                            .subtract(const Duration(days: 1))
-                                            .copyWith(hour: 23, minute: 59),
-                                      )}',
-                                    ),
-                                  ],
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 54, 86, 121),
+                        borderRadius: BorderRadius.circular(16.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 28, 63, 96).withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: const Offset(0, 8),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ListView.builder(
+                          itemCount: assignments.length,
+                          itemBuilder: (context, index) {
+                            final assignment = assignments[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 2.0),
+                              child: Card(
+                                elevation: 3.0,
+                                color: Color.fromARGB(255, 28, 63, 96),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.0),
                                 ),
-                                onTap: () => fetchSubmission(
-                                    assignment['assignCode'], assignment['dueDate'], assignment['title']),
+                                child: ListTile(
+                                  title: Text(assignment['title'], style:TextStyle(color: Color.fromARGB(255, 243, 246, 250), fontWeight: FontWeight.w700) ,),
+                                  subtitle: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(assignment['description'],style:TextStyle(color: Color.fromARGB(255, 243, 246, 250), fontWeight: FontWeight.w300)),
+                                      Text(
+                                        'Due Date: ${DateFormat('yyyy-MM-dd hh:mm a').format(
+                                          DateTime.parse(assignment['dueDate']).subtract(const Duration(days: 1)).copyWith(hour: 23, minute: 59),
+                                        )}',
+                                        style:TextStyle(color: Color.fromARGB(255, 243, 246, 250), fontWeight: FontWeight.w300),
+                                      ),
+                                    ],
+                                  ),
+                                  onTap: () => fetchSubmission(
+                                    assignment['assignCode'],
+                                    assignment['dueDate'],
+                                    assignment['title'],
+                                  ),
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
-                ),
+      ),
     );
   }
 }
+
+
+
+
+
+
+

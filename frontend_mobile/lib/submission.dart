@@ -96,19 +96,16 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Submit Assignment'),
-        centerTitle: true,
-        backgroundColor: Colors.teal,
-        elevation: 4,
+        title: const Text('Submit Assignment',
+        style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.w700, fontSize: 30),
+        ),
+        backgroundColor: Color.fromARGB(255, 175, 193, 208),
+        elevation: 0,
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.teal.shade100, Colors.teal.shade300],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          color: Color.fromARGB(255, 175, 193, 208),
         ),
         child: _isSubmissionSuccess != null
             ? Center(
@@ -144,7 +141,7 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
                               Container(
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
-                                  color: Colors.redAccent,
+                                  color: Color.fromARGB(255, 28, 63, 96),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: const Text(
@@ -174,12 +171,12 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: ListTile(
-                                  leading: const Icon(Icons.upload_file, color: Colors.teal),
+                                  leading: const Icon(Icons.upload_file, color: Color.fromARGB(255, 28, 63, 96)),
                                   title: const Text('Upload your file'),
                                   trailing: ElevatedButton.icon(
                                     onPressed: pickFile,
-                                    icon: const Icon(Icons.attach_file),
-                                    label: const Text('Select File'),
+                                    icon: const Icon(Icons.attach_file, color: Color.fromARGB(255, 28, 63, 96)),
+                                    label: const Text('Select File', style:TextStyle(color: Color.fromARGB(255, 28, 63, 96))),
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(30),
@@ -196,7 +193,7 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
                                     borderRadius: BorderRadius.circular(15),
                                   ),
                                   child: ListTile(
-                                    leading: const Icon(Icons.insert_drive_file, color: Colors.teal),
+                                    leading: const Icon(Icons.insert_drive_file, color: Color.fromARGB(255, 28, 63, 96)),
                                     title: Text(
                                       'File selected: ${pickedFile!.name}',
                                       style: const TextStyle(fontSize: 16),
@@ -207,7 +204,7 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
                               if (pickedFile != null)
                                 ElevatedButton(
                                   onPressed: submitFile,
-                                  child: const Text('Submit Assignment'),
+                                  child: const Text('Submit Assignment', style:TextStyle(color: Color.fromARGB(255, 28, 63, 96))),
                                   style: ElevatedButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                                     shape: RoundedRectangleBorder(
@@ -226,7 +223,7 @@ class _SubmissionScreenState extends State<SubmissionScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.check_circle, color: Colors.green, size: 100),
+                        const Icon(Icons.check_circle, color: Color.fromARGB(255, 28, 63, 96), size: 100),
                         const SizedBox(height: 20),
                         const Text(
                           'Submission Details:',
