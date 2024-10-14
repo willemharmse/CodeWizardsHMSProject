@@ -1,5 +1,5 @@
 import express from 'express';
-import db from './src/db.mjs';
+import db from './src/config/db.mjs';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import index from './src/routes/index.mjs';

@@ -910,3 +910,4 @@
 2024-10-14 13:41:56 info: Assignments for CS201 successfully returned
 2024-10-14 13:41:57 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
 2024-10-14 13:41:57 info: Assignments for CS601 successfully returned
+2024-10-14 13:47:29 info: Mongoose connected
