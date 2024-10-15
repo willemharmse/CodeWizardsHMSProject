@@ -34,7 +34,7 @@
 }
 
 .submission-logout-button:hover, .back-to-dashboard-button:hover{
-  background-color: #f3f6fa;
+  background-color: transparent;
   color: #365679;
   transition: 0.5s ease;
 }

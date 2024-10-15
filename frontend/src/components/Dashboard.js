@@ -195,6 +195,7 @@ const Dashboard = () => {
       });
   
       if (!response.ok) {
+        alert('Course creation/editing failed.');
         throw new Error('Course creation/editing failed.');
       }
   
@@ -246,6 +247,7 @@ const Dashboard = () => {
       });
   
       if (!response.ok) {
+        alert('Assignment creation/editing failed.');
         throw new Error('Assignment creation/editing failed.');
       }
   
@@ -306,6 +308,7 @@ const handleDeleteCourse = async (courseCode) => {
     // Update the courses list after deletion
     fetchCourses();
     setSelectedCourse(null); // Deselect the course if it's deleted
+    window.location.href = '/dashboard';
   } catch (error) {
     console.error('Error deleting course', error);
   }
