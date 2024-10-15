@@ -107,6 +107,7 @@ const SubmissionDetail = () => {
         }
       );
       alert('Grade and feedback submitted successfully');
+      window.location.href = '/dashboard';
     } catch (error) {
       console.error('Error submitting grade and feedback:', error);
     }
