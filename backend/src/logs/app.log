@@ -1,0 +1,913 @@
+2024-09-22 11:36:09 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-22 11:36:10 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-22 14:40:10 info: Request: GET /api/user/student/12345678 - Query: {} - Body: {}
+2024-09-22 14:40:39 info: Request: GET /api/user/admin/Willem - Query: {} - Body: {}
+2024-09-22 14:40:46 info: Request: GET /api/user/admin/Shaldon - Query: {} - Body: {}
+2024-09-22 14:41:07 info: Request: GET /api/user/lecturer/73498120 - Query: {} - Body: {}
+2024-09-22 14:42:46 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-22 14:42:46 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-22 19:53:25 info: Request: GET /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-22 19:53:33 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-22 19:53:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-22 19:55:31 info: Request: PUT /api/user/update/73498120 - Query: {} - Body: {"role":"lecturer","department":"Data Science","email":"lecturer1@hms.com"}
+2024-09-22 19:55:41 info: Request: PUT /api/user/update/73498120 - Query: {} - Body: {"role":"lecturer","email":"lecturer1@hms.com"}
+2024-09-22 20:01:25 info: Request: GET /api/submission/CS101-1 - Query: {} - Body: {"role":"lecturer","email":"lecturer1@hms.com"}
+2024-09-22 20:01:25 info: Assignments found for CS101-1 successfully loaded
+2024-09-23 08:56:11 info: Request: GET /api/course/ - Query: {} - Body: {}
+2024-09-23 08:56:11 info: Courses loaded successfully
+2024-09-23 08:56:18 info: Request: GET /api/course/CS101 - Query: {} - Body: {}
+2024-09-23 08:56:18 info: Course loaded successfully
+2024-09-23 09:02:40 info: Request: GET /api/assignment/CS101 - Query: {} - Body: {}
+2024-09-23 09:02:40 warn: Error occured during retrieval of assignments: ReferenceError: Cannot access 'assignment' before initialization
+2024-09-23 09:02:56 info: Request: GET /api/assignment/CS101 - Query: {} - Body: {}
+2024-09-23 09:02:56 warn: Error occured during retrieval of assignments: ReferenceError: Cannot access 'assignment' before initialization
+2024-09-23 09:03:15 info: Request: GET /api/assignment/CS101 - Query: {} - Body: {}
+2024-09-23 09:06:30 info: Request: GET /api/assignment/CS101-1 - Query: {} - Body: {}
+2024-09-23 09:06:30 warn: CS101-1 not found
+2024-09-23 09:07:55 info: Request: GET /api/assignment/CS101-1 - Query: {} - Body: {}
+2024-09-23 09:07:55 warn: Error occured during retrieval of assignment: ReferenceError: Cannot access 'assignment' before initialization
+2024-09-23 09:08:05 info: Request: GET /api/assignment/CS101-1 - Query: {} - Body: {}
+2024-09-23 09:08:05 info: Assignment for CS101-1 successfully found
+2024-09-23 09:08:08 info: Request: GET /api/assignment/CS101-2 - Query: {} - Body: {}
+2024-09-23 09:08:08 info: Assignment for CS101-2 successfully found
+2024-09-23 09:08:10 info: Request: GET /api/assignment/CS101-3 - Query: {} - Body: {}
+2024-09-23 09:08:10 info: Assignment for CS101-3 successfully found
+2024-09-23 09:08:10 info: Request: GET /api/assignment/CS101-4 - Query: {} - Body: {}
+2024-09-23 09:08:10 info: Assignment for CS101-4 not found
+2024-09-23 09:08:23 info: Request: GET /api/assignment/course/CS101 - Query: {} - Body: {}
+2024-09-23 09:08:48 info: Request: GET /api/assignment/course/CS101 - Query: {} - Body: {}
+2024-09-23 09:08:48 info: Assignments for CS101 successfully returned
+2024-09-23 09:14:21 info: Request: GET /api/submission/11/CS101-1 - Query: {} - Body: {}
+2024-09-23 09:14:21 warn: Failed retrieving info for 11. User does not exist
+2024-09-23 09:14:32 info: Request: GET /api/submission/Willem/CS101-1 - Query: {} - Body: {}
+2024-09-23 09:14:32 info: No assignments found for user: Willem for assingment: CS101-1
+2024-09-23 09:15:58 info: Request: GET /api/submission/12345678/CS101-1 - Query: {} - Body: {}
+2024-09-23 09:15:58 info: Assignments found for user: 12345678 for assignment: CS101-1 successfully loaded
+2024-09-23 09:16:09 info: Request: GET /api/submission/34567890/CS101-1 - Query: {} - Body: {}
+2024-09-23 09:16:09 info: No assignments found for user: 34567890 for assignment: CS101-1
+2024-09-23 09:37:36 info: Request: POST /api/user/login - Query: {} - Body: {"username":"73498120","password":"******"}
+2024-09-23 09:37:36 info: Login attempt for user: 73498120 successful with body: {"username":"73498120","password":"******"}
+2024-09-23 09:39:13 info: Request: GET /api/submission/grade/12345678/CS101-1 - Query: {} - Body: {"grade":"90","feedback":"Great Work"}
+2024-09-23 09:39:16 info: Request: PUT /api/submission/grade/12345678/CS101-1 - Query: {} - Body: {"grade":"90","feedback":"Great Work"}
+2024-09-23 09:39:16 info: Submission for 12345678 graded for Basic Programming Concepts
+2024-09-23 09:39:27 info: Request: GET /api/grades/CS101-1 - Query: {} - Body: {}
+2024-09-23 09:39:27 info: Excel file cointaining feedback and marks successfully created
+2024-09-23 10:02:54 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:02:54 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:03:27 info: Request: POST /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:03:30 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:03:56 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:03:56 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:04:03 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:04:03 warn: Error during course deletion: ReferenceError: assignment is not defined
+2024-09-23 10:06:28 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:06:28 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:06:37 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:06:37 warn: Error during course deletion: ReferenceError: file is not defined
+2024-09-23 10:06:48 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:06:48 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:07:01 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:07:01 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 10:13:45 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:13:45 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:13:53 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:13:53 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 10:15:15 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:15:15 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:15:24 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:15:24 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 10:16:06 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:16:06 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:16:13 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:16:13 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 10:17:56 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:17:57 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:18:04 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:18:41 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:18:47 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 10:21:01 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:21:01 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:21:02 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:21:02 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:21:17 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 10:21:17 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 10:21:53 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 10:21:53 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 10:22:00 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 10:22:00 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 13:12:23 info: Request: GET /users/student/12345678 - Query: {} - Body: {}
+2024-09-23 13:13:30 info: Request: GET /api/users/student/12345678 - Query: {} - Body: {}
+2024-09-23 13:36:15 info: Request: OPTIONS /api/user/login - Query: {} - Body: {}
+2024-09-23 17:59:36 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 17:59:36 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 18:00:18 info: Request: POST /api/course/update/CS101 - Query: {} - Body: {"courseCode":"CS101"}
+2024-09-23 18:00:21 info: Request: PUT /api/course/update/CS101 - Query: {} - Body: {"courseCode":"CS101"}
+2024-09-23 18:00:21 warn: Error during course update: ReferenceError: courseCode is not defined
+2024-09-23 18:01:13 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 18:01:13 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 18:01:25 info: Request: PUT /api/course/update/CS101 - Query: {} - Body: {"courseCode":"CS101"}
+2024-09-23 18:01:25 warn: Course not found in database
+2024-09-23 18:01:42 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 18:01:42 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 18:01:50 info: Request: PUT /api/course/update/CS101 - Query: {} - Body: {"courseCode":"CS101"}
+2024-09-23 18:01:50 warn: Course not found in database
+2024-09-23 18:02:25 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 18:02:26 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 18:02:51 info: Request: PUT /api/course/update/CS101 - Query: {} - Body: {"courseCode":"CS101"}
+2024-09-23 18:03:23 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 18:03:23 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 18:03:32 info: Request: PUT /api/course/update/CS101 - Query: {} - Body: {"courseCode":"CS101"}
+2024-09-23 18:03:32 warn: Error during course update: ValidationError: courseName: Path `courseName` is required., description: Path `description` is required.
+2024-09-23 18:04:18 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 18:04:19 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 18:04:32 info: Request: PUT /api/course/update/CS101 - Query: {} - Body: {"courseCode":"CS101"}
+2024-09-23 18:04:32 info: Course: CS101 successfully updated
+2024-09-23 18:10:35 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 18:10:35 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 18:11:09 info: Request: PUT /api/assignment/update/CS101-3 - Query: {} - Body: {"title":"Assignment 3"}
+2024-09-23 18:11:09 info: Assignment CS101-3 updated successfully.
+2024-09-23 20:24:55 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 20:24:55 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 20:25:36 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:25:54 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 20:25:55 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 20:26:04 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:26:04 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 20:28:05 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 20:28:06 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 20:28:13 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:28:13 warn: Error during course deletion: TypeError: Cannot read properties of undefined (reading 'split')
+2024-09-23 20:29:57 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 20:29:57 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 20:30:07 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:31:15 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-23 20:31:15 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-23 20:31:24 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:32:27 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:45:03 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-23 20:45:05 info: Course: CS101 successfully deleted
+2024-09-24 09:19:35 info: Request: GET /favicon.ico - Query: {} - Body: {}
+2024-09-24 09:19:59 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:19:59 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:04 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:04 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:04 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:04 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:05 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:05 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:05 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:05 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:06 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:06 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:06 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:06 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:07 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:07 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:07 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:07 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:07 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:07 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:08 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:08 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:08 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:08 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:08 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:08 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:09 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:09 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:09 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:09 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:09 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:09 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:09 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:09 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:09 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:09 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:10 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:10 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:10 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:10 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:10 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:10 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:10 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:10 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:10 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:10 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:11 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:11 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:11 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:11 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:11 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:11 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:11 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:11 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:11 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:11 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:12 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:12 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:12 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:12 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:12 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:12 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:12 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:12 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:12 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:12 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:13 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:13 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:13 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:13 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:13 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 09:20:13 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:03:58 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:03:58 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:08:09 info: Request: POST /api/user/create - Query: {} - Body: {"username":"43041450","password":"******","email":"student@hms.com","role":"student","enrollmentYear":"2020"}
+2024-09-24 12:08:10 info: Creation of user account for user: 43041450 successfull
+2024-09-24 12:08:19 info: Request: POST /api/user/create - Query: {} - Body: {"username":"33300011","password":"******","email":"lecturer@hms.com","role":"lecturer","department":"FNAS"}
+2024-09-24 12:08:19 info: Creation of user account for user: 33300011 successfull
+2024-09-24 12:08:48 info: Request: GET /api/user/student/43041450 - Query: {} - Body: {}
+2024-09-24 12:08:48 info: User info for user: 43041450 successfully loaded
+2024-09-24 12:09:06 info: Request: GET /api/user/lecturer/33300011 - Query: {} - Body: {}
+2024-09-24 12:09:06 info: User info for user: 33300011 successfully loaded
+2024-09-24 12:09:30 info: Request: GET /api/user/admin/Willem - Query: {} - Body: {}
+2024-09-24 12:09:31 info: User info for user: Willem successfully loaded
+2024-09-24 12:09:56 info: Request: GET /api/user/logout - Query: {} - Body: {}
+2024-09-24 12:10:12 info: Request: GET /api/user/logout - Query: {} - Body: {}
+2024-09-24 12:10:12 error: Error during logging out: ReferenceError: username is not defined
+2024-09-24 12:10:29 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:10:29 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:10:51 info: Request: GET /api/user/logout - Query: {} - Body: {}
+2024-09-24 12:11:23 info: Request: GET /api/user/logout - Query: {} - Body: {}
+2024-09-24 12:11:23 info: User: Willem successfully logged out
+2024-09-24 12:11:30 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:11:30 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:13:04 info: Request: PUT /api/user/update/43041450 - Query: {} - Body: {"email":"student43041450@hms.com"}
+2024-09-24 12:13:04 info: User: 43041450 successfully updated
+2024-09-24 12:13:15 info: Request: GET /api/user/student/43041450 - Query: {} - Body: {}
+2024-09-24 12:13:15 info: User info for user: 43041450 successfully loaded
+2024-09-24 12:13:37 info: Request: PUT /api/user/update/33300011 - Query: {} - Body: {"email":"lecturer33300011@hms.com"}
+2024-09-24 12:13:37 info: User: 33300011 successfully updated
+2024-09-24 12:13:46 info: Request: GET /api/user/lecturer/33300011 - Query: {} - Body: {}
+2024-09-24 12:13:46 info: User info for user: 33300011 successfully loaded
+2024-09-24 12:14:11 info: Request: PUT /api/user/delete/43041450 - Query: {} - Body: {"email":"lecturer33300011@hms.com"}
+2024-09-24 12:14:14 info: Request: DELETE /api/user/delete/43041450 - Query: {} - Body: {"email":"lecturer33300011@hms.com"}
+2024-09-24 12:14:14 info: User: 43041450 successfully deleted
+2024-09-24 12:14:19 info: Request: GET /api/user/student/43041450 - Query: {} - Body: {}
+2024-09-24 12:14:19 warn: Failed retrieving info for 43041450. User does not exist
+2024-09-24 12:14:30 info: Request: DELETE /api/user/delete/33300011 - Query: {} - Body: {"email":"lecturer33300011@hms.com"}
+2024-09-24 12:14:30 info: User: 33300011 successfully deleted
+2024-09-24 12:14:51 info: Request: POST /api/user/create - Query: {} - Body: {"username":"43041450","password":"******","email":"student@hms.com","role":"student","enrollmentYear":"2020"}
+2024-09-24 12:14:51 info: Creation of user account for user: 43041450 successfull
+2024-09-24 12:14:53 info: Request: POST /api/user/create - Query: {} - Body: {"username":"33300011","password":"******","email":"lecturer@hms.com","role":"lecturer","department":"FNAS"}
+2024-09-24 12:14:53 info: Creation of user account for user: 33300011 successfull
+2024-09-24 12:14:58 info: Request: GET /api/user/student/43041450 - Query: {} - Body: {}
+2024-09-24 12:14:58 info: User info for user: 43041450 successfully loaded
+2024-09-24 12:15:06 info: Request: GET /api/user/lecturer/33300011 - Query: {} - Body: {}
+2024-09-24 12:15:06 info: User info for user: 33300011 successfully loaded
+2024-09-24 12:15:53 info: Request: GET /api/course/ - Query: {} - Body: {}
+2024-09-24 12:15:53 info: Courses loaded successfully
+2024-09-24 12:16:14 info: Request: GET /api/course/CS101 - Query: {} - Body: {}
+2024-09-24 12:16:14 warn: CS101 not found in database
+2024-09-24 12:16:18 info: Request: GET /api/course/CS201 - Query: {} - Body: {}
+2024-09-24 12:16:18 info: Course loaded successfully
+2024-09-24 12:17:19 info: Request: POST /api/course/create - Query: {} - Body: {"courseName":"Intoduction to CS","courseCode":"CS101","description":"Learn the basics of computer science"}
+2024-09-24 12:17:19 info: Course: Intoduction to CS successfully created
+2024-09-24 12:17:55 info: Request: GET /api/course/CS101 - Query: {} - Body: {}
+2024-09-24 12:17:55 info: Course loaded successfully
+2024-09-24 12:18:32 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {}
+2024-09-24 12:18:32 info: Course: CS101 successfully deleted
+2024-09-24 12:18:49 info: Request: DELETE /api/course/CS101 - Query: {} - Body: {}
+2024-09-24 12:18:52 info: Request: GET /api/course/CS101 - Query: {} - Body: {}
+2024-09-24 12:18:52 warn: CS101 not found in database
+2024-09-24 12:19:00 info: Request: POST /api/course/create - Query: {} - Body: {"courseName":"Intoduction to CS","courseCode":"CS101","description":"Learn the basics of computer science"}
+2024-09-24 12:19:00 info: Course: Intoduction to CS successfully created
+2024-09-24 12:19:22 info: Request: POST /api/course/update/CS101 - Query: {} - Body: {"description":"Into to CS"}
+2024-09-24 12:19:24 info: Request: PUT /api/course/update/CS101 - Query: {} - Body: {"description":"Into to CS"}
+2024-09-24 12:19:24 info: Course: CS101 successfully updated
+2024-09-24 12:19:31 info: Request: PUT /api/course/CS101 - Query: {} - Body: {"description":"Into to CS"}
+2024-09-24 12:19:34 info: Request: GET /api/course/CS101 - Query: {} - Body: {"description":"Into to CS"}
+2024-09-24 12:19:34 info: Course loaded successfully
+2024-09-24 12:20:01 info: Request: POST /api/course/lecturer/33300011/CS101 - Query: {} - Body: {"description":"Into to CS"}
+2024-09-24 12:20:01 info: Course CS101 added to course taught for lecturer: 33300011.
+2024-09-24 12:20:12 info: Request: POST /api/course/student/43041450/CS101 - Query: {} - Body: {"description":"Into to CS"}
+2024-09-24 12:20:12 info: Course CS101 added to course enrolled for student: 43041450.
+2024-09-24 12:23:24 info: Request: GET /api/assignment/CS201-1 - Query: {} - Body: {}
+2024-09-24 12:23:24 info: Assignment for CS201-1 successfully found
+2024-09-24 12:23:35 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-09-24 12:23:35 info: Assignments for CS201 successfully returned
+2024-09-24 12:25:05 info: Request: POST /api/assignment/create - Query: {} - Body: {"title":"Assignment 1","description":"This is the first assignment","dueDate":"2024-10-16","courseCode":"CS101","mark":"200"}
+2024-09-24 12:25:05 error: Error occured during creation of assignment: ReferenceError: coures is not defined
+2024-09-24 12:25:45 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:25:45 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:26:15 info: Request: POST /api/assignment/create - Query: {} - Body: {"title":"Assignment 1","description":"This is the first assignment","dueDate":"2024-10-16","courseCode":"CS101","mark":"200"}
+2024-09-24 12:26:16 error: Error occured during creation of assignment: ReferenceError: coures is not defined
+2024-09-24 12:26:28 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:26:29 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:26:55 info: Request: POST /api/assignment/create - Query: {} - Body: {"title":"Assignment 1","description":"This is the first assignment","dueDate":"2024-10-16","courseCode":"CS101","mark":"200"}
+2024-09-24 12:26:55 info: Assignment created for CS101 by admin: Willem.
+2024-09-24 12:27:05 info: Request: POST /api/assignment/CS101-1 - Query: {} - Body: {"title":"Assignment 1","description":"This is the first assignment","dueDate":"2024-10-16","courseCode":"CS101","mark":"200"}
+2024-09-24 12:27:08 info: Request: GET /api/assignment/CS101-1 - Query: {} - Body: {"title":"Assignment 1","description":"This is the first assignment","dueDate":"2024-10-16","courseCode":"CS101","mark":"200"}
+2024-09-24 12:27:08 info: Assignment for CS101-1 successfully found
+2024-09-24 12:27:27 info: Request: GET /api/assignment/course/CS101 - Query: {} - Body: {"title":"Assignment 1","description":"This is the first assignment","dueDate":"2024-10-16","courseCode":"CS101","mark":"200"}
+2024-09-24 12:27:27 info: Assignments for CS101 successfully returned
+2024-09-24 12:29:02 info: Request: DELETE /api/assignment/delete/CS101-2 - Query: {} - Body: {}
+2024-09-24 12:29:02 error: Error occured during deletion of assignment: ReferenceError: Submission is not defined
+2024-09-24 12:29:52 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:29:52 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:30:03 info: Request: DELETE /api/assignment/delete/CS101-2 - Query: {} - Body: {}
+2024-09-24 12:30:03 info: Assignment CS101-2 deleted.
+2024-09-24 12:30:06 info: Request: DELETE /api/assignment/delete/CS101-3 - Query: {} - Body: {}
+2024-09-24 12:30:07 info: Assignment CS101-3 deleted.
+2024-09-24 12:30:19 info: Request: GET /api/assignment/course/CS101 - Query: {} - Body: {}
+2024-09-24 12:30:20 info: Assignments for CS101 successfully returned
+2024-09-24 12:31:34 info: Request: PUT /api/assignment/update/CS101-1 - Query: {} - Body: {"mark":"50"}
+2024-09-24 12:31:34 info: Assignment CS101-1 updated successfully.
+2024-09-24 12:31:45 info: Request: GET /api/assignment/CS101-1 - Query: {} - Body: {"mark":"50"}
+2024-09-24 12:31:45 info: Assignment for CS101-1 successfully found
+2024-09-24 12:33:25 info: Request: DELETE /api/course/delete/CS101 - Query: {} - Body: {"courseName":"Intoduction to CS","courseCode":"CS101","description":"Learn the basics of computer science"}
+2024-09-24 12:33:25 info: Course: CS101 successfully deleted
+2024-09-24 12:33:55 info: Request: GET /api/assignment/CS101-1 - Query: {} - Body: {"mark":"50"}
+2024-09-24 12:33:55 warn: Assignment for CS101-1 not found
+2024-09-24 12:34:25 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:25 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:27 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:27 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:28 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:28 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:29 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:29 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:30 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:30 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:31 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:31 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:31 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:31 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:32 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:32 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:33 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:33 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:33 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:33 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:33 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-24 12:34:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-24 12:41:40 info: Request: OPTIONS /api/user/login - Query: {} - Body: {}
+2024-09-24 12:43:31 info: Request: POST /api/user/login - Query: {} - Body: {"username":"43041450","password":"******"}
+2024-09-24 12:43:31 info: Login attempt for user: 43041450 successful with body: {"username":"43041450","password":"******"}
+2024-09-25 08:24:01 info: Mongoose connected
+2024-09-25 08:24:13 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-09-25 08:24:13 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-09-25 10:51:57 info: Mongoose connected
+2024-09-25 10:52:10 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Piet","password":"******"}
+2024-09-25 10:52:10 warn: Failed login attempt for user: Piet
+2024-10-14 12:57:18 info: Mongoose connected
+2024-10-14 12:58:42 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-10-14 12:58:43 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-10-14 12:58:43 info: Request: GET /api/course/courses/student - Query: {} - Body: {}
+2024-10-14 12:58:43 info: Courses loaded successfully
+2024-10-14 12:58:44 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 12:58:45 info: Assignments for CS201 successfully returned
+2024-10-14 12:58:45 info: Request: GET /api/submission/Willem/CS201-1 - Query: {} - Body: {}
+2024-10-14 12:58:46 info: Assignments found for user: Willem for assignment: CS201-1 successfully loaded
+2024-10-14 12:58:48 info: Request: GET /api/submission/Willem/CS201-2 - Query: {} - Body: {}
+2024-10-14 12:58:48 info: No assignments found for user: Willem for assignment: CS201-2
+2024-10-14 12:58:50 info: Request: GET /api/submission/Willem/CS201-3 - Query: {} - Body: {}
+2024-10-14 12:58:50 info: No assignments found for user: Willem for assignment: CS201-3
+2024-10-14 12:58:52 info: Request: GET /api/assignment/course/CS301 - Query: {} - Body: {}
+2024-10-14 12:58:52 info: Assignments for CS301 successfully returned
+2024-10-14 12:58:54 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 12:58:54 info: Assignments for CS803 not found
+2024-10-14 12:58:56 info: Request: GET /api/assignment/course/CS701 - Query: {} - Body: {}
+2024-10-14 12:58:56 info: Assignments for CS701 successfully returned
+2024-10-14 12:58:56 info: Request: GET /api/submission/Willem/CS701-1 - Query: {} - Body: {}
+2024-10-14 12:58:57 info: No assignments found for user: Willem for assignment: CS701-1
+2024-10-14 12:58:59 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 12:58:59 info: Assignments for CS601 successfully returned
+2024-10-14 12:59:00 info: Request: GET /api/submission/Willem/CS601-1 - Query: {} - Body: {}
+2024-10-14 12:59:00 info: No assignments found for user: Willem for assignment: CS601-1
+2024-10-14 12:59:01 info: Request: GET /api/submission/Willem/CS601-2 - Query: {} - Body: {}
+2024-10-14 12:59:01 info: No assignments found for user: Willem for assignment: CS601-2
+2024-10-14 12:59:03 info: Request: GET /api/submission/Willem/CS601-3 - Query: {} - Body: {}
+2024-10-14 12:59:03 info: No assignments found for user: Willem for assignment: CS601-3
+2024-10-14 12:59:04 info: Request: GET /api/submission/Willem/CS601-4 - Query: {} - Body: {}
+2024-10-14 12:59:04 info: No assignments found for user: Willem for assignment: CS601-4
+2024-10-14 12:59:07 info: Request: GET /api/assignment/course/CS443 - Query: {} - Body: {}
+2024-10-14 12:59:07 info: Assignments for CS443 successfully returned
+2024-10-14 12:59:07 info: Request: GET /api/submission/Willem/CS443-1 - Query: {} - Body: {}
+2024-10-14 12:59:07 info: No assignments found for user: Willem for assignment: CS443-1
+2024-10-14 12:59:09 info: Request: GET /api/assignment/course/CS501 - Query: {} - Body: {}
+2024-10-14 12:59:09 info: Assignments for CS501 successfully returned
+2024-10-14 12:59:10 info: Request: GET /api/submission/Willem/CS501-1 - Query: {} - Body: {}
+2024-10-14 12:59:10 info: No assignments found for user: Willem for assignment: CS501-1
+2024-10-14 12:59:11 info: Request: GET /api/submission/Willem/CS501-2 - Query: {} - Body: {}
+2024-10-14 12:59:12 info: No assignments found for user: Willem for assignment: CS501-2
+2024-10-14 12:59:13 info: Request: GET /api/submission/Willem/CS501-3 - Query: {} - Body: {}
+2024-10-14 12:59:13 info: No assignments found for user: Willem for assignment: CS501-3
+2024-10-14 12:59:15 info: Request: GET /api/assignment/course/CS401 - Query: {} - Body: {}
+2024-10-14 12:59:15 info: Assignments for CS401 successfully returned
+2024-10-14 12:59:16 info: Request: GET /api/submission/Willem/CS401-1 - Query: {} - Body: {}
+2024-10-14 12:59:16 info: No assignments found for user: Willem for assignment: CS401-1
+2024-10-14 12:59:17 info: Request: GET /api/submission/Willem/CS401-2 - Query: {} - Body: {}
+2024-10-14 12:59:17 info: No assignments found for user: Willem for assignment: CS401-2
+2024-10-14 12:59:19 info: Request: GET /api/submission/Willem/CS401-3 - Query: {} - Body: {}
+2024-10-14 12:59:19 info: No assignments found for user: Willem for assignment: CS401-3
+2024-10-14 12:59:22 info: Request: GET /api/assignment/course/CS301 - Query: {} - Body: {}
+2024-10-14 12:59:22 info: Assignments for CS301 successfully returned
+2024-10-14 12:59:23 info: Request: GET /api/submission/Willem/CS301-1 - Query: {} - Body: {}
+2024-10-14 12:59:23 info: Assignments found for user: Willem for assignment: CS301-1 successfully loaded
+2024-10-14 13:06:57 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:06:57 info: Assignments for CS201 successfully returned
+2024-10-14 13:06:58 info: Request: GET /api/submission/Willem/CS201-2 - Query: {} - Body: {}
+2024-10-14 13:06:58 info: No assignments found for user: Willem for assignment: CS201-2
+2024-10-14 13:07:04 info: Request: POST /api/submission/submit - Query: {} - Body: {}
+2024-10-14 13:07:10 info: Submission for Willem created for Stack and Queue Operations
+2024-10-14 13:07:37 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-10-14 13:07:38 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-10-14 13:07:38 info: Request: GET /api/course/ - Query: {} - Body: {}
+2024-10-14 13:07:38 info: Courses loaded successfully
+2024-10-14 13:07:39 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:07:39 info: Assignments for CS201 successfully returned
+2024-10-14 13:07:40 info: Request: GET /api/submission/assignment/CS201-2 - Query: {} - Body: {}
+2024-10-14 13:07:40 info: Assignments found for CS201-2 successfully loaded
+2024-10-14 13:07:41 info: Request: GET /api/submission/670cfb5e8d28c0e59a35184b - Query: {} - Body: {}
+2024-10-14 13:07:41 info: Submission found
+2024-10-14 13:07:41 info: Request: GET /api/submission/670cfb5e8d28c0e59a35184b - Query: {} - Body: {}
+2024-10-14 13:07:41 info: Request: GET /api/file/stream/670cfb5e8d28c0e59a351849 - Query: {} - Body: {}
+2024-10-14 13:07:41 info: Submission found
+2024-10-14 13:07:42 info: Request: GET /api/file/stream/670cfb5e8d28c0e59a351849 - Query: {} - Body: {}
+2024-10-14 13:07:49 info: Request: GET /api/submission/Willem/CS201-2 - Query: {} - Body: {}
+2024-10-14 13:07:50 info: Assignments found for user: Willem for assignment: CS201-2 successfully loaded
+2024-10-14 13:08:13 info: Request: PUT /api/submission/grade/670cfb5e8d28c0e59a35184b - Query: {} - Body: {"grade":"150","feedback":"Great detail and explanation. "}
+2024-10-14 13:08:20 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:08:20 info: Assignments for CS201 successfully returned
+2024-10-14 13:08:21 info: Request: GET /api/submission/Willem/CS201-2 - Query: {} - Body: {}
+2024-10-14 13:08:21 info: Assignments found for user: Willem for assignment: CS201-2 successfully loaded
+2024-10-14 13:08:33 info: Request: GET /api/submission/Willem/CS201-3 - Query: {} - Body: {}
+2024-10-14 13:08:34 info: No assignments found for user: Willem for assignment: CS201-3
+2024-10-14 13:08:37 info: Request: GET /api/submission/Willem/CS201-3 - Query: {} - Body: {}
+2024-10-14 13:08:37 info: No assignments found for user: Willem for assignment: CS201-3
+2024-10-14 13:09:02 info: Request: GET /api/submission/Willem/CS201-3 - Query: {} - Body: {}
+2024-10-14 13:09:03 info: No assignments found for user: Willem for assignment: CS201-3
+2024-10-14 13:09:27 info: Request: GET /api/course/ - Query: {} - Body: {}
+2024-10-14 13:09:27 info: Courses loaded successfully
+2024-10-14 13:10:55 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-10-14 13:10:55 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-10-14 13:10:55 info: Request: GET /api/course/courses/student - Query: {} - Body: {}
+2024-10-14 13:10:55 info: Courses loaded successfully
+2024-10-14 13:10:57 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:10:57 info: Assignments for CS201 successfully returned
+2024-10-14 13:11:00 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 13:11:00 info: Assignments for CS803 not found
+2024-10-14 13:11:02 info: Request: GET /api/assignment/course/CS701 - Query: {} - Body: {}
+2024-10-14 13:11:02 info: Assignments for CS701 successfully returned
+2024-10-14 13:11:02 info: Request: GET /api/submission/Willem/CS701-1 - Query: {} - Body: {}
+2024-10-14 13:11:03 info: No assignments found for user: Willem for assignment: CS701-1
+2024-10-14 13:11:05 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 13:11:05 info: Assignments for CS601 successfully returned
+2024-10-14 13:11:06 info: Request: GET /api/submission/Willem/CS601-1 - Query: {} - Body: {}
+2024-10-14 13:11:06 info: No assignments found for user: Willem for assignment: CS601-1
+2024-10-14 13:11:09 info: Request: GET /api/submission/Willem/CS601-3 - Query: {} - Body: {}
+2024-10-14 13:11:09 info: No assignments found for user: Willem for assignment: CS601-3
+2024-10-14 13:13:59 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-10-14 13:13:59 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-10-14 13:13:59 info: Request: GET /api/course/courses/student - Query: {} - Body: {}
+2024-10-14 13:13:59 info: Courses loaded successfully
+2024-10-14 13:14:02 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 13:14:02 info: Assignments for CS601 successfully returned
+2024-10-14 13:14:04 info: Request: GET /api/submission/Willem/CS601-3 - Query: {} - Body: {}
+2024-10-14 13:14:04 info: No assignments found for user: Willem for assignment: CS601-3
+2024-10-14 13:14:39 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-10-14 13:14:39 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-10-14 13:14:39 info: Request: GET /api/course/courses/student - Query: {} - Body: {}
+2024-10-14 13:14:39 info: Courses loaded successfully
+2024-10-14 13:14:40 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 13:14:40 info: Assignments for CS601 successfully returned
+2024-10-14 13:14:42 info: Request: GET /api/submission/Willem/CS601-1 - Query: {} - Body: {}
+2024-10-14 13:14:42 info: No assignments found for user: Willem for assignment: CS601-1
+2024-10-14 13:14:43 info: Request: GET /api/submission/Willem/CS601-4 - Query: {} - Body: {}
+2024-10-14 13:14:43 info: No assignments found for user: Willem for assignment: CS601-4
+2024-10-14 13:14:45 info: Request: GET /api/submission/Willem/CS601-1 - Query: {} - Body: {}
+2024-10-14 13:14:46 info: No assignments found for user: Willem for assignment: CS601-1
+2024-10-14 13:17:22 info: Request: GET /api/submission/Willem/CS601-4 - Query: {} - Body: {}
+2024-10-14 13:17:22 info: No assignments found for user: Willem for assignment: CS601-4
+2024-10-14 13:17:27 info: Request: GET /api/submission/Willem/CS601-1 - Query: {} - Body: {}
+2024-10-14 13:17:27 info: No assignments found for user: Willem for assignment: CS601-1
+2024-10-14 13:17:52 info: Request: GET /api/submission/Willem/CS601-2 - Query: {} - Body: {}
+2024-10-14 13:17:52 info: No assignments found for user: Willem for assignment: CS601-2
+2024-10-14 13:17:58 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:17:59 info: Assignments for CS201 successfully returned
+2024-10-14 13:18:08 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:18:08 info: Assignments for CS201 successfully returned
+2024-10-14 13:18:10 info: Request: GET /api/submission/Willem/CS201-1 - Query: {} - Body: {}
+2024-10-14 13:18:10 info: Assignments found for user: Willem for assignment: CS201-1 successfully loaded
+2024-10-14 13:20:32 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-10-14 13:20:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-10-14 13:20:33 info: Request: GET /api/course/courses/student - Query: {} - Body: {}
+2024-10-14 13:20:33 info: Courses loaded successfully
+2024-10-14 13:20:34 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:20:34 info: Assignments for CS201 successfully returned
+2024-10-14 13:20:35 info: Request: GET /api/submission/Willem/CS201-1 - Query: {} - Body: {}
+2024-10-14 13:20:35 info: Assignments found for user: Willem for assignment: CS201-1 successfully loaded
+2024-10-14 13:20:37 info: Request: GET /api/submission/Willem/CS201-2 - Query: {} - Body: {}
+2024-10-14 13:20:37 info: Assignments found for user: Willem for assignment: CS201-2 successfully loaded
+2024-10-14 13:20:42 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 13:20:42 info: Assignments for CS803 not found
+2024-10-14 13:20:50 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 13:20:50 info: Assignments for CS803 not found
+2024-10-14 13:20:54 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 13:20:54 info: Assignments for CS803 not found
+2024-10-14 13:22:15 info: Request: GET /api/assignment/course/CS701 - Query: {} - Body: {}
+2024-10-14 13:22:15 info: Assignments for CS701 successfully returned
+2024-10-14 13:22:17 info: Request: GET /api/assignment/course/CS701 - Query: {} - Body: {}
+2024-10-14 13:22:17 info: Assignments for CS701 successfully returned
+2024-10-14 13:22:19 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 13:22:19 info: Assignments for CS803 not found
+2024-10-14 13:24:11 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 13:24:11 info: Assignments for CS803 not found
+2024-10-14 13:24:44 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-10-14 13:24:44 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-10-14 13:24:44 info: Request: GET /api/course/courses/student - Query: {} - Body: {}
+2024-10-14 13:24:44 info: Courses loaded successfully
+2024-10-14 13:24:45 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 13:24:45 info: Assignments for CS803 not found
+2024-10-14 13:25:39 info: Request: GET /api/assignment/course/CS701 - Query: {} - Body: {}
+2024-10-14 13:25:39 info: Assignments for CS701 successfully returned
+2024-10-14 13:25:41 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 13:25:41 info: Assignments for CS803 not found
+2024-10-14 13:25:49 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:25:50 info: Assignments for CS201 successfully returned
+2024-10-14 13:25:52 info: Request: GET /api/assignment/course/CS301 - Query: {} - Body: {}
+2024-10-14 13:25:52 info: Assignments for CS301 successfully returned
+2024-10-14 13:25:54 info: Request: GET /api/assignment/course/CS501 - Query: {} - Body: {}
+2024-10-14 13:25:54 info: Assignments for CS501 successfully returned
+2024-10-14 13:25:56 info: Request: GET /api/assignment/course/CS401 - Query: {} - Body: {}
+2024-10-14 13:25:56 info: Assignments for CS401 successfully returned
+2024-10-14 13:25:58 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 13:25:58 info: Assignments for CS601 successfully returned
+2024-10-14 13:26:15 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 13:26:15 info: Assignments for CS803 not found
+2024-10-14 13:26:22 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 13:26:22 info: Assignments for CS803 not found
+2024-10-14 13:26:26 info: Request: GET /api/assignment/course/CS701 - Query: {} - Body: {}
+2024-10-14 13:26:26 info: Assignments for CS701 successfully returned
+2024-10-14 13:28:02 info: Request: GET /api/assignment/course/CS501 - Query: {} - Body: {}
+2024-10-14 13:28:02 info: Assignments for CS501 successfully returned
+2024-10-14 13:28:03 info: Request: GET /api/submission/Willem/CS501-1 - Query: {} - Body: {}
+2024-10-14 13:28:03 info: No assignments found for user: Willem for assignment: CS501-1
+2024-10-14 13:28:04 info: Request: GET /api/submission/Willem/CS501-2 - Query: {} - Body: {}
+2024-10-14 13:28:04 info: No assignments found for user: Willem for assignment: CS501-2
+2024-10-14 13:28:06 info: Request: GET /api/submission/Willem/CS501-3 - Query: {} - Body: {}
+2024-10-14 13:28:06 info: No assignments found for user: Willem for assignment: CS501-3
+2024-10-14 13:28:20 info: Request: GET /api/assignment/course/CS301 - Query: {} - Body: {}
+2024-10-14 13:28:20 info: Assignments for CS301 successfully returned
+2024-10-14 13:28:22 info: Request: GET /api/submission/Willem/CS301-1 - Query: {} - Body: {}
+2024-10-14 13:28:22 info: Assignments found for user: Willem for assignment: CS301-1 successfully loaded
+2024-10-14 13:28:24 info: Request: GET /api/submission/Willem/CS301-2 - Query: {} - Body: {}
+2024-10-14 13:28:24 info: No assignments found for user: Willem for assignment: CS301-2
+2024-10-14 13:31:21 info: Request: GET /api/submission/Willem/CS301-1 - Query: {} - Body: {}
+2024-10-14 13:31:21 info: Assignments found for user: Willem for assignment: CS301-1 successfully loaded
+2024-10-14 13:31:24 info: Request: GET /api/submission/Willem/CS301-2 - Query: {} - Body: {}
+2024-10-14 13:31:24 info: No assignments found for user: Willem for assignment: CS301-2
+2024-10-14 13:31:30 info: Request: GET /api/submission/Willem/CS301-3 - Query: {} - Body: {}
+2024-10-14 13:31:30 info: No assignments found for user: Willem for assignment: CS301-3
+2024-10-14 13:31:33 info: Request: GET /api/submission/Willem/CS301-2 - Query: {} - Body: {}
+2024-10-14 13:31:33 info: No assignments found for user: Willem for assignment: CS301-2
+2024-10-14 13:31:35 info: Request: GET /api/submission/Willem/CS301-3 - Query: {} - Body: {}
+2024-10-14 13:31:35 info: No assignments found for user: Willem for assignment: CS301-3
+2024-10-14 13:32:01 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:32:01 info: Assignments for CS201 successfully returned
+2024-10-14 13:34:02 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-10-14 13:34:02 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-10-14 13:34:02 info: Request: GET /api/course/courses/student - Query: {} - Body: {}
+2024-10-14 13:34:02 info: Courses loaded successfully
+2024-10-14 13:34:07 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:34:07 info: Assignments for CS201 successfully returned
+2024-10-14 13:34:09 info: Request: GET /api/submission/Willem/CS201-1 - Query: {} - Body: {}
+2024-10-14 13:34:09 info: Assignments found for user: Willem for assignment: CS201-1 successfully loaded
+2024-10-14 13:34:11 info: Request: GET /api/submission/Willem/CS201-2 - Query: {} - Body: {}
+2024-10-14 13:34:11 info: Assignments found for user: Willem for assignment: CS201-2 successfully loaded
+2024-10-14 13:34:13 info: Request: GET /api/submission/Willem/CS201-3 - Query: {} - Body: {}
+2024-10-14 13:34:13 info: No assignments found for user: Willem for assignment: CS201-3
+2024-10-14 13:34:16 info: Request: GET /api/assignment/course/CS701 - Query: {} - Body: {}
+2024-10-14 13:34:16 info: Assignments for CS701 successfully returned
+2024-10-14 13:34:18 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 13:34:18 info: Assignments for CS601 successfully returned
+2024-10-14 13:34:19 info: Request: GET /api/submission/Willem/CS601-1 - Query: {} - Body: {}
+2024-10-14 13:34:19 info: No assignments found for user: Willem for assignment: CS601-1
+2024-10-14 13:34:21 info: Request: GET /api/submission/Willem/CS601-2 - Query: {} - Body: {}
+2024-10-14 13:34:21 info: No assignments found for user: Willem for assignment: CS601-2
+2024-10-14 13:34:23 info: Request: GET /api/submission/Willem/CS601-3 - Query: {} - Body: {}
+2024-10-14 13:34:23 info: No assignments found for user: Willem for assignment: CS601-3
+2024-10-14 13:34:56 info: Request: GET /api/course/ - Query: {} - Body: {}
+2024-10-14 13:34:56 info: Courses loaded successfully
+2024-10-14 13:35:48 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-10-14 13:35:48 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-10-14 13:35:48 info: Request: GET /api/course/ - Query: {} - Body: {}
+2024-10-14 13:35:48 info: Courses loaded successfully
+2024-10-14 13:35:56 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:35:56 info: Assignments for CS201 successfully returned
+2024-10-14 13:35:58 info: Request: GET /api/submission/assignment/CS201-2 - Query: {} - Body: {}
+2024-10-14 13:35:59 info: Assignments found for CS201-2 successfully loaded
+2024-10-14 13:36:00 info: Request: GET /api/submission/670cfb5e8d28c0e59a35184b - Query: {} - Body: {}
+2024-10-14 13:36:00 info: Submission found
+2024-10-14 13:36:00 info: Request: GET /api/submission/670cfb5e8d28c0e59a35184b - Query: {} - Body: {}
+2024-10-14 13:36:00 info: Request: GET /api/file/stream/670cfb5e8d28c0e59a351849 - Query: {} - Body: {}
+2024-10-14 13:36:00 info: Submission found
+2024-10-14 13:36:01 info: Request: GET /api/file/stream/670cfb5e8d28c0e59a351849 - Query: {} - Body: {}
+2024-10-14 13:36:23 info: Request: GET /api/file/download/670cfb5e8d28c0e59a351849 - Query: {} - Body: {}
+2024-10-14 13:36:35 info: Request: GET /api/course/ - Query: {} - Body: {}
+2024-10-14 13:36:35 info: Courses loaded successfully
+2024-10-14 13:36:36 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:36:36 info: Assignments for CS201 successfully returned
+2024-10-14 13:36:37 info: Request: GET /api/submission/assignment/CS201-2 - Query: {} - Body: {}
+2024-10-14 13:36:37 info: Assignments found for CS201-2 successfully loaded
+2024-10-14 13:36:40 info: Request: GET /api/submission/670cfb5e8d28c0e59a35184b - Query: {} - Body: {}
+2024-10-14 13:36:40 info: Submission found
+2024-10-14 13:36:40 info: Request: GET /api/submission/670cfb5e8d28c0e59a35184b - Query: {} - Body: {}
+2024-10-14 13:36:40 info: Request: GET /api/file/stream/670cfb5e8d28c0e59a351849 - Query: {} - Body: {}
+2024-10-14 13:36:40 info: Submission found
+2024-10-14 13:36:40 info: Request: GET /api/file/stream/670cfb5e8d28c0e59a351849 - Query: {} - Body: {}
+2024-10-14 13:36:52 info: Request: PUT /api/submission/grade/670cfb5e8d28c0e59a35184b - Query: {} - Body: {"grade":"150","feedback":"Great detail and explanation."}
+2024-10-14 13:36:55 info: Request: GET /api/course/ - Query: {} - Body: {}
+2024-10-14 13:36:55 info: Courses loaded successfully
+2024-10-14 13:36:56 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:36:56 info: Assignments for CS201 successfully returned
+2024-10-14 13:37:13 info: Request: GET /favicon.ico - Query: {} - Body: {}
+2024-10-14 13:37:34 info: Request: GET /api/assignment/course/CS301 - Query: {} - Body: {}
+2024-10-14 13:37:34 info: Assignments for CS301 successfully returned
+2024-10-14 13:37:35 info: Request: GET /api/assignment/course/CS401 - Query: {} - Body: {}
+2024-10-14 13:37:35 info: Assignments for CS401 successfully returned
+2024-10-14 13:37:36 info: Request: GET /api/assignment/course/CS501 - Query: {} - Body: {}
+2024-10-14 13:37:36 info: Assignments for CS501 successfully returned
+2024-10-14 13:37:37 info: Request: GET /api/assignment/course/CS443 - Query: {} - Body: {}
+2024-10-14 13:37:37 info: Assignments for CS443 successfully returned
+2024-10-14 13:37:38 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 13:37:38 info: Assignments for CS601 successfully returned
+2024-10-14 13:37:44 info: Request: GET /api/submission/assignment/CS601-4 - Query: {} - Body: {}
+2024-10-14 13:37:44 info: No assignments found for CS601-4
+2024-10-14 13:38:09 info: Request: PUT /api/assignment/update/CS601-4 - Query: {} - Body: {"title":"Create Web Application","description":"Web application simple creation","dueDate":"2024-10-15","courseCode":"CS601","mark":100}
+2024-10-14 13:38:09 info: Assignment CS601-4 updated successfully.
+2024-10-14 13:38:09 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 13:38:09 info: Assignments for CS601 successfully returned
+2024-10-14 13:38:10 info: Request: GET /api/submission/assignment/CS601-4 - Query: {} - Body: {}
+2024-10-14 13:38:10 info: No assignments found for CS601-4
+2024-10-14 13:38:15 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 13:38:15 info: Assignments for CS601 successfully returned
+2024-10-14 13:38:25 info: Request: GET /api/submission/assignment/CS601-4 - Query: {} - Body: {}
+2024-10-14 13:38:25 info: No assignments found for CS601-4
+2024-10-14 13:39:31 info: Request: PUT /api/assignment/update/CS601-4 - Query: {} - Body: {"title":"Create Web Application","description":"Web application simple creation","dueDate":"2024-10-15","courseCode":"CS601","mark":"300"}
+2024-10-14 13:39:31 warn: Mark entered is out of bounds.
+2024-10-14 13:39:41 info: Request: PUT /api/assignment/update/CS601-4 - Query: {} - Body: {"title":"Create Web Application","description":"Web application simple creation","dueDate":"2024-10-15","courseCode":"CS601","mark":"300"}
+2024-10-14 13:39:41 warn: Mark entered is out of bounds.
+2024-10-14 13:39:54 info: Request: PUT /api/assignment/update/CS601-4 - Query: {} - Body: {"title":"Create Web Application","description":"Web application simple creation","dueDate":"2024-10-15","courseCode":"CS601","mark":"250"}
+2024-10-14 13:39:54 info: Assignment CS601-4 updated successfully.
+2024-10-14 13:39:54 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 13:39:54 info: Assignments for CS601 successfully returned
+2024-10-14 13:40:17 info: Request: GET /api/submission/assignment/CS601-3 - Query: {} - Body: {}
+2024-10-14 13:40:17 info: No assignments found for CS601-3
+2024-10-14 13:40:19 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 13:40:19 info: Assignments for CS601 successfully returned
+2024-10-14 13:40:21 info: Request: GET /api/assignment/course/CS443 - Query: {} - Body: {}
+2024-10-14 13:40:21 info: Assignments for CS443 successfully returned
+2024-10-14 13:40:22 info: Request: GET /api/assignment/course/CS501 - Query: {} - Body: {}
+2024-10-14 13:40:22 info: Assignments for CS501 successfully returned
+2024-10-14 13:40:49 info: Request: GET /api/user - Query: {} - Body: {}
+2024-10-14 13:40:49 info: Request: GET /api/user - Query: {} - Body: {}
+2024-10-14 13:40:49 info: Request: GET /api/user/student/12345678 - Query: {} - Body: {}
+2024-10-14 13:40:49 info: Request: GET /api/user/student/34567890 - Query: {} - Body: {}
+2024-10-14 13:40:49 info: Request: GET /api/user/student/23456789 - Query: {} - Body: {}
+2024-10-14 13:40:49 info: Request: GET /api/user/student/45678901 - Query: {} - Body: {}
+2024-10-14 13:40:49 info: Request: GET /api/user/student/56789012 - Query: {} - Body: {}
+2024-10-14 13:40:49 info: Request: GET /api/user/student/67890123 - Query: {} - Body: {}
+2024-10-14 13:40:49 info: User info for user: 34567890 successfully loaded
+2024-10-14 13:40:49 info: Request: GET /api/user/student/78901234 - Query: {} - Body: {}
+2024-10-14 13:40:49 info: User info for user: 45678901 successfully loaded
+2024-10-14 13:40:49 info: Request: GET /api/user/student/89012345 - Query: {} - Body: {}
+2024-10-14 13:40:49 info: User info for user: 23456789 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/90123456 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 67890123 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/01234567 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 89012345 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/11223344 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 78901234 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/22334455 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 01234567 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/33445566 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 12345678 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/lecturer/84572189 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 56789012 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/lecturer/97364521 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 11223344 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/lecturer/21547983 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 33445566 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/lecturer/68947325 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 84572189 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/lecturer/94167285 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 90123456 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/lecturer/32871946 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 97364521 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/lecturer/56482910 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 21547983 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/lecturer/19847265 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 68947325 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/lecturer/78451239 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 94167285 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/43041450 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 32871946 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/lecturer/41475399 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 22334455 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/lecturer/33300011 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 56482910 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/34567890 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 19847265 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/45678901 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 78451239 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/23456789 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 43041450 successfully loaded
+2024-10-14 13:40:50 info: User info for user: 41475399 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/67890123 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: Request: GET /api/user/student/89012345 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 33300011 successfully loaded
+2024-10-14 13:40:50 info: User info for user: 45678901 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/78901234 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: Request: GET /api/user/student/01234567 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 34567890 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/12345678 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 23456789 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/56789012 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 89012345 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/11223344 - Query: {} - Body: {}
+2024-10-14 13:40:50 info: User info for user: 67890123 successfully loaded
+2024-10-14 13:40:50 info: Request: GET /api/user/student/33445566 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 78901234 successfully loaded
+2024-10-14 13:40:51 info: Request: GET /api/user/lecturer/84572189 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 12345678 successfully loaded
+2024-10-14 13:40:51 info: Request: GET /api/user/student/90123456 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 56789012 successfully loaded
+2024-10-14 13:40:51 info: Request: GET /api/user/lecturer/97364521 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 11223344 successfully loaded
+2024-10-14 13:40:51 info: User info for user: 33445566 successfully loaded
+2024-10-14 13:40:51 info: Request: GET /api/user/lecturer/21547983 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: Request: GET /api/user/lecturer/68947325 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 84572189 successfully loaded
+2024-10-14 13:40:51 info: Request: GET /api/user/lecturer/94167285 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 90123456 successfully loaded
+2024-10-14 13:40:51 info: Request: GET /api/user/lecturer/32871946 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 97364521 successfully loaded
+2024-10-14 13:40:51 info: Request: GET /api/user/student/22334455 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 21547983 successfully loaded
+2024-10-14 13:40:51 info: User info for user: 68947325 successfully loaded
+2024-10-14 13:40:51 info: Request: GET /api/user/lecturer/56482910 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: Request: GET /api/user/lecturer/19847265 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 01234567 successfully loaded
+2024-10-14 13:40:51 info: Request: GET /api/user/lecturer/78451239 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 94167285 successfully loaded
+2024-10-14 13:40:51 info: Request: GET /api/user/student/43041450 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 32871946 successfully loaded
+2024-10-14 13:40:51 info: Request: GET /api/user/lecturer/41475399 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 22334455 successfully loaded
+2024-10-14 13:40:51 info: Request: GET /api/user/lecturer/33300011 - Query: {} - Body: {}
+2024-10-14 13:40:51 info: User info for user: 56482910 successfully loaded
+2024-10-14 13:40:51 info: User info for user: 19847265 successfully loaded
+2024-10-14 13:40:51 info: User info for user: 78451239 successfully loaded
+2024-10-14 13:40:51 info: User info for user: 43041450 successfully loaded
+2024-10-14 13:40:51 info: User info for user: 41475399 successfully loaded
+2024-10-14 13:40:51 info: User info for user: 33300011 successfully loaded
+2024-10-14 13:41:17 info: Request: GET /api/course/ - Query: {} - Body: {}
+2024-10-14 13:41:17 info: Courses loaded successfully
+2024-10-14 13:41:33 info: Request: POST /api/user/login - Query: {} - Body: {"username":"Willem","password":"******"}
+2024-10-14 13:41:33 info: Login attempt for user: Willem successful with body: {"username":"Willem","password":"******"}
+2024-10-14 13:41:34 info: Request: GET /api/user - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/12345678 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/34567890 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/23456789 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/45678901 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/67890123 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/56789012 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 12345678 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 34567890 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 23456789 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/78901234 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 45678901 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/89012345 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/90123456 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/01234567 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 78901234 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 89012345 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/11223344 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/22334455 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 90123456 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 01234567 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/33445566 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/84572189 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 67890123 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/97364521 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 11223344 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/12345678 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 56789012 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/34567890 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 22334455 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 84572189 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 33445566 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/21547983 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/68947325 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/23456789 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 97364521 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/94167285 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 12345678 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/45678901 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 34567890 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/32871946 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 21547983 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/56482910 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 68947325 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 23456789 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/19847265 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/78451239 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 32871946 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/43041450 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 56482910 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 45678901 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 94167285 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/33300011 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 19847265 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/41475399 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/78901234 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/89012345 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 78451239 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/90123456 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 43041450 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/01234567 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 41475399 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/67890123 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 78901234 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 33300011 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 89012345 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/11223344 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/56789012 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/student/22334455 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 90123456 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/84572189 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 01234567 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/33445566 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 67890123 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/97364521 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 11223344 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/21547983 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 22334455 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/68947325 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 56789012 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/32871946 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 84572189 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/56482910 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 97364521 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 33445566 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/94167285 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/19847265 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 21547983 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/78451239 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 68947325 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/student/43041450 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 32871946 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/41475399 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 56482910 successfully loaded
+2024-10-14 13:41:34 info: Request: GET /api/user/lecturer/33300011 - Query: {} - Body: {}
+2024-10-14 13:41:34 info: User info for user: 94167285 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 19847265 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 78451239 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 43041450 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 41475399 successfully loaded
+2024-10-14 13:41:34 info: User info for user: 33300011 successfully loaded
+2024-10-14 13:41:36 info: Request: GET /api/course/ - Query: {} - Body: {}
+2024-10-14 13:41:36 info: Courses loaded successfully
+2024-10-14 13:41:38 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:41:38 info: Assignments for CS201 successfully returned
+2024-10-14 13:41:41 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 13:41:41 info: Assignments for CS803 not found
+2024-10-14 13:41:43 info: Request: GET /api/assignment/course/CS803 - Query: {} - Body: {}
+2024-10-14 13:41:43 info: Request: DELETE /api/course/delete/CS803 - Query: {} - Body: {}
+2024-10-14 13:41:43 info: Assignments for CS803 not found
+2024-10-14 13:41:43 info: Course: CS803 successfully deleted
+2024-10-14 13:41:43 info: Request: GET /api/course/ - Query: {} - Body: {}
+2024-10-14 13:41:43 info: Courses loaded successfully
+2024-10-14 13:41:44 info: Request: GET /api/assignment/course/CS701 - Query: {} - Body: {}
+2024-10-14 13:41:44 info: Assignments for CS701 successfully returned
+2024-10-14 13:41:47 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 13:41:47 info: Assignments for CS601 successfully returned
+2024-10-14 13:41:52 info: Request: GET /api/assignment/course/CS443 - Query: {} - Body: {}
+2024-10-14 13:41:52 info: Assignments for CS443 successfully returned
+2024-10-14 13:41:54 info: Request: GET /api/assignment/course/CS501 - Query: {} - Body: {}
+2024-10-14 13:41:54 info: Assignments for CS501 successfully returned
+2024-10-14 13:41:55 info: Request: GET /api/assignment/course/CS401 - Query: {} - Body: {}
+2024-10-14 13:41:55 info: Assignments for CS401 successfully returned
+2024-10-14 13:41:55 info: Request: GET /api/assignment/course/CS301 - Query: {} - Body: {}
+2024-10-14 13:41:56 info: Assignments for CS301 successfully returned
+2024-10-14 13:41:56 info: Request: GET /api/assignment/course/CS201 - Query: {} - Body: {}
+2024-10-14 13:41:56 info: Assignments for CS201 successfully returned
+2024-10-14 13:41:57 info: Request: GET /api/assignment/course/CS601 - Query: {} - Body: {}
+2024-10-14 13:41:57 info: Assignments for CS601 successfully returned
+2024-10-14 13:47:29 info: Mongoose connected
